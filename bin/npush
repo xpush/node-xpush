@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+var program = require('commander')
+  , mkdirp = require('mkdirp')
+  , pkg = require('../package.json')
+  , version = pkg.version
+  , os = require('os')
+  , fs = require('fs');
+
+// ref -  https://github.com/visionmedia/express/blob/master/bin/express

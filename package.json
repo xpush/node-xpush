@@ -1,0 +1,40 @@
+{
+  "name": "npush",
+  "description": "A integrated push api module",
+  "version": "0.0.1",
+  "contributors": [
+    {
+      "name": "John Kim",
+      "email": "yohany@gmail.com"
+    },
+    {
+      "name": "You",
+      "email": "you@domain.com"
+    }
+  ],
+  "dependencies": {
+    "socket.io": ">= 0.9"
+  },
+  "devDependencies": {
+    "should": "~2.1.1"
+  },
+  "keywords": [
+    "push",
+    "websocket",
+    "gcm",
+    "apm",
+    "xmpp",
+    "api"
+  ],
+  "repository": "git://github.com/n-push/npush",
+  "main": "./lib/index.js",
+  "bin": {
+    "npush": "./bin/npush"
+  },
+  "scripts": {
+    "test": "node test"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  }
+}
