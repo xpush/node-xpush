@@ -1,6 +1,6 @@
 {
   "name": "npush",
-  "description": "A integrated push api module",
+  "description": "Realtime communication api server and node module.",
   "version": "0.0.1",
   "contributors": [
     {
@@ -13,7 +13,10 @@
     }
   ],
   "dependencies": {
-    "socket.io": ">= 0.9"
+    "socket.io": ">= 0.9",
+    "colors": "0.x.x",
+    "pkginfo": "0.2.x",
+    "optimist": "0.3.x"
   },
   "devDependencies": {
     "should": "~2.1.1"
@@ -27,7 +30,7 @@
     "api"
   ],
   "repository": "git://github.com/n-push/npush",
-  "main": "./lib/index.js",
+  "main": "./lib/npush.js",
   "bin": {
     "npush": "./bin/npush"
   },
