@@ -23,7 +23,11 @@ Gateway server is for load balancing and managing distributed api servers. And a
 
 ### Start a gateway server
 
-	$ npush-gateway --port 8080
+	$ npush --gateway --port 8080 --config ./config.sample.json
+
+### Start a API server
+
+	$ npush --port 8088 --config ./config.sample.json
 
 
 
