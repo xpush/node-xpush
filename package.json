@@ -16,7 +16,9 @@
     "socket.io": ">= 0.9",
     "colors": "0.x.x",
     "pkginfo": "0.2.x",
-    "optimist": "0.3.x"
+    "optimist": "0.3.x",
+    "restify": "2.x.x",
+    "underscore": "1.5.x"
   },
   "devDependencies": {
     "should": "~2.1.1"

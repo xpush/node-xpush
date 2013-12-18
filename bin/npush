@@ -55,9 +55,12 @@ if(argv.gateway){
   server = npush.createApiServer(port, config);
 }
 
-if (!config.silent) {
-  util.puts(welcome.rainbow.bold);
-  util.puts(' ' +
-    (argv.gateway?'Gateway Server'.underline.bold.green:'API Server'.underline.bold.green) +
-    ' now listening on port: ' + port);
-}
+server.on('connected', function (url, port){
+  if (!config.silent) {
+    util.puts(welcome.rainbow.bold);
+    util.puts(' ' +
+      (argv.gateway?'Gateway Server'.underline.bold.green:'API Server'.underline.bold.green) +
+      ' now listening on port: ' + port);
+  }
+});
+
