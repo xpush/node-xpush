@@ -18,7 +18,8 @@
     "pkginfo": "0.2.x",
     "optimist": "0.3.x",
     "restify": "2.x.x",
-    "underscore": "1.5.x"
+    "underscore": "1.5.x",
+    "node-zookeeper-client": "0.2.x"
   },
   "devDependencies": {
     "should": "~2.1.1"
