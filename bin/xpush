@@ -1,0 +1,67 @@
+#!/usr/bin/env node
+
+var path     = require('path'),
+    fs       = require('fs'),
+    util     = require('util'),
+    colors   = require('colors'),
+    argv     = require('optimist').argv,
+    xpush    = require('../lib/xpush');
+
+var help = [
+    "usage: xpush [options] ",
+    "",
+    "Starts a xpush server using the specified command-line options",
+    "",
+    "options:",
+    "  --port   PORT       Port that the xpush server should run on",
+    "  --config OUTFILE    (mandatory!) Location of the configuration file for the xpush server",
+    "  --silent            Silence the log output from the xpush server",
+    "  --gateway           start the gateway server for loadbalancing xpush servers",
+    "  -h, --help          You're staring at it"
+].join('\n');
+
+
+var welcome = [ 
+"                         _     ",
+"                        | |    ",
+"   __  ___ __  _   _ ___| |__  ",
+"   \\ \\/ / '_ \\| | | / __| '_ \\ ",
+"    >  <| |_) | |_| \\__ \\ | | |",
+"   /_/\\_\\ .__/ \\__,_|___/_| |_|",
+"        | |                    ",
+"        |_|                    "
+].join('\n'); 
+
+if (argv.h || argv.help || Object.keys(argv).length === 2 || !argv.config) {
+  return util.puts(help);
+}
+
+var config = {},
+    port = argv.port || 80, 
+    server;
+
+try {
+  var data = fs.readFileSync(argv.config);
+  config = JSON.parse(data.toString());
+} catch (ex) {
+  util.puts('Error starting xpush server: ' + ex);
+  process.exit(1);
+}
+
+config.silent = typeof argv.silent !== 'undefined' ? argv.silent : config.silent;
+
+if(argv.gateway){
+  server = xpush.createGatewayServer(port, config);
+}else{
+  server = xpush.createApiServer(port, config);
+}
+
+server.on('connected', function (url, port){
+  if (!config.silent) {
+    util.puts(welcome.rainbow.bold);
+    util.puts(' ' +
+      (argv.gateway?'Gateway Server'.underline.bold.green:'API Server'.underline.bold.green) +
+      ' now listening on port: ' + port);
+  }
+});
+

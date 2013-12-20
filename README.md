@@ -1,15 +1,15 @@
 # npush
 Realtime communication api server and node-module.
 
-[![Build Status](https://travis-ci.org/n-push/npush.png?branch=master)](https://travis-ci.org/n-push/npush)
+[![Build Status](https://travis-ci.org/xpush/node-xpush.png?branch=master)](https://travis-ci.org/xpush/node-xpush)
 
 ### npush
-Npush is an realtime communication api server for quickly, easily adding scalable functionality to web and mobile apps.
+'xpush is an realtime communication api server for quickly, easily adding scalable functionality to web and mobile apps.
 
-Npush makes it easy to send real-time notifications to Android and iOS devices, and send messages to various messengers (via XMPP) and send real-time datas to Webpages (via websocket, wrapping socket.io).
+It makes it easy to send real-time notifications to Android and iOS devices, and send messages to various messengers (via XMPP) and send real-time datas to Webpages (via websocket, wrapping socket.io).
 
-Npush is consists of npush a api server and a gateway server.
-Gateway server is for load balancing and managing distributed api servers. And api servers can easily scalable.
+'xpush' is consists of npush a api server and a gateway server.
+Gateway server is for load balancing and managing many distributed api servers.
 
 ## Usage
 
@@ -19,15 +19,15 @@ Gateway server is for load balancing and managing distributed api servers. And a
 
 ### Install
 
-	$ npm install -g npush
+	$ npm install -g xpush
 
 ### Start a gateway server
 
-	$ npush --gateway --port 8080 --config ./config.sample.json
+	$ xpush --gateway --port 8080 --config ./config.sample.json
 
 ### Start a API server
 
-	$ npush --port 8088 --config ./config.sample.json
+	$ xpush --port 8088 --config ./config.sample.json
 
 
 
