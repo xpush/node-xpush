@@ -1,5 +1,5 @@
 # xpush
-x(extensional)push is the realtime communication api server and node-module.
+x(extensional)push is the realtime communication api server and node-module...
 
 [![Build Status](https://travis-ci.org/xpush/node-xpush.png?branch=master)](https://travis-ci.org/xpush/node-xpush)
 
