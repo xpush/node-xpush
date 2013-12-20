@@ -20,6 +20,15 @@ Gateway server is for load balancing and managing many distributed api servers.
 ### Install
 
 	$ npm install -g xpush
+	
+For developer, 
+	$ git clone https://github.com/xpush/node-xpush.git
+	$ cd node-xpush
+	$ npm install
+	
+	Start Xpush Servers
+	$ ./bin/xpush --port 8088 --config ./config.sample.json
+	$ ./bin/xpush --gateway --port 8088 --config ./config.sample.json
 
 ### Start a gateway server
 
