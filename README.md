@@ -8,7 +8,7 @@ x(extensional)push is the realtime communication api server and node-module...
 
 It makes it easy to send real-time notifications to Android and iOS devices, and send messages to various messengers (via XMPP) and send real-time datas to Webpages (via websocket, wrapping socket.io).
 
-'xpush' is consists of npush a api server and a gateway server.
+'xpush' is consists of a api server and a gateway server.
 Gateway server is for load balancing and managing many distributed api servers.
 
 ## Usage
