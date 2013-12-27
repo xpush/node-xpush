@@ -1,6 +1,8 @@
 # xpush
 x(extensional)push is the realtime communication api server and node-module...
 
+**The project is currently under development. Not yet available.**
+
 [![Build Status](https://travis-ci.org/xpush/node-xpush.png?branch=master)](https://travis-ci.org/xpush/node-xpush)
 
 ### xpush
