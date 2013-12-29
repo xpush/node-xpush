@@ -17,14 +17,18 @@ Gateway server is for load balancing and managing many distributed api servers.
 ## Getting Started  ( for dvelopers )
 Currently under development. **This is only for contributors.**
 #### 1. Install zookeeper and redis
+
 Install and start zookeeper. (http://zookeeper.apache.org)
+
 	$ wget http://apache.mirror.cdnetworks.com/zookeeper/zookeeper-3.4.5/zookeeper-3.4.5.tar.gz
 	$ tar -xvzf ./zookeeper-3.4.5.tar.gz
 	$ cd zookeeper-3.4.5/conf
 	$ cp zoo_sample.cfg zoo.cfg
 	$ cd ../bin
 	$ ./zkServer.sh start
+	
 Install and start redis. (http://redis.io)
+
 	$ wget http://download.redis.io/redis-stable.tar.gz
 	$ tar xvzf redis-stable.tar.gz
 	$ cd redis-stable
