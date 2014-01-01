@@ -47,7 +47,7 @@ Install and start redis. (http://redis.io)
 
 #### 4. Start xpush Gateway Server
 
-	$ ./bin/xpush --port 8000 --config ./config.sample.json —gateway
+	$ ./bin/xpush --port 8000 --config ./config.sample.json --gateway
 
 
 
