@@ -6,7 +6,7 @@ var path     = require('path'),
     colors   = require('colors'),
     argv     = require('optimist').argv,
     xpush    = require('../lib/xpush');
-
+argv.host="www.notdol.com";
 var help = [
     "usage: xpush [options] ",
     "",
@@ -17,6 +17,7 @@ var help = [
     "  --config OUTFILE    (mandatory!) Location of the configuration file for the xpush server",
     "  --silent            Silence the log output from the xpush server",
     "  --gateway           start the gateway server for loadbalancing xpush servers",
+    "  --host          Hostname ",
     "  -h, --help          You're staring at it"
 ].join('\n');
 
@@ -49,11 +50,13 @@ try {
 }
 
 config.silent = typeof argv.silent !== 'undefined' ? argv.silent : config.silent;
+config.port = port || config.port;
+config.host = argv.host || config.host;
 
 if(argv.gateway){
-  server = xpush.createGatewayServer(port, config);
+  server = xpush.createGatewayServer(config);
 }else{
-  server = xpush.createApiServer(port, config);
+  server = xpush.createApiServer(config);
 }
 
 server.on('connected', function (url, port){
