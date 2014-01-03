@@ -6,7 +6,7 @@ var path     = require('path'),
     colors   = require('colors'),
     argv     = require('optimist').argv,
     xpush    = require('../lib/xpush');
-argv.host="www.notdol.com";
+
 var help = [
     "usage: xpush [options] ",
     "",
@@ -17,7 +17,7 @@ var help = [
     "  --config OUTFILE    (mandatory!) Location of the configuration file for the xpush server",
     "  --silent            Silence the log output from the xpush server",
     "  --gateway           start the gateway server for loadbalancing xpush servers",
-    "  --host          Hostname ",
+    "  --host              Hostname ",
     "  -h, --help          You're staring at it"
 ].join('\n');
 
@@ -56,6 +56,20 @@ config.host = argv.host || config.host;
 if(argv.gateway){
   server = xpush.createGatewayServer(config);
 }else{
+
+  /*
+  if ( typeof config.host  == "undefined" ) {
+  
+    var errorMessage = [
+    '',
+    ' --host [Domain or IP Address]'.red + ' is required.',
+    '  or ',
+    ' Check host value in your config file'.red +' (loaded by --config)',
+    ''
+    ].join('\n');
+    return util.puts(errorMessage);
+  } */
+
   server = xpush.createApiServer(config);
 }
 
