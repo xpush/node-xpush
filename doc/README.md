@@ -138,3 +138,6 @@ channel 이 없다면 unique random 으로 생성한다.
 		  }
 		)
 
+
+#### git command 
+ [ git policy ](https://gist.github.com/notdol/8298927)
