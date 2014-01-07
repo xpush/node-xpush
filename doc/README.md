@@ -126,7 +126,7 @@ channel 이 없다면 unique random 으로 생성한다.
 ### user
 - #### app | userId | sessionId | deviceType | deviceId | notiId | datas
 
-		db.message.insert(
+		db.user.insert(
 		  {
 			app: ‘slideair’,
 			userId: ’JYJung’,
