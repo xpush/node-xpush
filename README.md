@@ -53,7 +53,7 @@ Install and start redis. (http://redis.io)
 
 
 ## Documentation
-_(Coming soon)_
+* [API Documents][]
 
 ## Examples
 _(Coming soon)_
@@ -64,3 +64,6 @@ _(Nothing yet)_
 
 ## License
 xpush project may be freely distributed under the MIT license.
+
+
+[API Documents]: https://github.com/xpush/node-xpush/blob/master/doc/README.md
