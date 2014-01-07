@@ -20,7 +20,8 @@
     "restify": "2.x.x",
     "underscore": "1.5.x",
     "node-zookeeper-client": "0.2.x",
-    "redis": "0.10.x"
+    "redis": "0.10.x",
+    "mongoose": "~3.8.3"
   },
   "devDependencies": {
     "should": "~2.1.1"
