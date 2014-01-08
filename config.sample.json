@@ -1,5 +1,5 @@
 {
   "zookeeper": {},
-  "redis": {}
-
+  "redis": {},
+  "gcm_api_key" : "Insert Google Server API Key here"
 }
