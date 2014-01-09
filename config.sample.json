@@ -1,5 +1,6 @@
 {
   "zookeeper": {},
-  "redis": {}
+  "redis": {},
+  "mongodb":{"address":"localhost:30001"}
 
 }
