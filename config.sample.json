@@ -1,6 +1,10 @@
 {
   "zookeeper": {},
   "redis": {},
-  "mongodb":{"address":"localhost:30001"}
+
+  "mongodb":{},
+
+
+  "gcm_api_key" : "Insert Google Server API Key here"
 
 }
