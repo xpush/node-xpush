@@ -22,7 +22,8 @@
     "node-zookeeper-client": "0.2.x",
     "redis": "0.10.x",
     "mongoose": "~3.8.3",
-    "node-gcm": "0.9.x"
+    "node-gcm": "0.9.x",
+    "shortid": "~2.0.0"
   },
   "devDependencies": {
     "should": "~2.1.1"
