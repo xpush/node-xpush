@@ -14,7 +14,7 @@ It makes it easy to send real-time notifications to Android and iOS devices, and
 Gateway server is for load balancing and managing many distributed api servers.
 
 
-## Getting Started  ( for dvelopers )
+## Getting Started  ( for developers )
 Currently under development. **This is only for contributors.**
 #### 1. Install zookeeper and redis
 
