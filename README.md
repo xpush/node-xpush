@@ -35,6 +35,14 @@ Install and start redis. (http://redis.io)
 	$ make
 	$ ./src/redis-server
 
+Install and start mongoDB. (http://www.mongodb.org)
+
+	$ wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-2.4.9.tgz
+	$ tar xvzf mongodb-linux-x86_64-2.4.9.tgz
+	$ cd mongodb-linux-x86_64-2.4.9
+	$ mkdir -p data/db
+	$ bin/mongod --dbpath data/db &
+
 #### 2. Clone xpush project
 
 	$ git clone https://github.com/xpush/node-xpush.git
