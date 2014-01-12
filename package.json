@@ -43,7 +43,9 @@
     "npush": "./bin/xpush"
   },
   "scripts": {
-    "test": "node test"
+    "test": "node test",
+    "dev-api": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 8000 --config ./config.sample.json",
+    "dev-gateway": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 9000 --config ./config.sample.json --gateway"
   },
   "engines": {
     "node": ">= 0.8.0"
