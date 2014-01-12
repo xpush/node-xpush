@@ -1,0 +1,221 @@
+{
+  "endpoints": [
+    {
+      "name": "Application",
+      "methods": [
+        {
+          "MethodName": "Create",
+          "Synopsis": "create an application with the name",
+          "HTTPMethod": "POST",
+          "URI": "/app/:appName",
+          "RequiresOAuth": "N",
+          "parameters": [
+            {
+              "Name": "appName",
+              "Description": "application name",
+              "Required": "Y",
+              "Type": "string"
+            }
+          ]
+        },
+        {
+          "MethodName": "Retrieve",
+          "Synopsis": "Retrieve an application by id",
+          "HTTPMethod": "GET",
+          "URI": "/app/:appId",
+          "RequiresOAuth": "N",
+          "parameters": [
+            {
+              "Name": "appId",
+              "Description": "application Id",
+              "Required": "Y",
+              "Type": "string"
+            }
+          ]
+        },
+        {
+          "MethodName": "Delete",
+          "Synopsis": "Delete an application by the Id",
+          "HTTPMethod": "DEL",
+          "URI": "/app/:appId",
+          "RequiresOAuth": "N",
+          "parameters": [
+            {
+              "Name": "appId",
+              "Description": "application Id",
+              "Required": "Y",
+              "Type": "string"
+            }
+          ]
+        },
+        {
+          "MethodName": "Retrieve All",
+          "Synopsis": "Retrieve app application",
+          "HTTPMethod": "GET",
+          "URI": "/apps",
+          "RequiresOAuth": "N"
+        }
+      ]
+    },
+    {
+      "name": "Channel",
+      "methods": [
+        {
+          "MethodName": "Create",
+          "Synopsis": "Create the channel",
+          "HTTPMethod": "POST",
+          "URI": "/channel/create/:channel",
+          "RequiresOAuth": "N",
+          "parameters": [
+            {
+              "Name": "app",
+              "Description": "the unique application name",
+              "Required": "Y",
+              "Type": "string"
+            },
+            {
+              "Name": "channel",
+              "Description": "the unique channel name",
+              "Required": "Y",
+              "Type": "string"
+            }
+          ]
+        },
+        {
+          "MethodName": "Join",
+          "Synopsis": "Join into the channel",
+          "HTTPMethod": "POST",
+          "URI": "/channel/join/:channel",
+          "RequiresOAuth": "N",
+          "parameters": [
+            {
+              "Name": "app",
+              "Description": "the unique application name",
+              "Required": "Y",
+              "Type": "string"
+            },
+            {
+              "Name": "channel",
+              "Description": "the unique channel name",
+              "Required": "Y",
+              "Type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "methods": [
+        {
+          "MethodName": "Register",
+          "Synopsis": "register user account",
+          "HTTPMethod": "POST",
+          "URI": "/user/register",
+          "RequiresOAuth": "N",
+          "parameters": [
+            {
+              "Name": "app",
+              "Description": "application name",
+              "Required": "Y",
+              "Type": "string"
+            },
+            {
+              "Name": "userId",
+              "Description": "User id",
+              "Required": "Y",
+              "Type": "string"
+            },
+            {
+              "Name": "deviceType",
+              "Description": "type of the device (WEB, Android, IOS)",
+              "Required": "N",
+              "Type": "string"
+            },
+            {
+              "Name": "deviceId",
+              "Description": "the unique id of the device",
+              "Required": "N",
+              "Type": "string"
+            },
+            {
+              "Name": "notiId",
+              "Description": "notification token id",
+              "Required": "N",
+              "Type": "string"
+            },
+            {
+              "Name": "datas",
+              "Description": "additional datas of the user",
+              "Required": "N",
+              "Type": "string"
+            }
+          ]
+        },
+        {
+          "MethodName": "Retrieve",
+          "Synopsis": "Retrieve an user account",
+          "HTTPMethod": "GET",
+          "URI": "/user/:app/:userId",
+          "RequiresOAuth": "N",
+          "parameters": [
+            {
+              "Name": "app",
+              "Description": "application name",
+              "Required": "Y",
+              "Type": "string"
+            },
+            {
+              "Name": "userId",
+              "Description": "User id",
+              "Required": "Y",
+              "Type": "string"
+            }
+          ]
+        },
+        {
+          "MethodName": "Login",
+          "Synopsis": "Log in",
+          "HTTPMethod": "POST",
+          "URI": "/user/login",
+          "RequiresOAuth": "N",
+          "parameters": [
+            {
+              "Name": "app",
+              "Description": "application name",
+              "Required": "Y",
+              "Type": "string"
+            },
+            {
+              "Name": "userId",
+              "Description": "User id",
+              "Required": "Y",
+              "Type": "string"
+            }
+          ]
+        },
+        {
+          "MethodName": "Logout",
+          "Synopsis": "Log out",
+          "HTTPMethod": "POST",
+          "URI": "/user/logout",
+          "RequiresOAuth": "N",
+          "parameters": [
+            {
+              "Name": "app",
+              "Description": "application name",
+              "Required": "Y",
+              "Type": "string"
+            },
+            {
+              "Name": "userId",
+              "Description": "User id",
+              "Required": "Y",
+              "Type": "string"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
