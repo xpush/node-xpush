@@ -25,7 +25,8 @@
     "node-gcm": "0.9.x",
     "shortid": "~2.0.0",
     "async": "~0.2.9",
-    "iodocs": "~0.0.1"
+    "iodocs": "~0.0.1",
+    "supervisor": "~0.5.6"
   },
   "devDependencies": {
     "should": "~2.1.1"
@@ -45,8 +46,8 @@
   },
   "scripts": {
     "test": "node test",
-    "dev-api": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 8000 --config ./config.sample.json",
-    "dev-gateway": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 9000 --config ./config.sample.json --gateway",
+    "dev-gateway": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 8000 --config ./config.sample.json --gateway",
+    "dev-api": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 9000 --config ./config.sample.json",
     "api-ref": "cp ./doc/iodocs-config.json ./node_modules/iodocs/config.json && cp ./doc/apiconfig.json ./node_modules/iodocs/public/data/apiconfig.json && cp ./doc/xpush.json ./node_modules/iodocs/public/data/xpush.json && node ./node_modules/iodocs/app.js"
   },
   "engines": {
