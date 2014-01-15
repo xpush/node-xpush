@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head><title>channel</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="channel"><meta name="groc-project-path" content="lib/routes/channel.js"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/routes/channel.js</div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><h1 id="channel-api">Channel API</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">restify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;restify&#39;</span><span class="p">),</span>
+    <span class="nx">mongoPersister</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;../mongodb-persister/mongoPersister&#39;</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="codepostcodechannelcreatechannel"><code>POST</code> /channel/create/:channel</h3>
+
+<ul>
+<li><em><code>PARAM</code> app</em> : application name </li>
+<li><em><code>URI</code> channel</em> : channel name to broadcast messages </li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">_param</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">_param</span><span class="p">.</span><span class="nx">app</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">next</span><span class="p">(</span><span class="k">new</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">InvalidArgumentError</span><span class="p">(</span><span class="s1">&#39;App must be supplied&#39;</span><span class="p">))</span>
+  <span class="p">}</span>
+
+  <span class="nx">mongoPersister</span><span class="p">.</span><span class="nx">createChannel</span><span class="p">(</span><span class="nx">_param</span><span class="p">.</span><span class="nx">app</span><span class="p">,</span> <span class="nx">_param</span><span class="p">.</span><span class="nx">channel</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">channel</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="nx">next</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">channel</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="codepostcodechanneljoinchannel"><code>POST</code> /channel/join/:channel</h3>
+
+<ul>
+<li><em><code>PARAM</code> app</em> : application name </li>
+<li><em><code>URI</code> channel</em> : channel name to broadcast messages </li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nx">join</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+
+  <span class="kd">var</span> <span class="nx">_param</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">_param</span><span class="p">.</span><span class="nx">app</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">next</span><span class="p">(</span><span class="k">new</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">InvalidArgumentError</span><span class="p">(</span><span class="s1">&#39;App must be supplied&#39;</span><span class="p">))</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">_param</span><span class="p">.</span><span class="nx">channel</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">next</span><span class="p">(</span><span class="k">new</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">InvalidArgumentError</span><span class="p">(</span><span class="s1">&#39;Channel must be supplied&#39;</span><span class="p">))</span>
+  <span class="p">}</span>
+
+  <span class="nx">mongoPersister</span><span class="p">.</span><span class="nx">joinChannel</span><span class="p">(</span><span class="nx">_param</span><span class="p">.</span><span class="nx">app</span><span class="p">,</span> <span class="nx">_param</span><span class="p">.</span><span class="nx">channel</span><span class="p">,</span> <span class="nx">_param</span><span class="p">.</span><span class="nx">sessionId</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="nx">next</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+  <span class="p">});</span>
+
+<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="codepostcodechannellistuserid"><code>POST</code> /channel/list/:userId</h3>
+
+<ul>
+<li><em><code>PARAM</code> app</em> : application name </li>
+<li><em><code>URI</code> userId</em> : user id in the channels </li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nx">list</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+
+  <span class="kd">var</span> <span class="nx">_param</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">_param</span><span class="p">.</span><span class="nx">app</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">next</span><span class="p">(</span><span class="k">new</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">InvalidArgumentError</span><span class="p">(</span><span class="s1">&#39;App must be supplied&#39;</span><span class="p">))</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">_param</span><span class="p">.</span><span class="nx">userId</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">next</span><span class="p">(</span><span class="k">new</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">InvalidArgumentError</span><span class="p">(</span><span class="s1">&#39;UserId must be supplied&#39;</span><span class="p">))</span>
+  <span class="p">}</span>
+
+  <span class="nx">mongoPersister</span><span class="p">.</span><span class="nx">getChannelsByUserId</span><span class="p">(</span><span class="nx">_param</span><span class="p">.</span><span class="nx">app</span><span class="p">,</span> <span class="nx">_param</span><span class="p">.</span><span class="nx">userId</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="nx">next</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+  <span class="p">});</span>
+  
+<span class="p">};</span></div></div></div></div></body></html>

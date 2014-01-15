@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="en"><head><title>app</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="app"><meta name="groc-project-path" content="lib/routes/app.js"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/routes/app.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">constants</span>   <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;../node-manager/constants&#39;</span><span class="p">),</span>
+    <span class="nx">shortId</span>     <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;shortid&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">appAPI</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">nodeManager</span><span class="p">){</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">nodeManager</span> <span class="o">=</span> <span class="nx">nodeManager</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">zkCli</span>  <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">nodeManager</span><span class="p">.</span><span class="nx">zkClient</span><span class="p">;</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>on zookeeper version , there is no matching user!!
+zookeeper /meta/app/appId^appNm (no mongodb version , there is no binding user info)</p></div></div><div class="code"><div class="wrapper"><span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">appNm</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">appNm</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">appId</span> <span class="o">=</span> <span class="nx">shortId</span><span class="p">.</span><span class="nx">generate</span><span class="p">();</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">zkCli</span><span class="p">.</span><span class="nx">getChildren</span><span class="p">(</span>
+    <span class="nx">constants</span><span class="p">.</span><span class="nx">BASE_ZNODE_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">META_PATH</span><span class="p">,</span>
+    <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">nodes</span><span class="p">,</span> <span class="nx">stats</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">stack</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="kd">var</span> <span class="nx">appInfo</span> <span class="o">=</span> <span class="nx">appId</span><span class="o">+</span><span class="s1">&#39;^&#39;</span><span class="o">+</span><span class="nx">appNm</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="nx">nodePath</span> <span class="o">=</span> <span class="nx">constants</span><span class="p">.</span><span class="nx">META_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">APP_PATH</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="nx">appInfo</span>
+      <span class="nx">self</span><span class="p">.</span><span class="nx">nodeManager</span><span class="p">.</span><span class="nx">_createZnode</span><span class="p">(</span><span class="nx">nodePath</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">appId</span> <span class="o">:</span> <span class="nx">appId</span><span class="p">,</span><span class="nx">appNm</span><span class="o">:</span> <span class="nx">appNm</span><span class="p">}));</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+    <span class="p">}</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">remove</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span> <span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">appId</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">appId</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">appNode</span> <span class="o">=</span> <span class="nx">constants</span><span class="p">.</span><span class="nx">BASE_ZNODE_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">META_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">APP_PATH</span><span class="p">;</span>
+  <span class="nx">self</span><span class="p">.</span><span class="nx">zkCli</span><span class="p">.</span><span class="nx">getChildren</span><span class="p">(</span>
+    <span class="nx">appNode</span><span class="p">,</span>
+    <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">nodes</span><span class="p">,</span> <span class="nx">stats</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">stack</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">length</span> <span class="p">;</span> <span class="nx">i</span> <span class="o">++</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="nx">nodes</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">appId</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
+          <span class="nx">self</span><span class="p">.</span><span class="nx">zkCli</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">appNode</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="nx">item</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+              <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;remove node Error : &quot;</span><span class="o">+</span> <span class="nx">err</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;success&#39;</span><span class="p">);</span>
+          <span class="p">});</span>
+          <span class="k">break</span><span class="p">;</span> 
+        <span class="p">};</span>
+      <span class="p">};</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">nodes</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+<span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">list</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">appNode</span> <span class="o">=</span> <span class="nx">constants</span><span class="p">.</span><span class="nx">BASE_ZNODE_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">META_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">APP_PATH</span><span class="p">;</span>
+  <span class="nx">self</span><span class="p">.</span><span class="nx">zkCli</span><span class="p">.</span><span class="nx">getChildren</span><span class="p">(</span> 
+    <span class="nx">appNode</span><span class="p">,</span>
+    <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">nodes</span><span class="p">,</span> <span class="nx">stats</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">stack</span><span class="p">);</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="kd">var</span> <span class="nx">apps</span> <span class="o">=</span> <span class="p">[];</span>
+      <span class="nx">nodes</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">appId</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;^&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="kd">var</span> <span class="nx">appNm</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;^&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>
+        <span class="nx">apps</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">appId</span><span class="o">:</span> <span class="nx">appId</span><span class="p">,</span> <span class="nx">appNm</span><span class="o">:</span> <span class="nx">appNm</span><span class="p">});</span>
+      <span class="p">})</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">apps</span><span class="p">));</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">retrieve</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">appId</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">appId</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">appNode</span> <span class="o">=</span> <span class="nx">constants</span><span class="p">.</span><span class="nx">BASE_ZNODE_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">META_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">APP_PATH</span><span class="p">;</span>
+  <span class="nx">self</span><span class="p">.</span><span class="nx">zkCli</span><span class="p">.</span><span class="nx">getChildren</span><span class="p">(</span> 
+    <span class="nx">appNode</span><span class="p">,</span>
+    <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">nodes</span><span class="p">,</span> <span class="nx">stats</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">stack</span><span class="p">);</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">++</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">nodes</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">app</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">appId</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">appId</span><span class="o">:</span> <span class="nx">app</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;^&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">appNm</span><span class="o">:</span> <span class="nx">app</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;^&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]}));</span> <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;There is no AppId : &#39;</span><span class="o">+</span><span class="nx">appId</span><span class="p">);</span>
+    <span class="p">});</span>
+
+<span class="p">}</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">appAPI</span> <span class="o">=</span> <span class="nx">appAPI</span><span class="p">;</span></div></div></div></div></body></html>

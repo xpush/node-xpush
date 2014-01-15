@@ -1,0 +1,9 @@
+{
+  "glob": [
+    "lib/routes/**/*.js"
+  ],
+  "except": [
+  ],
+  "github": true,
+  "out": "./docs/groc"
+}

@@ -26,7 +26,8 @@
     "shortid": "~2.0.0",
     "async": "~0.2.9",
     "iodocs": "~0.0.1",
-    "supervisor": "~0.5.6"
+    "supervisor": "~0.5.6",
+    "groc": "~0.6.1"
   },
   "devDependencies": {
     "should": "~2.1.1"
