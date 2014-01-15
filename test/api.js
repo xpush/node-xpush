@@ -33,7 +33,7 @@ async.waterfall([
   // app 생성 (slideair 어플리케이션 생성)
   function(cb){
 
-    var URL = '[URL] /app/create/slideair'; console.log('** '+URL);
+    var URL = '/app/create/slideair'; console.log('** '+URL);
 	  client_gateway.post( URL,
 	    function(err, req, res, data) {
 	    	if( err ){
@@ -51,7 +51,7 @@ async.waterfall([
   // app 단건조회(flashmob 어플리케이션 조회)
   function(cb){
 
-    var URL = '[URL] /app/get/' + TEST_DATA.appId1; console.log('** '+URL);
+    var URL = '/app/get/' + TEST_DATA.appId1; console.log('** '+URL);
 	  client_gateway.get( URL,
 	    function(err, req, res, data) {
 	    	if( err ){
@@ -68,7 +68,7 @@ async.waterfall([
   // 모든 app 조회  
   function(cb){
 
-    var URL = '[URL] /app/list'; console.log('** '+URL);
+    var URL = '/app/list'; console.log('** '+URL);
 	  client_gateway.get( URL,
 	    function(err, req, res, data) {
 	    	if( err ){
@@ -85,7 +85,7 @@ async.waterfall([
   // flashbom 어플 삭제
   function(cb){
 
-    var URL = '[URL] /app/remove/'+TEST_DATA.appId1; console.log('** '+URL);
+    var URL = '/app/remove/'+TEST_DATA.appId1; console.log('** '+URL);
 	  client_gateway.post( URL,
 	    function(err, req, res, data) {
 	    	if( err ){
@@ -102,7 +102,7 @@ async.waterfall([
   // slideair 어플 삭제
   function(cb){
 
-    var URL = '[URL] /app/remove/'+TEST_DATA.appId2; console.log('** '+URL);
+    var URL = '/app/remove/'+TEST_DATA.appId2; console.log('** '+URL);
 	  client_gateway.post( URL,
 	    function(err, req, res, data) {
 	    	if( err ){
