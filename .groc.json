@@ -4,6 +4,6 @@
   ],
   "except": [
   ],
-  "github": true,
+  "github": false,
   "out": "./docs/groc"
 }

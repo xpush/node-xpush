@@ -1,11 +1,14 @@
-<!DOCTYPE html><html lang="en"><head><title>app</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="app"><meta name="groc-project-path" content="lib/routes/app.js"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/routes/app.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">constants</span>   <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;../node-manager/constants&#39;</span><span class="p">),</span>
+<!DOCTYPE html><html lang="en"><head><title>app</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="app"><meta name="groc-project-path" content="lib/routes/app.js"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/routes/app.js</div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><h1 id="application-api">Application API</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">constants</span>   <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;../node-manager/constants&#39;</span><span class="p">),</span>
     <span class="nx">shortId</span>     <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;shortid&#39;</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">appAPI</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">nodeManager</span><span class="p">){</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">nodeManager</span> <span class="o">=</span> <span class="nx">nodeManager</span><span class="p">;</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">zkCli</span>  <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">nodeManager</span><span class="p">.</span><span class="nx">zkClient</span><span class="p">;</span>
-<span class="p">}</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>on zookeeper version , there is no matching user!!
-zookeeper /meta/app/appId^appNm (no mongodb version , there is no binding user info)</p></div></div><div class="code"><div class="wrapper"><span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="appcreateappnm">/app/create/:appNm</h3>
+
+<ul>
+<li><em><code>URI</code> appNm</em> : application name</li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
   <span class="kd">var</span> <span class="nx">appNm</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">appNm</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">appId</span> <span class="o">=</span> <span class="nx">shortId</span><span class="p">.</span><span class="nx">generate</span><span class="p">();</span>
@@ -27,9 +30,11 @@ zookeeper /meta/app/appId^appNm (no mongodb version , there is no binding user i
       <span class="p">});</span>
     <span class="p">}</span>
   <span class="p">);</span>
-<span class="p">};</span>
+<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="appremoveappid">/app/remove/:appId</h3>
 
-<span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">remove</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span> <span class="p">){</span>
+<ul>
+<li><em><code>URI</code> appId</em> : application ID </li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">remove</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span> <span class="p">){</span>
   <span class="kd">var</span> <span class="nx">appId</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">appId</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">appNode</span> <span class="o">=</span> <span class="nx">constants</span><span class="p">.</span><span class="nx">BASE_ZNODE_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">META_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">APP_PATH</span><span class="p">;</span>
@@ -56,8 +61,7 @@ zookeeper /meta/app/appId^appNm (no mongodb version , there is no binding user i
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">nodes</span><span class="p">);</span>
     <span class="p">}</span>
   <span class="p">);</span>
-<span class="p">};</span>
-<span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">list</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
+<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="applist">/app/list</h3></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">list</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
   <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">appNode</span> <span class="o">=</span> <span class="nx">constants</span><span class="p">.</span><span class="nx">BASE_ZNODE_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">META_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">APP_PATH</span><span class="p">;</span>
   <span class="nx">self</span><span class="p">.</span><span class="nx">zkCli</span><span class="p">.</span><span class="nx">getChildren</span><span class="p">(</span> 
@@ -76,9 +80,11 @@ zookeeper /meta/app/appId^appNm (no mongodb version , there is no binding user i
       <span class="p">})</span>
       <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">apps</span><span class="p">));</span>
     <span class="p">});</span>
-<span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="appappid">/app/:appId</h3>
 
-<span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">retrieve</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
+<ul>
+<li><em><code>URI</code> appId</em> : application ID</li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="nx">appAPI</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">retrieve</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
   <span class="kd">var</span> <span class="nx">appId</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">appId</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">appNode</span> <span class="o">=</span> <span class="nx">constants</span><span class="p">.</span><span class="nx">BASE_ZNODE_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">META_PATH</span><span class="o">+</span><span class="nx">constants</span><span class="p">.</span><span class="nx">APP_PATH</span><span class="p">;</span>

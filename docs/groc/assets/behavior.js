@@ -21,10 +21,89 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "projectPath": "lib/routes/app.js",
         "targetPath": "app",
         "pageTitle": "app",
-        "title": "app"
+        "firstHeader": {
+          "type": "heading",
+          "data": {
+            "level": 1,
+            "title": "Application API",
+            "slug": "application-api",
+            "isFileHeader": true
+          },
+          "depth": 1,
+          "children": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "/app/create/:appNm",
+                "slug": "appcreateappnm"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "/app/remove/:appId",
+                "slug": "appremoveappid"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "/app/list",
+                "slug": "applist"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "/app/:appId",
+                "slug": "appappid"
+              },
+              "depth": 3
+            }
+          ]
+        },
+        "title": "Application API"
       },
       "depth": 1,
-      "outline": []
+      "outline": [
+        {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "/app/create/:appNm",
+            "slug": "appcreateappnm"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "/app/remove/:appId",
+            "slug": "appremoveappid"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "/app/list",
+            "slug": "applist"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "/app/:appId",
+            "slug": "appappid"
+          },
+          "depth": 3
+        }
+      ]
     }, {
       "type": "file",
       "data": {
@@ -91,7 +170,17 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "projectPath": "lib/routes/user.js",
         "targetPath": "user",
         "pageTitle": "user",
-        "title": "user"
+        "firstHeader": {
+          "type": "heading",
+          "data": {
+            "level": 1,
+            "title": "User API",
+            "slug": "user-api",
+            "isFileHeader": true
+          },
+          "depth": 1
+        },
+        "title": "User API"
       },
       "depth": 1,
       "outline": []

@@ -49,7 +49,8 @@
     "test": "node test",
     "dev-gateway": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 8000 --config ./config.sample.json --gateway",
     "dev-api": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 9000 --config ./config.sample.json",
-    "api-ref": "cp ./doc/iodocs-config.json ./node_modules/iodocs/config.json && cp ./doc/apiconfig.json ./node_modules/iodocs/public/data/apiconfig.json && cp ./doc/xpush.json ./node_modules/iodocs/public/data/xpush.json && node ./node_modules/iodocs/app.js"
+    "api-ref": "cp ./doc/iodocs-config.json ./node_modules/iodocs/config.json && cp ./doc/apiconfig.json ./node_modules/iodocs/public/data/apiconfig.json && cp ./doc/xpush.json ./node_modules/iodocs/public/data/xpush.json && node ./node_modules/iodocs/app.js",
+    "groc": "node_modules/.bin/groc"
   },
   "engines": {
     "node": ">= 0.8.0"
