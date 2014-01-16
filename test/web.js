@@ -11,16 +11,49 @@ var socketOptions ={
   transports: ['websocket'],
   'force new connection': true
 };
-var socket;
 
 describe('Web Client', function() {
-  this.timeout(5000);
+  this.timeout(3000);
 
-  var apiServer = {};
+  var appId = '';
 
-  describe('#login()', function() {
+  var apiServers = {};
+  var clients = {};
 
-    it('should retrieve the address of the API server.', function(done) {
+  before( function(done) {
+
+    gatewayServer.post(
+      '/app/create/xpush-messenger-sample',
+      function(err, req, res, data) {
+        if( err ){
+          console.log( err );
+        } else {
+          appId = data.appId;
+          done();
+        }
+      }
+    );
+/*
+    gatewayServer.get(
+      '/app/list',
+      function(err, req, res, data) {
+        if( err ){
+          console.log( err );
+        } else {
+          for (var app in data.result) {
+            appId = app.appId;
+            console.log( app.appNm +' is selected. ');
+            done();
+          }
+        }
+      }
+    );
+*/
+  });
+
+  describe('#login() - JohnKim', function() {
+
+    it('get Api Server URL', function(done) {
 
       gatewayServer.get('/node/session/JohnKim', 
         function(err, req, res, data) {
@@ -29,23 +62,38 @@ describe('Web Client', function() {
           } else {
 
             console.log(data);
-            apiServer = data.result; 
+            apiServer.url1 = data.result; 
+
+            clients.socket1 = io.connect(apiServer.server, socketOptions);
 
           }
           done();
         });
     });
 
-    it('should login and connect socket connection for notification.', function(done) {
+    it('login with JohnKim', function(done) {
 
-      socket = io.connect(apiServer.server, socketOptions);
-      socket.on('connect',function(data){
-        console.log(data);
-        //socket.emit('connection name',chatUser1);
+      clients.socket1.on('connect', function(data){
+
+        var param = {
+          app: appId,
+          userId: 'JohnKim',
+          server: apiServer.name };
+
+        clients.socket1.emit('login', param, function (data) {
+          console.log(data);
+          done();
+        });
+
       });
-
       
     });
+
+    it('get the list of JohnKim\'s channels', function (done) {
+      
+
+    });
+
   });
 
   describe('#createChannel()', function() {
