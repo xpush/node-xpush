@@ -75,8 +75,7 @@ var API = {
     var params = {
       app: Application.appId,
       userId: _userId,
-      deviceType: 'WEB',
-      deviceId: 'V1'
+      deviceType: 'WEB'
     };
 
     gatewayServer.post('/user/register', params, 
@@ -131,6 +130,21 @@ var Library = {
       callback(data);
     });
     
+  },
+
+  createChannel: function(_userId, _channel, _userIds, callback) {
+
+    var param = {
+      app: Application.appId,
+      channel: _channel,
+      users: _userIds };
+
+    Users[_userId].sessionSocket.emit('createChannel', param, function (data) {
+        console.info('\t create channel : '+JSON.stringify(data));
+      callback(data);
+    });
+
+
   }
 };
 
@@ -213,6 +227,22 @@ describe('xpush samples', function() {
 
     it('Ally', function(done) {
       Library.channels('Ally', function(result){
+        done();
+      });
+    });
+
+  });
+
+  describe('#createChannel()', function() {
+
+    it('John (with Ally and Lynn) ', function(done) {
+      Library.createChannel('John', null, ['John', 'Ally', 'Lynn'], function(result){
+        done();
+      });
+    });
+
+    it('Ally (with Daniel and Lynn) ', function(done) {
+      Library.createChannel('Ally', null, ['Ally', 'Daniel', 'Lynn'], function(result){
         done();
       });
     });
