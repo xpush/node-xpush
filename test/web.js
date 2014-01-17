@@ -144,8 +144,34 @@ var Library = {
       callback(data);
     });
 
+  },
 
+  joinChannel: function(_userId, _channel, callback) {
+
+    API.node(Application.appId, _channel, function (data, _userId) {
+
+      Users[_userId].messageSocket = io.connect(data.result.server, socketOptions);
+      Users[_userId].messageSocket.on('connect', function() {
+        
+        var param = {
+          app: Application.appId,
+          channel: _channel,
+          userId: _userId };
+
+        Users[_userId].messageSocket.emit('joinChannel', param, function (data) {
+          console.info('\t joined : '+JSON.stringify(data));
+          callback(data);
+        });
+
+      });
+
+      Users[_userId].messageSocket.on('message', function (data) {
+        console.info('\t Message : '+JSON.stringify(data));
+      });
+
+    });
   }
+
 };
 
 // ## Sample Application TEST !!! 
@@ -247,6 +273,29 @@ describe('xpush samples', function() {
       });
     });
 
+  });
+
+
+  describe('#joinChannel()', function() {
+
+    it('Ally', function(done) {
+      Library.channels('Ally', function(result){
+        done();
+      });
+    });
+/*
+    it('John (with Ally and Lynn) ', function(done) {
+      Library.joinChannel('John', null, ['John', 'Ally', 'Lynn'], function(result){
+        done();
+      });
+    });
+
+    it('Ally (with Daniel and Lynn) ', function(done) {
+      Library.createChannel('Ally', null, ['Ally', 'Daniel', 'Lynn'], function(result){
+        done();
+      });
+    });
+*/
   });
 
 });
