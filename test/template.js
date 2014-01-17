@@ -1,4 +1,4 @@
-var io = require('socket.io-client');
+var io     = require('socket.io-client');
     assert = require('assert');
 
 
