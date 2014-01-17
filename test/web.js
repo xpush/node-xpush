@@ -75,7 +75,8 @@ var API = {
     var params = {
       app: Application.appId,
       userId: _userId,
-      deviceType: 'WEB'
+      deviceType: 'WEB',
+      deviceId: 'V1'
     };
 
     gatewayServer.post('/user/register', params, 
@@ -84,8 +85,6 @@ var API = {
           console.log( err );
         } else {
 
-        console.log(req);
-          console.log(data);
           callback(data, _userId);
         }
       });
