@@ -1,6 +1,6 @@
 {
   "glob": [
-    "test/web.js"
+    "test/usage.js"
   ],
   "except": [
   ],

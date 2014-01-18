@@ -25,10 +25,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "JavaScript"
             },
-            "sourcePath": "/Users/johnkim/dev/project/node-xpush/test/web.js",
-            "projectPath": "test/web.js",
-            "targetPath": "test/web",
-            "pageTitle": "test/web",
+            "sourcePath": "/Users/johnkim/dev/project/node-xpush/test/usage.js",
+            "projectPath": "test/usage.js",
+            "targetPath": "test/usage",
+            "pageTitle": "test/usage",
             "firstHeader": {
               "type": "heading",
               "data": {
