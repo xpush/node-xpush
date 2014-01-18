@@ -1,5 +1,6 @@
 // # XPUSH - API USAGE
 // 메신져 개발에 필요한 시나리오를 따라서 restful API 호출과 Socket 이벤트에 대해 기술하였다.
+//
 // Sample 이므로, 다양한 xpush library 개발 시 참조할 수 있다.
 
 var assert  = require("assert"),
@@ -21,12 +22,14 @@ var socketOptions ={
 };
 
 // 테스트 application 정보
+//
 // 테스트 app 이름은 'xpush-messenger' 이다.
 var Application = {
   appNm: 'xpush-messenger' 
 };
 
 // 테스트 사용자 정보들 (4명)
+//
 // 편의를 위하여 userId 를 간단하게 표기하였다.
 var Users = {
   John: {
@@ -171,6 +174,7 @@ var Library = {
 
   // #### Channel 목록 가져오기.
   // User ID 가 포함되어 있는 모든 Channel 목록을 가져오기.
+  //
   // ( **user-login** 이벤트 호출 이후에 사용 가능 )
   channels: function(_userId, callback) {
     
@@ -418,6 +422,7 @@ describe('xpush samples', function() {
     
     it('Ally on channel-1 ', function(done) {
       // Ally 는 현재 체널에서 나온다.
+      //
       // ( 메시지 전용 socket 연결을 끊는다. )
       Library.leaveChannel('Ally');
       // Ally 는 두번째 channel 에 참여한다.
