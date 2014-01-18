@@ -6,184 +6,133 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
 
   tableOfContents = [
     {
-      "type": "file",
+      "type": "folder",
       "data": {
-        "language": {
-          "nameMatchers": [".js"],
-          "pygmentsLexer": "javascript",
-          "multiLineComment": ["/*", "*", "*/"],
-          "singleLineComment": ["//"],
-          "ignorePrefix": "}",
-          "foldPrefix": "^",
-          "name": "JavaScript"
-        },
-        "sourcePath": "/Users/john/dev/project/node-xpush/lib/routes/app.js",
-        "projectPath": "lib/routes/app.js",
-        "targetPath": "app",
-        "pageTitle": "app",
-        "firstHeader": {
-          "type": "heading",
+        "path": "test",
+        "title": "test"
+      },
+      "depth": 1,
+      "children": [
+        {
+          "type": "file",
           "data": {
-            "level": 1,
-            "title": "Application API",
-            "slug": "application-api",
-            "isFileHeader": true
+            "language": {
+              "nameMatchers": [".js"],
+              "pygmentsLexer": "javascript",
+              "multiLineComment": ["/*", "*", "*/"],
+              "singleLineComment": ["//"],
+              "ignorePrefix": "}",
+              "foldPrefix": "^",
+              "name": "JavaScript"
+            },
+            "sourcePath": "/Users/johnkim/dev/project/node-xpush/test/web.js",
+            "projectPath": "test/web.js",
+            "targetPath": "test/web",
+            "pageTitle": "test/web",
+            "firstHeader": {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "XPUSH - API USAGE ( and samples )",
+                "slug": "xpush-api-usage--and-samples-",
+                "isFileHeader": true
+              },
+              "depth": 1
+            },
+            "title": "XPUSH - API USAGE ( and samples )"
           },
-          "depth": 1,
-          "children": [
+          "depth": 2,
+          "outline": [
             {
               "type": "heading",
               "data": {
-                "level": 3,
-                "title": "/app/create/:appNm",
-                "slug": "appcreateappnm"
+                "level": 1,
+                "title": "Restful API 목록",
+                "slug": "restful-api-"
               },
-              "depth": 3
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "/app/remove/:appId",
-                "slug": "appremoveappid"
-              },
-              "depth": 3
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "/app/list",
-                "slug": "applist"
-              },
-              "depth": 3
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "/app/:appId",
-                "slug": "appappid"
-              },
-              "depth": 3
+              "depth": 1,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "application 생성.",
+                    "slug": "application-"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Session Socket Server 주소 가져오기.",
+                    "slug": "session-socket-server--"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Message Socket Server 주소 가져오기.",
+                    "slug": "message-socket-server--"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Message Socket Server 주소 가져오기.",
+                    "slug": "message-socket-server--"
+                  },
+                  "depth": 2,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Parameters",
+                        "slug": "parameters"
+                      },
+                      "depth": 4
+                    }
+                  ]
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Channel 목록 가져오기.",
+                    "slug": "channel--"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Channel 생성하기.",
+                    "slug": "channel-"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Channel 참여하기.",
+                    "slug": "channel-"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Sample Application TEST !!!",
+                    "slug": "sample-application-test-"
+                  },
+                  "depth": 2
+                }
+              ]
             }
           ]
-        },
-        "title": "Application API"
-      },
-      "depth": 1,
-      "outline": [
-        {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "/app/create/:appNm",
-            "slug": "appcreateappnm"
-          },
-          "depth": 3
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "/app/remove/:appId",
-            "slug": "appremoveappid"
-          },
-          "depth": 3
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "/app/list",
-            "slug": "applist"
-          },
-          "depth": 3
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "/app/:appId",
-            "slug": "appappid"
-          },
-          "depth": 3
         }
       ]
-    }, {
-      "type": "file",
-      "data": {
-        "language": {
-          "nameMatchers": [".js"],
-          "pygmentsLexer": "javascript",
-          "multiLineComment": ["/*", "*", "*/"],
-          "singleLineComment": ["//"],
-          "ignorePrefix": "}",
-          "foldPrefix": "^",
-          "name": "JavaScript"
-        },
-        "sourcePath": "/Users/john/dev/project/node-xpush/lib/routes/channel.js",
-        "projectPath": "lib/routes/channel.js",
-        "targetPath": "channel",
-        "pageTitle": "channel",
-        "firstHeader": {
-          "type": "heading",
-          "data": {
-            "level": 1,
-            "title": "Channel API",
-            "slug": "channel-api",
-            "isFileHeader": true
-          },
-          "depth": 1
-        },
-        "title": "Channel API"
-      },
-      "depth": 1,
-      "outline": []
-    }, {
-      "type": "file",
-      "data": {
-        "language": {
-          "nameMatchers": [".js"],
-          "pygmentsLexer": "javascript",
-          "multiLineComment": ["/*", "*", "*/"],
-          "singleLineComment": ["//"],
-          "ignorePrefix": "}",
-          "foldPrefix": "^",
-          "name": "JavaScript"
-        },
-        "sourcePath": "/Users/john/dev/project/node-xpush/lib/routes/routes.js",
-        "projectPath": "lib/routes/routes.js",
-        "targetPath": "routes",
-        "pageTitle": "routes",
-        "title": "routes"
-      },
-      "depth": 1,
-      "outline": []
-    }, {
-      "type": "file",
-      "data": {
-        "language": {
-          "nameMatchers": [".js"],
-          "pygmentsLexer": "javascript",
-          "multiLineComment": ["/*", "*", "*/"],
-          "singleLineComment": ["//"],
-          "ignorePrefix": "}",
-          "foldPrefix": "^",
-          "name": "JavaScript"
-        },
-        "sourcePath": "/Users/john/dev/project/node-xpush/lib/routes/user.js",
-        "projectPath": "lib/routes/user.js",
-        "targetPath": "user",
-        "pageTitle": "user",
-        "firstHeader": {
-          "type": "heading",
-          "data": {
-            "level": 1,
-            "title": "User API",
-            "slug": "user-api",
-            "isFileHeader": true
-          },
-          "depth": 1
-        },
-        "title": "User API"
-      },
-      "depth": 1,
-      "outline": []
     }
   ];
 

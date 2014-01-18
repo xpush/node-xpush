@@ -1,6 +1,6 @@
 {
   "glob": [
-    "lib/routes/**/*.js"
+    "test/web.js"
   ],
   "except": [
   ],

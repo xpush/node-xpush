@@ -34,8 +34,8 @@ var Users = {
   Lynn: {
     userId : 'Lynn'
   },
-  Danial: {
-    userId : 'Danial'
+  Daniel: {
+    userId : 'Daniel'
   }
 
 };
@@ -78,11 +78,14 @@ var API = {
   //
   // ### <code>GET</code> /node/ [App명] / [Channel명]
   node: function (_app, _channel, callback) {
+    
     gatewayServer.get('/node/'+_app+'/'+_channel, 
       function(err, req, res, data) {
+        
         if( err ){
           console.log( err );
         } else {
+          
           callback(data);
         }
       });
@@ -145,9 +148,7 @@ var Library = {
         
         Users[_userId].sessionSocket.emit('user-login', param, function (data) {
           
-          Users[_userId].sessionId = data.sessionId;
-          
-          console.log('------- Users[_userId].sessionId : '+Users[_userId].sessionId);
+          Users[_userId].sessionId = data.result.sessionId;
           
           console.info('\t logined : '+JSON.stringify(data));
           callback(data);
@@ -198,7 +199,7 @@ var Library = {
 
   // ## Channel 참여하기.
   joinChannel: function(_userId, _channel, callback) {
-
+    
     // Message Socket Server 주소 가져오기. ( /node/ [App ID] / [Channel ID] )
     API.node(Application.appId, _channel, function (data) {
       
@@ -221,10 +222,31 @@ var Library = {
       });
 
       Users[_userId].messageSocket.on('message', function (data) {
-        console.info('\t Message : '+JSON.stringify(data));
+        console.info('\t event was fired!! - Message : '+JSON.stringify(data));
       });
 
     });
+  },
+  
+  // ## Channel 에서 나가기
+  leaveChannel: function(_userId) {
+    Users[_userId].messageSocket.disconnect();
+  },
+  
+  // ## Channel 에 메시지 전송
+  sendMessage: function(_userId, _channel, _name, _datas, callback) {
+        
+    // **channel-join** 이벤트 호출
+    var param = {
+      app:      Application.appId,  // app : Application ID
+      channel:  _channel,           // channel : Channel ID
+      name:     _name,              // name : 이벤트 발생 ID
+      data:     _datas };           // data : 전송할 데이터
+
+    Users[_userId].messageSocket.emit('data-send', param, function (data) {
+      callback(data);
+    });
+
   }
 
 };
@@ -289,8 +311,8 @@ describe('xpush samples', function() {
       });
     });
 
-    it('Danial', function(done) {
-      Library.login('Danial', function(result){
+    it('Daniel', function(done) {
+      Library.login('Daniel', function(result){
         done();
       });
     });
@@ -335,32 +357,86 @@ describe('xpush samples', function() {
 
     var _channelList = [];
     
-    it('Ally', function(done) {
+    it('get the list of Ally\'s channels', function(done) {
       Library.channels('Ally', function(data){
         _channelList = data.result;
+        
+        console.log(_channelList[0]);
+        console.log(_channelList[1]);
         done();
       });
     });
 
     it('John on channel-0 ', function(done) {
-      
-      console.log(_channelList[0]);
-      
       Library.joinChannel('John', _channelList[0].channel, function(result){
         done();
       });
-      
     });
     
     it('Ally on channel-0 ', function(done) {
-      
-      console.log(_channelList[0]);
       Library.joinChannel('Ally', _channelList[0].channel, function(result){
         done();
       });
-      
+    });
+    
+    it('Lynn on channel-0 ', function(done) {
+      Library.joinChannel('Lynn', _channelList[0].channel, function(result){
+        done();
+      });
+    });
+    
+    it('Ally on channel-1 ', function(done) {
+      Library.leaveChannel('Ally');
+      Library.joinChannel('Ally', _channelList[1].channel, function(result){
+        done();
+      });
+    });
+    
+    it('Lynn on channel-1 ', function(done) {
+      Library.leaveChannel('Lynn');
+      Library.joinChannel('Lynn', _channelList[1].channel, function(result){
+        done();
+      });
     });
 
+    it('get the list of Ally\'s channels again', function(done) {
+      
+      var _temp_channelId = _channelList[0].channel;  
+      Library.channels('Ally', function(data){
+        _channelList = data.result;
+        console.log(_channelList[0]);
+        console.log(_channelList[1]);
+        done();
+      });
+    });
+    
+  });
+  
+  
+  describe('#sendMessage()', function() {
+
+    var _channelList = [];
+    
+    it('get the list of Ally\'s channels', function(done) {
+      Library.channels('Ally', function(data){
+        _channelList = data.result;
+        done();
+      });
+    });
+    
+    it('Ally send a string message on channel-1 ', function(done) {
+      var message = 'This is xpush sample testcase. This is String messages.';
+      Library.sendMessage('Ally', _channelList[1].channel, 'message', message, function(result){
+        done();
+      });
+    });
+    
+    it('Ally send a JSON message on channel-1 ', function(done) {
+      var message = {title: 'Hello xpush sample', body: 'This is json sample !!! '};
+      Library.sendMessage('Ally', _channelList[1].channel, 'message', message, function(result){
+        done();
+      });
+    });
     
   });
 
