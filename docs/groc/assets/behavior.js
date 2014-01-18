@@ -33,100 +33,259 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "type": "heading",
               "data": {
                 "level": 1,
-                "title": "XPUSH - API USAGE ( and samples )",
-                "slug": "xpush-api-usage--and-samples-",
+                "title": "XPUSH - API USAGE",
+                "slug": "xpush-api-usage",
                 "isFileHeader": true
-              },
-              "depth": 1
-            },
-            "title": "XPUSH - API USAGE ( and samples )"
-          },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Restful API 목록",
-                "slug": "restful-api-"
               },
               "depth": 1,
               "children": [
                 {
                   "type": "heading",
                   "data": {
-                    "level": 2,
-                    "title": "application 생성.",
-                    "slug": "application-"
+                    "level": 3,
+                    "title": "Restful API 목록",
+                    "slug": "restful-api-"
                   },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Session Socket Server 주소 가져오기.",
-                    "slug": "session-socket-server--"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Message Socket Server 주소 가져오기.",
-                    "slug": "message-socket-server--"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Message Socket Server 주소 가져오기.",
-                    "slug": "message-socket-server--"
-                  },
-                  "depth": 2,
+                  "depth": 3,
                   "children": [
                     {
                       "type": "heading",
                       "data": {
                         "level": 4,
+                        "title": "application 생성.",
+                        "slug": "application-"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Session Socket Server 주소 가져오기.",
+                        "slug": "session-socket-server--"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Message Socket Server 주소 가져오기.",
+                        "slug": "message-socket-server--"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Message Socket Server 주소 가져오기.",
+                        "slug": "message-socket-server--"
+                      },
+                      "depth": 4,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 5,
+                            "title": "Parameters",
+                            "slug": "parameters"
+                          },
+                          "depth": 5
+                        }
+                      ]
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Channel 목록 가져오기.",
+                        "slug": "channel--"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Channel 생성하기.",
+                        "slug": "channel-"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Channel 참여하기.",
+                        "slug": "channel-"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Channel 에서 나가기",
+                        "slug": "channel--"
+                      },
+                      "depth": 4
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 4,
+                        "title": "Channel 에 메시지 전송",
+                        "slug": "channel---"
+                      },
+                      "depth": 4,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 5,
+                            "title": "Channel 목록을 가져오기.",
+                            "slug": "channel--"
+                          },
+                          "depth": 5
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 5,
+                            "title": "Channel 생성하기.",
+                            "slug": "channel-"
+                          },
+                          "depth": 5
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 5,
+                            "title": "Channel에 참여하기.",
+                            "slug": "channel-"
+                          },
+                          "depth": 5
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "title": "XPUSH - API USAGE"
+          },
+          "depth": 2,
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "Restful API 목록",
+                "slug": "restful-api-"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 4,
+                    "title": "application 생성.",
+                    "slug": "application-"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 4,
+                    "title": "Session Socket Server 주소 가져오기.",
+                    "slug": "session-socket-server--"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 4,
+                    "title": "Message Socket Server 주소 가져오기.",
+                    "slug": "message-socket-server--"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 4,
+                    "title": "Message Socket Server 주소 가져오기.",
+                    "slug": "message-socket-server--"
+                  },
+                  "depth": 4,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 5,
                         "title": "Parameters",
                         "slug": "parameters"
                       },
-                      "depth": 4
+                      "depth": 5
                     }
                   ]
                 }, {
                   "type": "heading",
                   "data": {
-                    "level": 2,
+                    "level": 4,
                     "title": "Channel 목록 가져오기.",
                     "slug": "channel--"
                   },
-                  "depth": 2
+                  "depth": 4
                 }, {
                   "type": "heading",
                   "data": {
-                    "level": 2,
+                    "level": 4,
                     "title": "Channel 생성하기.",
                     "slug": "channel-"
                   },
-                  "depth": 2
+                  "depth": 4
                 }, {
                   "type": "heading",
                   "data": {
-                    "level": 2,
+                    "level": 4,
                     "title": "Channel 참여하기.",
                     "slug": "channel-"
                   },
-                  "depth": 2
+                  "depth": 4
                 }, {
                   "type": "heading",
                   "data": {
-                    "level": 2,
-                    "title": "Sample Application TEST !!!",
-                    "slug": "sample-application-test-"
+                    "level": 4,
+                    "title": "Channel 에서 나가기",
+                    "slug": "channel--"
                   },
-                  "depth": 2
+                  "depth": 4
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 4,
+                    "title": "Channel 에 메시지 전송",
+                    "slug": "channel---"
+                  },
+                  "depth": 4,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 5,
+                        "title": "Channel 목록을 가져오기.",
+                        "slug": "channel--"
+                      },
+                      "depth": 5
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 5,
+                        "title": "Channel 생성하기.",
+                        "slug": "channel-"
+                      },
+                      "depth": 5
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 5,
+                        "title": "Channel에 참여하기.",
+                        "slug": "channel-"
+                      },
+                      "depth": 5
+                    }
+                  ]
                 }
               ]
             }

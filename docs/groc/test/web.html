@@ -1,8 +1,11 @@
-<html lang="en"><head><title>test/web</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/><meta name="groc-relative-root" content="../"/><meta name="groc-document-path" content="test/web"/><meta name="groc-project-path" content="test/web.js"/><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"/><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">test/web.js</div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><h1 id="xpush-api-usage--and-samples-">XPUSH - API USAGE ( and samples )</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">assert</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;assert&quot;</span><span class="p">),</span>
+<html lang="en"><head><title>test/web</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/><meta name="groc-relative-root" content="../"/><meta name="groc-document-path" content="test/web"/><meta name="groc-project-path" content="test/web.js"/><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"/><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">test/web.js</div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><h1 id="xpush-api-usage">XPUSH - API USAGE</h1>
+
+<p>메신져 개발에 필요한 시나리오를 따라서 restful API 호출과 Socket 이벤트에 대해 기술하였다.
+Sample 이므로, 다양한 xpush library 개발 시 참조할 수 있다.</p></div></div><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">assert</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;assert&quot;</span><span class="p">),</span>
     <span class="nx">io</span>      <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;socket.io-client&#39;</span><span class="p">),</span>
     <span class="nx">restify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;restify&#39;</span><span class="p">),</span>
     <span class="nx">async</span>   <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;async&#39;</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Gateway Server 
-hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합니다</p></div></div><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">gatewayServer</span> <span class="o">=</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">createJsonClient</span><span class="p">({</span>
+테스트 하기 전에 hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합니다</p></div></div><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">gatewayServer</span> <span class="o">=</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">createJsonClient</span><span class="p">({</span>
   <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://gateway.server:8000&#39;</span><span class="p">,</span>
   <span class="nx">version</span><span class="o">:</span> <span class="s1">&#39;*&#39;</span>                
 <span class="p">});</span>
@@ -10,9 +13,11 @@ hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합�
 <span class="kd">var</span> <span class="nx">socketOptions</span> <span class="o">=</span><span class="p">{</span>
   <span class="nx">transports</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;websocket&#39;</span><span class="p">],</span>
   <span class="s1">&#39;force new connection&#39;</span><span class="o">:</span> <span class="kc">true</span>
-<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>테스트 application 정보</p></div></div><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">Application</span> <span class="o">=</span> <span class="p">{</span>
+<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>테스트 application 정보
+테스트 app 이름은 'xpush-messenger' 이다.</p></div></div><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">Application</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">appNm</span><span class="o">:</span> <span class="s1">&#39;xpush-messenger&#39;</span> 
-<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>테스트 사용자 정보</p></div></div><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">Users</span> <span class="o">=</span> <span class="p">{</span>
+<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>테스트 사용자 정보들 (4명)
+편의를 위하여 userId 를 간단하게 표기하였다.</p></div></div><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">Users</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">John</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">userId</span> <span class="o">:</span> <span class="s1">&#39;John&#39;</span>
   <span class="p">},</span>
@@ -22,13 +27,15 @@ hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합�
   <span class="nx">Lynn</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">userId</span> <span class="o">:</span> <span class="s1">&#39;Lynn&#39;</span>
   <span class="p">},</span>
-  <span class="nx">Danial</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">userId</span> <span class="o">:</span> <span class="s1">&#39;Danial&#39;</span>
+  <span class="nx">Daniel</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">userId</span> <span class="o">:</span> <span class="s1">&#39;Daniel&#39;</span>
   <span class="p">}</span>
 
-<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h1 id="restful-api-">Restful API 목록</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">API</span> <span class="o">=</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="application-">application 생성.</h2>
+<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="restful-api-">Restful API 목록</h3></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">API</span> <span class="o">=</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="application-">application 생성.</h4>
 
-<h3 id="codepostcodeappcreateapp"><code>POST</code> /app/create/ [App명]</h3></div></div><div class="code"><div class="wrapper">  <span class="nx">app_create</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_appNm</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+<p>App 명을 URL 에 포함하여 아플리케이션을 생성한다. </p>
+
+<h5 id="codepostcodeappcreateapp"><code>POST</code> /app/create/ [App명]</h5></div></div><div class="code"><div class="wrapper">  <span class="nx">app_create</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_appNm</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">gatewayServer</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span> <span class="s1">&#39;/app/create/&#39;</span><span class="o">+</span><span class="nx">_appNm</span><span class="p">,</span>
       <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span><span class="p">(</span> <span class="nx">err</span> <span class="p">){</span>
@@ -38,11 +45,11 @@ hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합�
         <span class="p">}</span>
       <span class="p">});</span>
   <span class="p">},</span>
-  </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="session-socket-server--">Session Socket Server 주소 가져오기.</h2>
+  </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="session-socket-server--">Session Socket Server 주소 가져오기.</h4>
 
 <p>Gateway Server 로부터 User ID를 기준으로 Session Socket Server 주소를 가져 옵니다.</p>
 
-<h3 id="codegetcodenodeuserid"><code>GET</code> /node/ [User ID]</h3></div></div><div class="code"><div class="wrapper">  <span class="nx">node_session</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+<h5 id="codegetcodenodeuserid"><code>GET</code> /node/ [User ID]</h5></div></div><div class="code"><div class="wrapper">  <span class="nx">node_session</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">gatewayServer</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/node/session/&#39;</span><span class="o">+</span><span class="nx">_userId</span><span class="p">,</span> 
       <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span><span class="p">(</span> <span class="nx">err</span> <span class="p">){</span>
@@ -52,25 +59,28 @@ hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합�
         <span class="p">}</span>
       <span class="p">});</span>
   <span class="p">},</span>
-  </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="message-socket-server--">Message Socket Server 주소 가져오기.</h2>
+  </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="message-socket-server--">Message Socket Server 주소 가져오기.</h4>
 
 <p>Gateway Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.</p>
 
-<h3 id="codegetcodenodeappchannel"><code>GET</code> /node/ [App명] / [Channel명]</h3></div></div><div class="code"><div class="wrapper">  <span class="nx">node</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_app</span><span class="p">,</span> <span class="nx">_channel</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+<h5 id="codegetcodenodeappchannel"><code>GET</code> /node/ [App명] / [Channel명]</h5></div></div><div class="code"><div class="wrapper">  <span class="nx">node</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_app</span><span class="p">,</span> <span class="nx">_channel</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+    
     <span class="nx">gatewayServer</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/node/&#39;</span><span class="o">+</span><span class="nx">_app</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="nx">_channel</span><span class="p">,</span> 
       <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        
         <span class="k">if</span><span class="p">(</span> <span class="nx">err</span> <span class="p">){</span>
           <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">err</span> <span class="p">);</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+          
           <span class="nx">callback</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
         <span class="p">}</span>
       <span class="p">});</span>
   <span class="p">},</span>
-  </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="message-socket-server--">Message Socket Server 주소 가져오기.</h2>
+  </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="message-socket-server--">Message Socket Server 주소 가져오기.</h4>
 
 <p>Gateway Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.</p>
 
-<h3 id="codepostcodeuserregister"><code>POST</code> /user/register</h3></div></div><div class="code"><div class="wrapper">  <span class="nx">user_register</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="parameters">Parameters</h4>
+<h5 id="codepostcodeuserregister"><code>POST</code> /user/register</h5></div></div><div class="code"><div class="wrapper">  <span class="nx">user_register</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h5 id="parameters">Parameters</h5>
 
 <ul>
 <li><strong>app</strong> : application ID <code>mandatory</code></li>
@@ -96,18 +106,16 @@ hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합�
       <span class="p">});</span>
   <span class="p">}</span>
   
-<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h1 id="">기능 구현하기.</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">Library</span> <span class="o">=</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="">로그인하기.</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper">  <span class="nx">login</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Session Socket Server 주소 가져오기. ( /node/session/ [User ID] )</p></div></div><div class="code"><div class="wrapper">    <span class="nx">API</span><span class="p">.</span><span class="nx">node_session</span><span class="p">(</span><span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">userId</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">_userId</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Session Socket 연결하기</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">sessionSocket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">server</span><span class="p">,</span> <span class="nx">socketOptions</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Socket에 connect 이벤트 등록 ( connect 이벤트 발생 )</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">sessionSocket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connect&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="">기능 구현 목록</h3></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="kd">var</span> <span class="nx">Library</span> <span class="o">=</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="">로그인하기.</h4></div></div></div><div class="segment"><div class="code"><div class="wrapper">  <span class="nx">login</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Session Socket Server 주소 가져오기. ( /node/session/ [User ID] )</p></div></div><div class="code"><div class="wrapper">    <span class="nx">API</span><span class="p">.</span><span class="nx">node_session</span><span class="p">(</span><span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">userId</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">_userId</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Session Socket 연결하기</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">sessionSocket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">server</span><span class="p">,</span> <span class="nx">socketOptions</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Socket에 connect 이벤트 등록 ( connect 이벤트 발생 )</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">sessionSocket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connect&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
         </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p><strong>login</strong> 이벤트 호출 </p></div></div><div class="code"><div class="wrapper">        <span class="kd">var</span> <span class="nx">param</span> <span class="o">=</span> <span class="p">{</span>
-          <span class="nx">app</span><span class="o">:</span> <span class="nx">Application</span><span class="p">.</span><span class="nx">appId</span><span class="p">,</span>   <span class="c1">// app : Application ID            </span>
-          <span class="nx">server</span><span class="o">:</span> <span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="c1">// server : Session Socket Server 번호(아이디) </span>
-          <span class="nx">userId</span><span class="o">:</span> <span class="nx">_userId</span><span class="p">,</span>          <span class="c1">// userId : User ID</span>
-          <span class="nx">deviceType</span><span class="o">:</span> <span class="s1">&#39;web&#39;</span>         <span class="c1">// Client device type ( web / android / ios / desktop ) </span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>( deviceType 이 'web' 인 경우, notiId는 넘기지 않습니다. 서버에서 자동 부여 됩니다.</p></div></div><div class="code"><div class="wrapper">        <span class="p">};</span> 
+          <span class="nx">app</span><span class="o">:</span> <span class="nx">Application</span><span class="p">.</span><span class="nx">appId</span><span class="p">,</span>   <span class="c1">// - app : Application ID            </span>
+          <span class="nx">server</span><span class="o">:</span> <span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="c1">// - server : Session Socket Server 번호(아이디) </span>
+          <span class="nx">userId</span><span class="o">:</span> <span class="nx">_userId</span><span class="p">,</span>          <span class="c1">// - userId : User ID</span>
+          <span class="nx">deviceType</span><span class="o">:</span> <span class="s1">&#39;web&#39;</span>         <span class="c1">// - devideType : Client device type ( web / android / ios / desktop ) </span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>notiId : notification key  ( deviceType 이 'web' 인 경우, notiId는 넘기지 않습니다. 서버에서 자동 부여 됩니다.)</p></div></div><div class="code"><div class="wrapper">        <span class="p">};</span> 
         
         <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">sessionSocket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;user-login&#39;</span><span class="p">,</span> <span class="nx">param</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
           
-          <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">sessionId</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">sessionId</span><span class="p">;</span>
-          
-          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;------- Users[_userId].sessionId : &#39;</span><span class="o">+</span><span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">sessionId</span><span class="p">);</span>
+          <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">sessionId</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">sessionId</span><span class="p">;</span>
           
           <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s1">&#39;\t logined : &#39;</span><span class="o">+</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
           <span class="nx">callback</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
@@ -118,7 +126,7 @@ hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합�
       <span class="p">});</span>
 
     <span class="p">});</span>
-  <span class="p">},</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="channel--">Channel 목록 가져오기.</h2>
+  <span class="p">},</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="channel--">Channel 목록 가져오기.</h4>
 
 <p>User ID 가 포함되어 있는 모든 Channel 목록을 가져오기.
 ( <strong>user-login</strong> 이벤트 호출 이후에 사용 가능 )</p></div></div><div class="code"><div class="wrapper">  <span class="nx">channels</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
@@ -130,7 +138,7 @@ hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합�
       <span class="nx">callback</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
     <span class="p">});</span>
     
-  <span class="p">},</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="channel-">Channel 생성하기.</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper">  <span class="nx">createChannel</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">_channel</span><span class="p">,</span> <span class="nx">_userIds</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p><strong>channel-create</strong> 이벤트 호출</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">param</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="p">},</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="channel-">Channel 생성하기.</h4></div></div></div><div class="segment"><div class="code"><div class="wrapper">  <span class="nx">createChannel</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">_channel</span><span class="p">,</span> <span class="nx">_userIds</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p><strong>channel-create</strong> 이벤트 호출</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">param</span> <span class="o">=</span> <span class="p">{</span>
       <span class="nx">app</span><span class="o">:</span>      <span class="nx">Application</span><span class="p">.</span><span class="nx">appId</span><span class="p">,</span>  <span class="c1">// app : Application ID</span>
       <span class="nx">channel</span><span class="o">:</span>  <span class="nx">_channel</span><span class="p">,</span>           <span class="c1">// channel : channel ID</span>
       <span class="nx">users</span><span class="o">:</span>    <span class="nx">_userIds</span>            <span class="c1">// users : userId 배열, **생성자의 User ID도 포함**되어야 한다.</span>
@@ -141,7 +149,8 @@ hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합�
       <span class="nx">callback</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
     <span class="p">});</span>
 
-  <span class="p">},</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="channel-">Channel 참여하기.</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper">  <span class="nx">joinChannel</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">_channel</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Message Socket Server 주소 가져오기. ( /node/ [App ID] / [Channel ID] )</p></div></div><div class="code"><div class="wrapper">    <span class="nx">API</span><span class="p">.</span><span class="nx">node</span><span class="p">(</span><span class="nx">Application</span><span class="p">.</span><span class="nx">appId</span><span class="p">,</span> <span class="nx">_channel</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">},</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="channel-">Channel 참여하기.</h4></div></div></div><div class="segment"><div class="code"><div class="wrapper">  <span class="nx">joinChannel</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">_channel</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+    </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Message Socket Server 주소 가져오기. ( /node/ [App ID] / [Channel ID] )</p></div></div><div class="code"><div class="wrapper">    <span class="nx">API</span><span class="p">.</span><span class="nx">node</span><span class="p">(</span><span class="nx">Application</span><span class="p">.</span><span class="nx">appId</span><span class="p">,</span> <span class="nx">_channel</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
       
       <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">messageSocket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">server</span><span class="p">,</span> <span class="nx">socketOptions</span><span class="p">);</span>
       <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">messageSocket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connect&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -160,24 +169,40 @@ hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합�
       <span class="p">});</span>
 
       <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">messageSocket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s1">&#39;\t Message : &#39;</span><span class="o">+</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s1">&#39;\t event was fired!! - Message : &#39;</span><span class="o">+</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
       <span class="p">});</span>
 
     <span class="p">});</span>
+  <span class="p">},</span>
+  </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="channel--">Channel 에서 나가기</h4></div></div></div><div class="segment"><div class="code"><div class="wrapper">  <span class="nx">leaveChannel</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_userId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">messageSocket</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">();</span>
+  <span class="p">},</span>
+  </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="channel---">Channel 에 메시지 전송</h4></div></div></div><div class="segment"><div class="code"><div class="wrapper">  <span class="nx">sendMessage</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_userId</span><span class="p">,</span> <span class="nx">_channel</span><span class="p">,</span> <span class="nx">_name</span><span class="p">,</span> <span class="nx">_datas</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+        </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p><strong>channel-join</strong> 이벤트 호출</p></div></div><div class="code"><div class="wrapper">    <span class="kd">var</span> <span class="nx">param</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">app</span><span class="o">:</span>      <span class="nx">Application</span><span class="p">.</span><span class="nx">appId</span><span class="p">,</span>  <span class="c1">// app : Application ID</span>
+      <span class="nx">channel</span><span class="o">:</span>  <span class="nx">_channel</span><span class="p">,</span>           <span class="c1">// channel : Channel ID</span>
+      <span class="nx">name</span><span class="o">:</span>     <span class="nx">_name</span><span class="p">,</span>              <span class="c1">// name : 이벤트 발생 ID</span>
+      <span class="nx">data</span><span class="o">:</span>     <span class="nx">_datas</span> <span class="p">};</span>           <span class="c1">// data : 전송할 데이터</span>
+
+    <span class="nx">Users</span><span class="p">[</span><span class="nx">_userId</span><span class="p">].</span><span class="nx">messageSocket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;data-send&#39;</span><span class="p">,</span> <span class="nx">param</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">callback</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+    <span class="p">});</span>
+
   <span class="p">}</span>
 
-<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="sample-application-test-">Sample Application TEST !!!</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;xpush samples&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">timeout</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<span class="p">};</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="">테스트 하기.</h3>
 
-  <span class="nx">before</span><span class="p">(</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">API</span><span class="p">.</span><span class="nx">app_create</span><span class="p">(</span><span class="nx">Application</span><span class="p">.</span><span class="nx">appNm</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">Application</span><span class="p">.</span><span class="nx">appId</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">appId</span><span class="p">;</span>
+<p>실제 다수의 사용자가 xpush-messenger 에 로그인하고 대화 하는 시나리오대로 정상 동작하는지 테스트 하는 코드.</p></div></div><div class="code"><div class="wrapper"><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;xpush samples&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">timeout</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h4 id="">어플리케이션 등록</h4>
+
+<p>테스트 시작하기 전에 신규 어플리케이션을 생성한다.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">before</span><span class="p">(</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">API</span><span class="p">.</span><span class="nx">app_create</span><span class="p">(</span><span class="nx">Application</span><span class="p">.</span><span class="nx">appNm</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>app ID 는 전역 변수에 저정해둔다. (다음 과정에서 사용해야 함)</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Application</span><span class="p">.</span><span class="nx">appId</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">appId</span><span class="p">;</span>
       <span class="nx">done</span><span class="p">();</span>
     <span class="p">});</span>
-  <span class="p">});</span>
+  <span class="p">});</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h5 id="">사용자 등록</h5>
 
-  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;#registration()&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-
+<p>user ID 가 John, Ally, Lynn, Daniel 인 사용자를 신규 등록한다. ( deviceType 은 모두 'web')</p></div></div><div class="code"><div class="wrapper">  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;#registration()&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  
     <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">API</span><span class="p">.</span><span class="nx">user_register</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">done</span><span class="p">();</span>
@@ -202,9 +227,9 @@ hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합�
       <span class="p">});</span>
     <span class="p">});</span>
 
-  <span class="p">});</span>
+  <span class="p">});</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h5 id="">사용자 로그인</h5>
 
-  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;#login()&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<p>4명 모두 로그인한다.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;#login()&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">Library</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
@@ -224,78 +249,112 @@ hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합�
       <span class="p">});</span>
     <span class="p">});</span>
 
-    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Danial&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">Library</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="s1">&#39;Danial&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Daniel&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">Library</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="s1">&#39;Daniel&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
         <span class="nx">done</span><span class="p">();</span>
       <span class="p">});</span>
     <span class="p">});</span>
 
-  <span class="p">});</span>
+  <span class="p">});</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h5 id="channel--">Channel 목록을 가져오기.</h5>
 
-
-  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;#channels()&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-
-    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+<p>사용자가 등록되어 있는 Channel 목록을 모두 가져온다.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;#listchannels()&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>John 의 channel 목록 가져오기</p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">Library</span><span class="p">.</span><span class="nx">channels</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
         <span class="nx">done</span><span class="p">();</span>
       <span class="p">});</span>
-    <span class="p">});</span>
-
-    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">});</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Ally 의 channel 목록 가져오기</p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">Library</span><span class="p">.</span><span class="nx">channels</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
         <span class="nx">done</span><span class="p">();</span>
       <span class="p">});</span>
     <span class="p">});</span>
+    </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>초기에는 목록에 아무 channel 도 없다.</p></div></div><div class="code"><div class="wrapper">  <span class="p">});</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h5 id="channel-">Channel 생성하기.</h5>
 
-  <span class="p">});</span>
-
-  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;#createChannel()&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-
-    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;John (with Ally and Lynn) &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">Library</span><span class="p">.</span><span class="nx">createChannel</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="s1">&#39;Lynn&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+<p>신규 Channel을 생성한다.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;#createChannel()&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>John 은 Ally 와 Lynn 과 함께 Channel 을 생성한다.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;John (with Ally and Lynn) &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Channel 명을 null 이나 '' 으로 넘기면, 자동 생성된된다.
+사용자 목록에는 userId 가 배열로 들어가며, 반드시 생성한 사용자의 userId 도 포함해야만 한다.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Library</span><span class="p">.</span><span class="nx">createChannel</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="s1">&#39;Lynn&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
         <span class="nx">done</span><span class="p">();</span>
       <span class="p">});</span>
     <span class="p">});</span>
-
-    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Ally (with Daniel and Lynn) &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+    </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Ally 은 Daniel 와 Lynn 과 함께 Channel 을 생성한다.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Ally (with Daniel and Lynn) &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">Library</span><span class="p">.</span><span class="nx">createChannel</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="s1">&#39;Daniel&#39;</span><span class="p">,</span> <span class="s1">&#39;Lynn&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
         <span class="nx">done</span><span class="p">();</span>
       <span class="p">});</span>
     <span class="p">});</span>
 
+  <span class="p">});</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h5 id="channel-">Channel에 참여하기.</h5>
+
+<p>메시지 전송 전용 socket 연결을 새로 한다. (session socket 과는 구별됨)</p></div></div><div class="code"><div class="wrapper">  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;#joinChannel()&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">_channelList</span> <span class="o">=</span> <span class="p">[];</span>
+    </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>체널에 참여하기 전에, Ally 의 channel 목록을 가져온다.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;get the list of Ally\&#39;s channels&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">Library</span><span class="p">.</span><span class="nx">channels</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+        <span class="nx">_channelList</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
+        
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_channelList</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_channelList</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        
+        <span class="nx">done</span><span class="p">();</span>
+      <span class="p">});</span>
+    <span class="p">});</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>John 는 첫번째 channel 에 참여한다.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;John on channel-0 &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">Library</span><span class="p">.</span><span class="nx">joinChannel</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="nx">_channelList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">channel</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+        <span class="nx">done</span><span class="p">();</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+    </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Ally 는 첫번째 channel 에 참여한다.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Ally on channel-0 &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">Library</span><span class="p">.</span><span class="nx">joinChannel</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="nx">_channelList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">channel</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+        <span class="nx">done</span><span class="p">();</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+    </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Lynn 는 첫번째 channel 에 참여한다.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Lynn on channel-0 &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">Library</span><span class="p">.</span><span class="nx">joinChannel</span><span class="p">(</span><span class="s1">&#39;Lynn&#39;</span><span class="p">,</span> <span class="nx">_channelList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">channel</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+        <span class="nx">done</span><span class="p">();</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+    
+    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Ally on channel-1 &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Ally 는 현재 체널에서 나온다.
+( 메시지 전용 socket 연결을 끊는다. )</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Library</span><span class="p">.</span><span class="nx">leaveChannel</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Ally 는 두번째 channel 에 참여한다.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Library</span><span class="p">.</span><span class="nx">joinChannel</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="nx">_channelList</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">channel</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+        <span class="nx">done</span><span class="p">();</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+    
+    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Lynn on channel-1 &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Lynn 는 현재 체널에서 나온다.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Library</span><span class="p">.</span><span class="nx">leaveChannel</span><span class="p">(</span><span class="s1">&#39;Lynn&#39;</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Lynn 는 두번째 channel 에 참여한다.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Library</span><span class="p">.</span><span class="nx">joinChannel</span><span class="p">(</span><span class="s1">&#39;Lynn&#39;</span><span class="p">,</span> <span class="nx">_channelList</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">channel</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+        <span class="nx">done</span><span class="p">();</span>
+      <span class="p">});</span>
+    <span class="p">});</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Ally 의 channel 목록 내용이 어떻게 변경되었는지 확인해본다.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;get the list of Ally\&#39;s channels again&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+      
+      <span class="kd">var</span> <span class="nx">_temp_channelId</span> <span class="o">=</span> <span class="nx">_channelList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">channel</span><span class="p">;</span>  
+      <span class="nx">Library</span><span class="p">.</span><span class="nx">channels</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+        <span class="nx">_channelList</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_channelList</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_channelList</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="nx">done</span><span class="p">();</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+    
   <span class="p">});</span>
-
-
-  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;#joinChannel()&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  
+  </div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h5 id="">메시지 송신하기.</h5></div></div></div><div class="segment"><div class="code"><div class="wrapper">  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;#sendMessage()&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">_channelList</span> <span class="o">=</span> <span class="p">[];</span>
     
-    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;get the list of Ally\&#39;s channels&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">Library</span><span class="p">.</span><span class="nx">channels</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
         <span class="nx">_channelList</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
         <span class="nx">done</span><span class="p">();</span>
       <span class="p">});</span>
     <span class="p">});</span>
-
-    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;John on channel-0 &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
-      
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_channelList</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-      
-      <span class="nx">Library</span><span class="p">.</span><span class="nx">joinChannel</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="nx">_channelList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">channel</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+    
+    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Ally send a string message on channel-1 &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="s1">&#39;This is xpush sample testcase. This is String messages.&#39;</span><span class="p">;</span>
+      <span class="nx">Library</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="nx">_channelList</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">channel</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
         <span class="nx">done</span><span class="p">();</span>
       <span class="p">});</span>
-      
     <span class="p">});</span>
     
-    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Ally on channel-0 &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
-      
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_channelList</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-      <span class="nx">Library</span><span class="p">.</span><span class="nx">joinChannel</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="nx">_channelList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">channel</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Ally send a JSON message on channel-1 &#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="p">{</span><span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Hello xpush sample&#39;</span><span class="p">,</span> <span class="nx">body</span><span class="o">:</span> <span class="s1">&#39;This is json sample !!! &#39;</span><span class="p">};</span>
+      <span class="nx">Library</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="s1">&#39;Ally&#39;</span><span class="p">,</span> <span class="nx">_channelList</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">channel</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
         <span class="nx">done</span><span class="p">();</span>
       <span class="p">});</span>
-      
     <span class="p">});</span>
-
     
   <span class="p">});</span>
 
