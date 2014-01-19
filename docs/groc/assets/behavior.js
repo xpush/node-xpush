@@ -119,7 +119,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "type": "heading",
                       "data": {
                         "level": 4,
-                        "title": "Channel 에서 나가기",
+                        "title": "Channel 에서 나가기.",
                         "slug": "channel--"
                       },
                       "depth": 4
@@ -127,7 +127,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "type": "heading",
                       "data": {
                         "level": 4,
-                        "title": "Channel 에 메시지 전송",
+                        "title": "Channel 에 메시지 전송.",
                         "slug": "channel---"
                       },
                       "depth": 4,
@@ -247,7 +247,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "type": "heading",
                   "data": {
                     "level": 4,
-                    "title": "Channel 에서 나가기",
+                    "title": "Channel 에서 나가기.",
                     "slug": "channel--"
                   },
                   "depth": 4
@@ -255,7 +255,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "type": "heading",
                   "data": {
                     "level": 4,
-                    "title": "Channel 에 메시지 전송",
+                    "title": "Channel 에 메시지 전송.",
                     "slug": "channel---"
                   },
                   "depth": 4,

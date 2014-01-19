@@ -8,7 +8,7 @@ var assert  = require("assert"),
     restify = require('restify'),
     async   = require('async');
 
-// Gateway Server 
+// Gateway Server. 
 //
 // 테스트 하기 전에 hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합니다
 var gatewayServer = restify.createJsonClient({
@@ -21,7 +21,7 @@ var socketOptions ={
   'force new connection': true
 };
 
-// 테스트 application 정보
+// 테스트 application 정보.
 //
 // 테스트 app 이름은 'xpush-messenger' 이다.
 var Application = {
@@ -140,12 +140,12 @@ var Library = {
     // Session Socket Server 주소 가져오기. ( /node/session/ [User ID] )
     API.node_session(Users[_userId].userId, function (data, _userId) {
 
-      // Session Socket 연결하기
+      // Session Socket 연결하기.
       Users[_userId].sessionSocket = io.connect(data.result.server, socketOptions);
       // Socket에 connect 이벤트 등록 ( connect 이벤트 발생 )
       Users[_userId].sessionSocket.on('connect', function() {
         
-        // **login** 이벤트 호출 
+        // **login** 이벤트 호출.
         var param = {
           app: Application.appId,   // - app : Application ID            
           server: data.result.name, // - server : Session Socket Server 번호(아이디) 
@@ -164,9 +164,9 @@ var Library = {
 
       });
 
-      // Notification 이벤트 등록
+      // Notification 이벤트 등록.
       Users[_userId].sessionSocket.on('notification', function (data) {
-        console.info('\t Notification : '+JSON.stringify(data));
+        console.info('\t Notification ('+_userId+') : '+JSON.stringify(data));
       });
 
     });
@@ -175,10 +175,10 @@ var Library = {
   // #### Channel 목록 가져오기.
   // User ID 가 포함되어 있는 모든 Channel 목록을 가져오기.
   //
-  // ( **user-login** 이벤트 호출 이후에 사용 가능 )
+  // ( **user-login** 이벤트 호출 이후에 사용 가능 ).
   channels: function(_userId, callback) {
     
-    // **channal-list** 이벤트 호출
+    // **channal-list** 이벤트 호출.
     var param = {
       app: Application.appId }; // app : Application ID
 
@@ -215,7 +215,7 @@ var Library = {
       Users[_userId].messageSocket = io.connect(data.result.server, socketOptions);
       Users[_userId].messageSocket.on('connect', function() {
         
-        // **channel-join** 이벤트 호출
+        // **channel-join** 이벤트 호출.
         var param = {
           server:     data.result.name,   // server: Message Socket Server 명(번호)
           app:        Application.appId,  // app : Application ID
@@ -231,21 +231,21 @@ var Library = {
       });
 
       Users[_userId].messageSocket.on('message', function (data) {
-        console.info('\t event was fired!! - Message : '+JSON.stringify(data));
+        console.info('\t MESSAGE ('+_userId+') : '+JSON.stringify(data));
       });
 
     });
   },
   
-  // #### Channel 에서 나가기
+  // #### Channel 에서 나가기.
   leaveChannel: function(_userId) {
     Users[_userId].messageSocket.disconnect();
   },
   
-  // #### Channel 에 메시지 전송
+  // #### Channel 에 메시지 전송.
   sendMessage: function(_userId, _channel, _name, _datas, callback) {
         
-    // **channel-join** 이벤트 호출
+    // **channel-join** 이벤트 호출.
     var param = {
       app:      Application.appId,  // app : Application ID
       channel:  _channel,           // channel : Channel ID
@@ -276,7 +276,7 @@ describe('xpush samples', function() {
   });
 
   // ##### 사용자 등록
-  // user ID 가 John, Ally, Lynn, Daniel 인 사용자를 신규 등록한다. ( deviceType 은 모두 'web')
+  // user ID 가 John, Ally, Lynn, Daniel 인 사용자를 신규 등록한다. ( deviceType 은 모두 'web').
   describe('#registration()', function() {
 	
     it('John', function(done) {
@@ -305,7 +305,7 @@ describe('xpush samples', function() {
 
   });
 
-  // ##### 사용자 로그인 
+  // ##### 사용자 로그인. 
   // 4명 모두 로그인한다.
   describe('#login()', function() {
 
@@ -339,14 +339,14 @@ describe('xpush samples', function() {
   // 사용자가 등록되어 있는 Channel 목록을 모두 가져온다.
   describe('#listchannels()', function() {
 
-    // John 의 channel 목록 가져오기
+    // John 의 channel 목록 가져오기.
     it('John', function(done) {
       Library.channels('John', function(result){
         done();
       });
     });
 
-    // Ally 의 channel 목록 가져오기
+    // Ally 의 channel 목록 가져오기.
     it('Ally', function(done) {
       Library.channels('Ally', function(result){
         done();
@@ -380,12 +380,14 @@ describe('xpush samples', function() {
 
   });
 
+	
+	var _channelList = [];
 
   // ##### Channel에 참여하기.
   // 메시지 전송 전용 socket 연결을 새로 한다. (session socket 과는 구별됨)
   describe('#joinChannel()', function() {
 
-    var _channelList = [];
+    
     
     // 체널에 참여하기 전에, Ally 의 channel 목록을 가져온다.
     it('get the list of Ally\'s channels', function(done) {
@@ -443,11 +445,9 @@ describe('xpush samples', function() {
     // Ally 의 channel 목록 내용이 어떻게 변경되었는지 확인해본다.
     it('get the list of Ally\'s channels again', function(done) {
       
-      var _temp_channelId = _channelList[0].channel;  
       Library.channels('Ally', function(data){
-        _channelList = data.result;
-        console.log(_channelList[0]);
-        console.log(_channelList[1]);
+        console.log(data.result[0]);
+        console.log(data.result[1]);
         done();
       });
     });
@@ -456,17 +456,23 @@ describe('xpush samples', function() {
   
   
   // ##### 메시지 송신하기.
+	// channel-0 : John 만 있음
+	//
+	// channel-1 : Ally 와 Lynn 이 있음
   describe('#sendMessage()', function() {
 
-    var _channelList = [];
     
     it('get the list of Ally\'s channels', function(done) {
       Library.channels('Ally', function(data){
-        _channelList = data.result;
+        console.log(data.result[0]);
+        console.log(data.result[1]);
         done();
       });
     });
     
+		// Ally 는 channel-1 에 메시지 전송
+		//
+		// : Ally/Lynn 에게 메시지 전송되고,  Daniel 에게 Notification !! 
     it('Ally send a string message on channel-1 ', function(done) {
       var message = 'This is xpush sample testcase. This is String messages.';
       Library.sendMessage('Ally', _channelList[1].channel, 'message', message, function(result){
@@ -474,13 +480,69 @@ describe('xpush samples', function() {
       });
     });
     
+		// Ally 는 channel-1 에 JSON 메시지 전송
+		//
+		// : Ally/Lynn 에게 JSON 메시지 전송되고,  Daniel 에게 Notification !!
     it('Ally send a JSON message on channel-1 ', function(done) {
       var message = {title: 'Hello xpush sample', body: 'This is json sample !!! '};
       Library.sendMessage('Ally', _channelList[1].channel, 'message', message, function(result){
         done();
       });
     });
+		
+		// John 은 channel-0 에 메시지 전송
+		//
+		// : John 본인에게 메시지 전송되고,  Ally/Lynn 에게 Notification !!
+    it('John send a JSON message on channel-0 ', function(done) {
+      var message = {title: 'Hello xpush sample', body: 'This is json sample !!! '};
+      Library.sendMessage('John', _channelList[0].channel, 'message', message, function(result){
+        done();
+      });
+    });
+		
+		// Notification 왔는지 확인하기 위해 1.5초 대기.
+    it('wait for 1.5 sec. ', function(done) {
+			setTimeout(done, 1500);
+    });
     
+  });
+  // ##### 메시지 송신하기.
+  describe('#sendMessage()', function() {
+		
+    it('Ally on channel-0 ', function(done) {
+      // Ally 는 현재 체널에서 나온다.
+      //
+      // ( 메시지 전용 socket 연결을 끊는다. )
+      Library.leaveChannel('Ally');
+      // Ally 는 첫번째 channel 에 참여한다.
+      Library.joinChannel('Ally', _channelList[0].channel, function(result){
+        done();
+      });
+    });
+    
+    it('Lynn on channel-0 ', function(done) {
+      // Lynn 는 현재 체널에서 나온다.
+      Library.leaveChannel('Lynn');
+      // Lynn 는 첫번째 channel 에 참여한다.
+      Library.joinChannel('Lynn', _channelList[0].channel, function(result){
+        done();
+      });
+    });
+		
+		// Ally 는 channel-0 에 JSON 메시지 전송
+		//
+		// 모두 즉시 전송되고 notification 없음!
+    it('Ally send a JSON message on channel-1 ', function(done) {
+      var message = {title: 'Hello xpush sample', body: 'This is json sample !!! '};
+      Library.sendMessage('Ally', _channelList[0].channel, 'message', message, function(result){
+        done();
+      });
+    });
+		
+		// 1.5초 대기 후 테스트 종료.
+    it('wait for 1.5 sec. ', function(done) {
+			setTimeout(done, 1500);
+    });
   });
 
 });
