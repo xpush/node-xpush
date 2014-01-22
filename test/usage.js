@@ -54,9 +54,9 @@ var API = {
   // #### application 생성.
   // App 명을 URL 에 포함하여 아플리케이션을 생성한다. 
   //
-  // ##### <code>POST</code> /app/create/ [App명]
+  // ##### <code>PUT</code> /app/ [App명]
   app_create: function (_appNm, callback) {
-    gatewayServer.post( '/app/create/'+_appNm,
+    gatewayServer.put( '/app/'+_appNm,
       function(err, req, res, data) {
         if( err ){
           console.log(err);
@@ -67,11 +67,11 @@ var API = {
   },
   
   // #### Session Socket Server 주소 가져오기.
-  // Gateway Server 로부터 User ID를 기준으로 Session Socket Server 주소를 가져 옵니다.
+  // Gateway Server 로부터 App ID와 User ID를 기준으로 Session Socket Server 주소를 가져 옵니다.
   //
-  // ##### <code>GET</code> /node/ [User ID]
+  // ##### <code>GET</code> /session/ [App ID] / [User ID]
   node_session: function (_userId, callback) {
-    gatewayServer.get('/node/session/'+_userId, 
+    gatewayServer.get('/session/'+Application.appId+'/'+_userId, 
       function(err, req, res, data) {
         if( err ){
           console.log( err );
