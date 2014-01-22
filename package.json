@@ -31,7 +31,8 @@
     "groc": "~0.6.1"
   },
   "devDependencies": {
-    "should": "~2.1.1"
+    "should": "~2.1.1",
+    "Faker": "~0.5.11"
   },
   "keywords": [
     "push",
