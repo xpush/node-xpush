@@ -58,7 +58,9 @@ var API = {
   app_create: function (_appNm, callback) {
     gatewayServer.put( '/app/'+_appNm,
       function(err, req, res, data) {
+        
         if( err ){
+          
           console.log(err);
         }else{
           callback(data);
@@ -264,11 +266,12 @@ var Library = {
 // 실제 다수의 사용자가 xpush-messenger 에 로그인하고 대화 하는 시나리오대로 정상 동작하는지 테스트 하는 코드.
 describe('xpush samples', function() {
   this.timeout(2000);
-
+  
   // #### 어플리케이션 등록
   // 테스트 시작하기 전에 신규 어플리케이션을 생성한다.
   before( function(done) {
     API.app_create(Application.appNm, function(data) {
+      
       // app ID 는 전역 변수에 저정해둔다. (다음 과정에서 사용해야 함)
       Application.appId = data.result.appId;
       done();
