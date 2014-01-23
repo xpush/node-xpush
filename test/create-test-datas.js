@@ -1,5 +1,6 @@
 var Faker     = require('Faker'),
-    User      = require('../lib/mongodb-persister/user')
+    utils     = require('../lib/server/utils'),
+    User      = require('../lib/mongodb-persister/user'),
     database  = require('../lib/mongodb-persister/database');
 
 var createUsers = function(rowCount) {
@@ -13,19 +14,23 @@ var createUsers = function(rowCount) {
       datas: { 
         name: Faker.Name.findName(),
         email: Faker.Internet.email(),
+        password: utils.encrypto('test')
       }
     });
 
-    user.save();
+    user.save(function(err, data){
+    console.log('asdfadsf');
+    console.log(err);
+    });
 
   }
 }
 
  database.config('', 'xpush', function (err, message) {
 
-  createUsers(100);
+  createUsers(1000);
 
-  process.exit(); 
+  //process.exit(); 
 
  });
 
