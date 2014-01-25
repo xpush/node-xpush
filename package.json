@@ -38,7 +38,6 @@
     "websocket",
     "gcm",
     "apm",
-    "xmpp",
     "api"
   ],
   "repository": "git://github.com/xpush/node-xpush",
