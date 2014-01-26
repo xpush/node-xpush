@@ -10,7 +10,8 @@ var createUsers = function(rowCount) {
     var user = new User({
       app: 'testapp',
       userId: Faker.Internet.userName(),
-      deviceType: Faker.Helpers.randomize(['web','android','iphone']),
+      password: utils.encrypto('test'),
+      deviceType: Faker.Helpers.randomize(['','android-23ASDFVEASDF435kgr09q3htgfewffeeefwqe','iphone-129774893029834']),
       datas: { 
         name: Faker.Name.findName(),
         email: Faker.Internet.email(),
@@ -19,7 +20,6 @@ var createUsers = function(rowCount) {
     });
 
     user.save(function(err, data){
-    console.log('asdfadsf');
     console.log(err);
     });
 
