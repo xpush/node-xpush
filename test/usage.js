@@ -33,16 +33,25 @@ var Application = {
 // 편의를 위하여 userId 를 간단하게 표기하였다.
 var Users = {
   John: {
-    userId : 'John'
+    userId : 'John',
+    password: 'test',
+    deviceId: 'web'
   },
   Ally: {
-    userId : 'Ally'
+    userId : 'Ally',
+    password: 'test',
+    deviceId: 'android-1234567890',
+    notiId: 'android-nnnnnnnnnnnnn'
   },
   Lynn: {
-    userId : 'Lynn'
+    userId : 'Lynn',
+    password: 'test',
+    deviceId: 'web'
   },
   Daniel: {
-    userId : 'Daniel'
+    userId : 'Daniel',
+    password: 'test',
+    deviceId: 'web'
   }
 
 };
@@ -68,12 +77,53 @@ var API = {
       });
   },
   
+  // #### Message Socket Server 주소 가져오기.
+  // Gateway Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.
+  //
+  // ##### <code>POST</code> /user/register
+  register: function (_userId, callback) {
+
+      // ##### Parameters
+      // - **app** : application ID <code>mandatory</code>
+      // - **userId** : User ID <code>mandatory</code>
+      // - **deviceType** : Client device type ( web / android / ios / desktop ) <code>mandatory</code>
+      // - **deviceId** : Unique client device ID
+      // - **notiId** : Notification ID
+      // - **datas** : Addional Datas ( JSON Object )    
+    var params = {
+      app: Application.appId,
+      userId: Users[_userId].userId,
+      password: Users[_userId].password,
+      deviceId: Users[_userId].deviceId,
+      notiId: Users[_userId].notiId,
+      datas: {name: Users[_userId].userId, email: Users[_userId].userId+'@xpush.io' }
+    };
+
+    gatewayServer.post('/user/register', params, 
+      function(err, req, res, data) {
+        if( err ){
+          console.log( err );
+        } else {
+
+          callback(data, _userId);
+        }
+      });
+  },
+  
   // #### Session Socket Server 주소 가져오기.
   // Gateway Server 로부터 App ID와 User ID를 기준으로 Session Socket Server 주소를 가져 옵니다.
   //
   // ##### <code>GET</code> /session/ [App ID] / [User ID]
-  node_session: function (_userId, callback) {
-    gatewayServer.get('/session/'+Application.appId+'/'+_userId, 
+  auth: function (_userId, callback) {
+    
+    var params = {
+      app: Application.appId,
+      userId: Users[_userId].userId,
+      password: Users[_userId].password,
+      deviceId: Users[_userId].deviceId
+    };   
+    
+    gatewayServer.post('/auth', params,
       function(err, req, res, data) {
         if( err ){
           console.log( err );
@@ -99,36 +149,6 @@ var API = {
           callback(data);
         }
       });
-  },
-  
-  // #### Message Socket Server 주소 가져오기.
-  // Gateway Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.
-  //
-  // ##### <code>POST</code> /user/register
-  user_register: function (_userId, callback) {
-
-      // ##### Parameters
-      // - **app** : application ID <code>mandatory</code>
-      // - **userId** : User ID <code>mandatory</code>
-      // - **deviceType** : Client device type ( web / android / ios / desktop ) <code>mandatory</code>
-      // - **deviceId** : Unique client device ID
-      // - **notiId** : Notification ID
-      // - **datas** : Addional Datas ( JSON Object )    
-    var params = {
-      app: Application.appId,
-      userId: _userId,
-      deviceType: 'web'
-    };
-
-    gatewayServer.post('/user/register', params, 
-      function(err, req, res, data) {
-        if( err ){
-          console.log( err );
-        } else {
-
-          callback(data, _userId);
-        }
-      });
   }
   
 };
@@ -137,38 +157,28 @@ var API = {
 var Library = {
 
   // #### 로그인하기.
-  login: function(_userId, callback) {
+  connect_session_socket: function(_userId, callback) {
 
     // Session Socket Server 주소 가져오기. ( /node/session/ [User ID] )
-    API.node_session(Users[_userId].userId, function (data, _userId) {
-
+    API.auth(Users[_userId].userId, function (data, _userId) {
+      
+      var query = 
+    	'app='+Application.appId+'&'+
+			'userId='+Users[_userId].userId+'&'+
+    	'deviceId='+Users[_userId].deviceId+'&'+
+    	'token='+data.result.token;
+      
       // Session Socket 연결하기.
-      Users[_userId].sessionSocket = io.connect(data.result.server, socketOptions);
+      Users[_userId].sessionSocket = io.connect(data.result.serverUrl+'/session?'+query, socketOptions);
       // Socket에 connect 이벤트 등록 ( connect 이벤트 발생 )
       Users[_userId].sessionSocket.on('connect', function() {
-        
-        // **login** 이벤트 호출.
-        var param = {
-          app: Application.appId,   // - app : Application ID            
-          server: data.result.name, // - server : Session Socket Server 번호(아이디) 
-          userId: _userId,          // - userId : User ID
-          deviceType: 'web'         // - devideType : Client device type ( web / android / ios / desktop ) 
-          // notiId : notification key  ( deviceType 이 'web' 인 경우, notiId는 넘기지 않습니다. 서버에서 자동 부여 됩니다.)
-        }; 
-        
-        Users[_userId].sessionSocket.emit('user-login', param, function (data) {
-          
-          Users[_userId].sessionId = data.result.sessionId;
-          
-          console.info('\t logined : '+JSON.stringify(data));
-          callback(data);
-        });
-
+        console.log(data);
+        callback();
       });
 
       // Notification 이벤트 등록.
-      Users[_userId].sessionSocket.on('notification', function (data) {
-        console.info('\t Notification ('+_userId+') : '+JSON.stringify(data));
+      Users[_userId].sessionSocket.on('NOTIFICATION', function (data) {
+        console.info('\t NOTIFICATION ('+_userId+') :  - '+JSON.stringify(data));
       });
 
     });
@@ -181,10 +191,8 @@ var Library = {
   channels: function(_userId, callback) {
     
     // **channal-list** 이벤트 호출.
-    var param = {
-      app: Application.appId }; // app : Application ID
 
-    Users[_userId].sessionSocket.emit('channel-list', param, function (data) {
+    Users[_userId].sessionSocket.emit('channel-list', function (data) {
         console.info('\t channels : '+JSON.stringify(data));
       callback(data);
     });
@@ -196,7 +204,6 @@ var Library = {
 
     // **channel-create** 이벤트 호출
     var param = {
-      app:      Application.appId,  // app : Application ID
       channel:  _channel,           // channel : channel ID
       users:    _userIds            // users : userId 배열, **생성자의 User ID도 포함**되어야 한다.
     };
@@ -209,27 +216,25 @@ var Library = {
   },
 
   // #### Channel 참여하기.
-  joinChannel: function(_userId, _channel, callback) {
+  connect_channel_socket: function(_userId, _channel, callback) {
     
     // Message Socket Server 주소 가져오기. ( /node/ [App ID] / [Channel ID] )
     API.node(Application.appId, _channel, function (data) {
       
-      Users[_userId].messageSocket = io.connect(data.result.server, socketOptions);
+      var query = 
+    	'app='+Application.appId+'&'+
+      'channel='+data.result.channel+'&'+
+      'server='+data.result.server+'&'+
+			'userId='+Users[_userId].userId+'&'+
+    	'deviceId='+Users[_userId].deviceId;
+      
+
+      Users[_userId].messageSocket = io.connect(data.result.serverUrl+'/channel?'+query, socketOptions);
       Users[_userId].messageSocket.on('connect', function() {
         
-        // **channel-join** 이벤트 호출.
-        var param = {
-          server:     data.result.name,   // server: Message Socket Server 명(번호)
-          app:        Application.appId,  // app : Application ID
-          channel:    _channel,           // channel : Channel ID
-          userId:     _userId,            // userId : User ID
-          sessionId:  Users[_userId].sessionId}; // sessionId : 로그인 했을때 생성된 session ID
+        console.log(data);
+        callback();
         
-        Users[_userId].messageSocket.emit('channel-join', param, function (data) {
-          console.info('\t joined : '+JSON.stringify(data));
-          callback(data);
-        });
-
       });
 
       Users[_userId].messageSocket.on('message', function (data) {
@@ -254,7 +259,7 @@ var Library = {
       name:     _name,              // name : 이벤트 발생 ID
       data:     _datas };           // data : 전송할 데이터
 
-    Users[_userId].messageSocket.emit('data-send', param, function (data) {
+    Users[_userId].messageSocket.emit('send', param, function (data) {
       callback(data);
     });
 
@@ -280,28 +285,28 @@ describe('xpush samples', function() {
 
   // ##### 사용자 등록
   // user ID 가 John, Ally, Lynn, Daniel 인 사용자를 신규 등록한다. ( deviceType 은 모두 'web').
-  describe('#registration()', function() {
+  describe('#register users()', function() {
 	
     it('John', function(done) {
-      API.user_register('John', function(data) {
+      API.register('John', function(data) {
         done();
       });
     });
 
     it('Ally', function(done) {
-      API.user_register('Ally', function(data) {
+      API.register('Ally', function(data) {
         done();
       });
     });
 
     it('Lynn', function(done) {
-      API.user_register('Lynn', function(data) {
+      API.register('Lynn', function(data) {
         done();
       });
     });
 
     it('Daniel', function(done) {
-      API.user_register('Daniel', function(data) {
+      API.register('Daniel', function(data) {
         done();
       });
     });
@@ -310,33 +315,34 @@ describe('xpush samples', function() {
 
   // ##### 사용자 로그인. 
   // 4명 모두 로그인한다.
-  describe('#login()', function() {
+  describe('#connect session sockets()', function() {
 
     it('John', function(done) {
-      Library.login('John', function(result){
+      Library.connect_session_socket('John', function(result){
         done();
       });
     });
 
     it('Ally', function(done) {
-      Library.login('Ally', function(result){
+      Library.connect_session_socket('Ally', function(result){
         done();
       });
     });
 
     it('Lynn', function(done) {
-      Library.login('Lynn', function(result){
+      Library.connect_session_socket('Lynn', function(result){
         done();
       });
     });
 
     it('Daniel', function(done) {
-      Library.login('Daniel', function(result){
+      Library.connect_session_socket('Daniel', function(result){
         done();
       });
     });
 
   });
+
 
   // ##### Channel 목록을 가져오기. 
   // 사용자가 등록되어 있는 Channel 목록을 모두 가져온다.
@@ -383,12 +389,12 @@ describe('xpush samples', function() {
 
   });
 
-	
+
 	var _channelList = [];
 
   // ##### Channel에 참여하기.
   // 메시지 전송 전용 socket 연결을 새로 한다. (session socket 과는 구별됨)
-  describe('#joinChannel()', function() {
+  describe('#connect_channel_socket()', function() {
 
     
     
@@ -406,21 +412,21 @@ describe('xpush samples', function() {
 
     // John 는 첫번째 channel 에 참여한다.
     it('John on channel-0 ', function(done) {
-      Library.joinChannel('John', _channelList[0].channel, function(result){
+      Library.connect_channel_socket('John', _channelList[0].channel, function(result){
         done();
       });
     });
     
     // Ally 는 첫번째 channel 에 참여한다.
     it('Ally on channel-0 ', function(done) {
-      Library.joinChannel('Ally', _channelList[0].channel, function(result){
+      Library.connect_channel_socket('Ally', _channelList[0].channel, function(result){
         done();
       });
     });
     
     // Lynn 는 첫번째 channel 에 참여한다.
     it('Lynn on channel-0 ', function(done) {
-      Library.joinChannel('Lynn', _channelList[0].channel, function(result){
+      Library.connect_channel_socket('Lynn', _channelList[0].channel, function(result){
         done();
       });
     });
@@ -431,7 +437,7 @@ describe('xpush samples', function() {
       // ( 메시지 전용 socket 연결을 끊는다. )
       Library.leaveChannel('Ally');
       // Ally 는 두번째 channel 에 참여한다.
-      Library.joinChannel('Ally', _channelList[1].channel, function(result){
+      Library.connect_channel_socket('Ally', _channelList[1].channel, function(result){
         done();
       });
     });
@@ -440,7 +446,7 @@ describe('xpush samples', function() {
       // Lynn 는 현재 체널에서 나온다.
       Library.leaveChannel('Lynn');
       // Lynn 는 두번째 channel 에 참여한다.
-      Library.joinChannel('Lynn', _channelList[1].channel, function(result){
+      Library.connect_channel_socket('Lynn', _channelList[1].channel, function(result){
         done();
       });
     });
@@ -456,8 +462,6 @@ describe('xpush samples', function() {
     });
     
   });
-  
-  
   // ##### 메시지 송신하기.
 	// channel-0 : John 만 있음
 	//
@@ -518,7 +522,7 @@ describe('xpush samples', function() {
       // ( 메시지 전용 socket 연결을 끊는다. )
       Library.leaveChannel('Ally');
       // Ally 는 첫번째 channel 에 참여한다.
-      Library.joinChannel('Ally', _channelList[0].channel, function(result){
+      Library.connect_channel_socket('Ally', _channelList[0].channel, function(result){
         done();
       });
     });
@@ -527,7 +531,7 @@ describe('xpush samples', function() {
       // Lynn 는 현재 체널에서 나온다.
       Library.leaveChannel('Lynn');
       // Lynn 는 첫번째 channel 에 참여한다.
-      Library.joinChannel('Lynn', _channelList[0].channel, function(result){
+      Library.connect_channel_socket('Lynn', _channelList[0].channel, function(result){
         done();
       });
     });
@@ -542,10 +546,13 @@ describe('xpush samples', function() {
       });
     });
 		
-		// 1.5초 대기 후 테스트 종료.
-    it('wait for 1.5 sec. ', function(done) {
-			setTimeout(done, 1500);
-    });
   });
 
+  
+  describe('#end()', function() {
+    // 1.5초 대기 후 테스트 종료.
+    it('wait for 1.5 sec. ', function(done) {
+      setTimeout(done, 1500);
+    });
+  });
 });
