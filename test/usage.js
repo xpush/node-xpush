@@ -263,7 +263,24 @@ var Library = {
       callback(data);
     });
 
-  }
+  },
+
+  unReadMessage: function(_userId, callback) {
+    Users[_userId].messageSocket.emit('message-unread', function (data) {
+      console.info('\t UNREAD MESSAGE ('+_userId+') : '+JSON.stringify(data));
+      callback(data);
+    });
+
+  },
+
+  unReadMessageWithChannel: function(_userId, _channel, callback) {
+    Users[_userId].sessionSocket.emit('message-unread', {channel: _channel}, function (data) {
+      console.info('\t UNREAD MESSAGE ('+_userId+') : '+JSON.stringify(data));
+      callback(data);
+    });
+
+  },
+
 
 };
 
@@ -545,7 +562,24 @@ describe('xpush samples', function() {
         done();
       });
     });
-		
+
+
+    it('wait for 0.5 sec. ', function(done) {
+      setTimeout(done, 500);
+    });
+
+    it('Ally\'s unread messages .', function(done) {
+      Library.unReadMessage('Ally', function(result){
+        done();
+      });
+    });
+
+    it('Ally\'s unread messages (from sessionSocket).', function(done) {
+      Library.unReadMessageWithChannel('Ally', _channelList[0].channel, function(result){
+        done();
+      });
+    });
+
   });
 
   
