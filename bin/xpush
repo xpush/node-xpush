@@ -16,7 +16,7 @@ var help = [
     "  --port   PORT       Port that the xpush server should run on",
     "  --config OUTFILE    (mandatory!) Location of the configuration file for the xpush server",
     "  --silent            Silence the log output from the xpush server",
-    "  --gateway           start the gateway server for loadbalancing xpush servers",
+    "  --session           start the session server for loadbalancing xpush servers",
     "  --host              Hostname ",
     "  -h, --help          You're staring at it"
 ].join('\n');
@@ -54,8 +54,8 @@ config.silent = typeof argv.silent !== 'undefined' ? argv.silent : config.silent
 config.port = port || config.port;
 config.host = argv.host || config.host;
 
-if(argv.gateway){
-  server = xpush.createGatewayServer(config);
+if(argv.session){
+  server = xpush.createSessionServer(config);
 }else{
 
   /*
@@ -71,14 +71,14 @@ if(argv.gateway){
     return util.puts(errorMessage);
   } */
 
-  server = xpush.createApiServer(config);
+  server = xpush.createChannelServer(config);
 }
 
 server.on('connected', function (url, port){
   if (!config.silent) {
     util.puts(welcome.rainbow.bold);
     util.puts(' ' +
-      (argv.gateway?'Gateway Server'.underline.bold.green:'API Server'.underline.bold.green) +
+      (argv.session?'Session Server'.underline.bold.green:'Channel Server'.underline.bold.green) +
       ' now listening on port: ' + port);
   }
 });

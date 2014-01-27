@@ -3,11 +3,6 @@
   "redis": {},
   "mongodb": {},
 
-  "authorization": {
-    "password_field" : "datas.password",
-    "algorithm": "sha256" 
-  },
-
   "gcm_api_key" : "Insert Google Server API Key here"
 
 }

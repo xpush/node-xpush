@@ -1,6 +1,6 @@
 {
   "name": "xpush",
-  "description": "Realtime communication api server and node module.",
+  "description": "Realtime communication channel server and node module.",
   "version": "0.0.1",
   "contributors": [
     {
@@ -38,7 +38,7 @@
     "websocket",
     "gcm",
     "apm",
-    "api"
+    "channel"
   ],
   "repository": "git://github.com/xpush/node-xpush",
   "main": "./lib/xpush.js",
@@ -47,9 +47,8 @@
   },
   "scripts": {
     "test": "node test",
-    "dev-gateway": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 8000 --config ./config.sample.json --gateway",
-    "dev-api": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 9000 --config ./config.sample.json",
-    "api-ref": "cp ./doc/iodocs-config.json ./node_modules/iodocs/config.json && cp ./doc/apiconfig.json ./node_modules/iodocs/public/data/apiconfig.json && cp ./doc/xpush.json ./node_modules/iodocs/public/data/xpush.json && node ./node_modules/iodocs/app.js",
+    "dev-session": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 8000 --config ./config.sample.json --session",
+    "dev-channel": "node_modules/.bin/supervisor -e 'js|json' -- ./bin/xpush --port 9000 --config ./config.sample.json",
     "groc": "node_modules/.bin/groc"
   },
   "engines": {

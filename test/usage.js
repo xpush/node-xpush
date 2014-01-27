@@ -8,11 +8,11 @@ var assert  = require("assert"),
     restify = require('restify'),
     async   = require('async');
 
-// Gateway Server. 
+// Session Server. 
 //
-// 테스트 하기 전에 hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합니다
-var gatewayServer = restify.createJsonClient({
-  url: 'http://gateway.server:8000',
+// 테스트 하기 전에 hosts 파일에 session.server 로 도메인 설정을 미리 해두어야 합니다
+var sessionServer = restify.createJsonClient({
+  url: 'http://session.server:8000',
   version: '*'                
 });
 
@@ -65,7 +65,7 @@ var API = {
   //
   // ##### <code>PUT</code> /app/ [App명]
   app_create: function (_appNm, callback) {
-    gatewayServer.put( '/app/'+_appNm,
+    sessionServer.put( '/app/'+_appNm,
       function(err, req, res, data) {
         
         if( err ){
@@ -78,7 +78,7 @@ var API = {
   },
   
   // #### Message Socket Server 주소 가져오기.
-  // Gateway Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.
+  // Session Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.
   //
   // ##### <code>POST</code> /user/register
   register: function (_userId, callback) {
@@ -99,7 +99,7 @@ var API = {
       datas: {name: Users[_userId].userId, email: Users[_userId].userId+'@xpush.io' }
     };
 
-    gatewayServer.post('/user/register', params, 
+    sessionServer.post('/user/register', params, 
       function(err, req, res, data) {
         if( err ){
           console.log( err );
@@ -111,7 +111,7 @@ var API = {
   },
   
   // #### Session Socket Server 주소 가져오기.
-  // Gateway Server 로부터 App ID와 User ID를 기준으로 Session Socket Server 주소를 가져 옵니다.
+  // Session Server 로부터 App ID와 User ID를 기준으로 Session Socket Server 주소를 가져 옵니다.
   //
   // ##### <code>GET</code> /session/ [App ID] / [User ID]
   auth: function (_userId, callback) {
@@ -123,7 +123,7 @@ var API = {
       deviceId: Users[_userId].deviceId
     };   
     
-    gatewayServer.post('/auth', params,
+    sessionServer.post('/auth', params,
       function(err, req, res, data) {
         if( err ){
           console.log( err );
@@ -134,12 +134,12 @@ var API = {
   },
   
   // #### Message Socket Server 주소 가져오기.
-  // Gateway Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.
+  // Session Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.
   //
   // ##### <code>GET</code> /node/ [App명] / [Channel명]
   node: function (_app, _channel, callback) {
     
-    gatewayServer.get('/node/'+_app+'/'+_channel, 
+    sessionServer.get('/node/'+_app+'/'+_channel, 
       function(err, req, res, data) {
         
         if( err ){

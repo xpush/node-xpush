@@ -1,17 +1,17 @@
 # xpush
-x(extensional)push is the realtime communication api server and node-module.
+x(extensional)push is the realtime communication channel server and node-module.
 
 - **The project is currently under development. Not yet available.**
 
 [![Build Status](https://travis-ci.org/xpush/node-xpush.png?branch=master)](https://travis-ci.org/xpush/node-xpush)
 
 ## xpush
-'xpush is an realtime communication api server for quickly, easily adding scalable functionality to web and mobile apps.
+'xpush is an realtime communication channel server for quickly, easily adding scalable functionality to web and mobile apps.
 
 It makes it easy to send real-time notifications to Android and iOS devices, and send messages to various messengers (via XMPP) and send real-time datas to Webpages (via websocket, wrapping socket.io).
 
-'xpush' is consists of a api server and a gateway server.
-Gateway server is for load balancing and managing many distributed api servers.
+'xpush' is consists of a channel server and a session server.
+Session server is for load balancing and managing many distributed channel servers.
 
 
 ## Getting Started  ( for developers )
@@ -49,19 +49,19 @@ Install and start mongoDB. (http://www.mongodb.org)
 	$ cd node-xpush
 	$ npm install
 
-#### 3. Start xpush API Server
+#### 3. Start xpush Channel Server
 
 	$ ./bin/xpush --port 8081 --config ./config.sample.json
 
-#### 4. Start xpush Gateway Server
+#### 4. Start xpush Session Server
 
-	$ ./bin/xpush --port 8000 --config ./config.sample.json --gateway
+	$ ./bin/xpush --port 8000 --config ./config.sample.json --session
 
 
 
 
 ## Documentation
-* [API Documents][]
+_(Coming soon)_
 
 ## Examples
 _(Coming soon)_
@@ -74,4 +74,3 @@ _(Nothing yet)_
 xpush project may be freely distributed under the MIT license.
 
 
-[API Documents]: https://github.com/xpush/node-xpush/blob/master/doc/README.md
