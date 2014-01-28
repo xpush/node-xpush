@@ -51,7 +51,7 @@ var Users = {
   Daniel: {
     userId : 'Daniel',
     password: 'test',
-    deviceId: 'web'
+    deviceId: 'ANDROID-DEVICE-ID-0000000000000000000000000000'
   }
 
 };
@@ -281,6 +281,12 @@ var Library = {
 
   },
 
+  exitChannel: function(_userId, _channel, callback) {
+    Users[_userId].sessionSocket.emit('channel-user-exit', {channel: _channel}, function (data) {
+      callback(data);
+    });
+  }
+
 
 };
 
@@ -392,7 +398,7 @@ describe('xpush samples', function() {
       // Channel 명을 null 이나 '' 으로 넘기면, 자동 생성된된다.
       //
       // 사용자 목록에는 userId 가 배열로 들어가며, 반드시 생성한 사용자의 userId 도 포함해야만 한다.
-      Library.createChannel('John', null, ['John', 'Ally', 'Lynn'], function(result){
+      Library.createChannel('John', null, ['John', 'Ally', 'Lynn', 'Daniel'], function(result){
         done();
       });
     });
@@ -553,6 +559,12 @@ describe('xpush samples', function() {
       });
     });
 		
+    it('Lynn is exited from channel-0' , function(done) {
+      Library.exitChannel('Lynn', _channelList[0].channel, function(result){
+        done();
+      });
+    });
+
 		// Ally 는 channel-0 에 JSON 메시지 전송
 		//
 		// 모두 즉시 전송되고 notification 없음!
@@ -566,6 +578,12 @@ describe('xpush samples', function() {
 
     it('wait for 0.5 sec. ', function(done) {
       setTimeout(done, 500);
+    });
+
+    it('John is exited from channel-0' , function(done) {
+      Library.exitChannel('John', _channelList[0].channel, function(result){
+        done();
+      });
     });
 
     it('Ally\'s unread messages .', function(done) {
