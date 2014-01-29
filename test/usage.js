@@ -252,7 +252,6 @@ var Library = {
   // #### Channel 에 메시지 전송.
   sendMessage: function(_userId, _channel, _name, _datas, callback) {
         
-    // **channel-join** 이벤트 호출.
     var param = {
       app:      Application.appId,  // app : Application ID
       channel:  _channel,           // channel : Channel ID
@@ -273,16 +272,8 @@ var Library = {
 
   },
 
-  unReadMessageWithChannel: function(_userId, _channel, callback) {
-    Users[_userId].sessionSocket.emit('message-unread', {channel: _channel}, function (data) {
-      console.info('\t UNREAD MESSAGE ('+_userId+') : '+JSON.stringify(data));
-      callback(data);
-    });
-
-  },
-
   exitChannel: function(_userId, _channel, callback) {
-    Users[_userId].sessionSocket.emit('channel-user-exit', {channel: _channel}, function (data) {
+    Users[_userId].sessionSocket.emit('channel-exit', {channel: _channel}, function (data) {
       callback(data);
     });
   }
@@ -514,7 +505,7 @@ describe('xpush samples', function() {
 		//
 		// : Ally/Lynn 에게 JSON 메시지 전송되고,  Daniel 에게 Notification !!
     it('Ally send a JSON message on channel-1 ', function(done) {
-      var message = {title: 'Hello xpush sample', body: 'This is json sample !!! '};
+      var message = {title: 'JSON1 - Hello xpush sample', body: 'This is json sample !!! '};
       Library.sendMessage('Ally', _channelList[1].channel, 'message', message, function(result){
         done();
       });
@@ -524,9 +515,12 @@ describe('xpush samples', function() {
 		//
 		// : John 본인에게 메시지 전송되고,  Ally/Lynn 에게 Notification !!
     it('John send a JSON message on channel-0 ', function(done) {
-      var message = {title: 'Hello xpush sample', body: 'This is json sample !!! '};
-      Library.sendMessage('John', _channelList[0].channel, 'message', message, function(result){
+      var message1 = {title: 'JSON2-1 - Hello xpush sample', body: 'This is json sample !!! '};
+      var message2 = {title: 'JSON2-2 - Hello xpush sample', body: 'This is json sample !!! '};
+      Library.sendMessage('John', _channelList[0].channel, 'message', message1, function(result){
+      Library.sendMessage('John', _channelList[0].channel, 'message', message2, function(result){
         done();
+      });
       });
     });
 		
@@ -569,9 +563,12 @@ describe('xpush samples', function() {
 		//
 		// 모두 즉시 전송되고 notification 없음!
     it('Ally send a JSON message on channel-1 ', function(done) {
-      var message = {title: 'Hello xpush sample', body: 'This is json sample !!! '};
-      Library.sendMessage('Ally', _channelList[0].channel, 'message', message, function(result){
+      var message1 = {title: '1111 Hello xpush sample', body: 'This is json sample !!! '};
+      var message2 = {title: '2222 Hello xpush sample', body: 'This is json sample !!! '};
+      Library.sendMessage('Ally', _channelList[0].channel, 'message', message1, function(result){
+      Library.sendMessage('Ally', _channelList[0].channel, 'message', message2, function(result){
         done();
+      });
       });
     });
 
@@ -588,12 +585,6 @@ describe('xpush samples', function() {
 
     it('Ally\'s unread messages .', function(done) {
       Library.unReadMessage('Ally', function(result){
-        done();
-      });
-    });
-
-    it('Ally\'s unread messages (from sessionSocket).', function(done) {
-      Library.unReadMessageWithChannel('Ally', _channelList[0].channel, function(result){
         done();
       });
     });
