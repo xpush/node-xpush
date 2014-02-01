@@ -8,11 +8,11 @@ var assert  = require("assert"),
     restify = require('restify'),
     async   = require('async');
 
-// Gateway Server. 
+// Session Server. 
 //
-// 테스트 하기 전에 hosts 파일에 gateway.server 로 도메인 설정을 미리 해두어야 합니다
-var gatewayServer = restify.createJsonClient({
-  url: 'http://gateway.server:8000',
+// 테스트 하기 전에 hosts 파일에 session.server 로 도메인 설정을 미리 해두어야 합니다
+var sessionServer = restify.createJsonClient({
+  url: 'http://session.server:8000',
   version: '*'                
 });
 
@@ -51,7 +51,7 @@ var Users = {
   Daniel: {
     userId : 'Daniel',
     password: 'test',
-    deviceId: 'web'
+    deviceId: 'ANDROID-DEVICE-ID-0000000000000000000000000000'
   }
 
 };
@@ -65,7 +65,7 @@ var API = {
   //
   // ##### <code>PUT</code> /app/ [App명]
   app_create: function (_appNm, callback) {
-    gatewayServer.put( '/app/'+_appNm,
+    sessionServer.put( '/app/'+_appNm,
       function(err, req, res, data) {
         
         if( err ){
@@ -78,7 +78,7 @@ var API = {
   },
   
   // #### Message Socket Server 주소 가져오기.
-  // Gateway Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.
+  // Session Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.
   //
   // ##### <code>POST</code> /user/register
   register: function (_userId, callback) {
@@ -99,7 +99,7 @@ var API = {
       datas: {name: Users[_userId].userId, email: Users[_userId].userId+'@xpush.io' }
     };
 
-    gatewayServer.post('/user/register', params, 
+    sessionServer.post('/user/register', params, 
       function(err, req, res, data) {
         if( err ){
           console.log( err );
@@ -111,7 +111,7 @@ var API = {
   },
   
   // #### Session Socket Server 주소 가져오기.
-  // Gateway Server 로부터 App ID와 User ID를 기준으로 Session Socket Server 주소를 가져 옵니다.
+  // Session Server 로부터 App ID와 User ID를 기준으로 Session Socket Server 주소를 가져 옵니다.
   //
   // ##### <code>GET</code> /session/ [App ID] / [User ID]
   auth: function (_userId, callback) {
@@ -123,7 +123,7 @@ var API = {
       deviceId: Users[_userId].deviceId
     };   
     
-    gatewayServer.post('/auth', params,
+    sessionServer.post('/auth', params,
       function(err, req, res, data) {
         if( err ){
           console.log( err );
@@ -134,12 +134,12 @@ var API = {
   },
   
   // #### Message Socket Server 주소 가져오기.
-  // Gateway Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.
+  // Session Server 로부터 App ID 와 Channel명을 기준으로 Message Socket Server 주소를 가져 옵니다.
   //
   // ##### <code>GET</code> /node/ [App명] / [Channel명]
   node: function (_app, _channel, callback) {
     
-    gatewayServer.get('/node/'+_app+'/'+_channel, 
+    sessionServer.get('/node/'+_app+'/'+_channel, 
       function(err, req, res, data) {
         
         if( err ){
@@ -252,7 +252,6 @@ var Library = {
   // #### Channel 에 메시지 전송.
   sendMessage: function(_userId, _channel, _name, _datas, callback) {
         
-    // **channel-join** 이벤트 호출.
     var param = {
       app:      Application.appId,  // app : Application ID
       channel:  _channel,           // channel : Channel ID
@@ -263,7 +262,22 @@ var Library = {
       callback(data);
     });
 
+  },
+
+  unReadMessage: function(_userId, callback) {
+    Users[_userId].messageSocket.emit('message-unread', function (data) {
+      console.info('\t UNREAD MESSAGE ('+_userId+') : '+JSON.stringify(data));
+      callback(data);
+    });
+
+  },
+
+  exitChannel: function(_userId, _channel, callback) {
+    Users[_userId].sessionSocket.emit('channel-exit', {channel: _channel}, function (data) {
+      callback(data);
+    });
   }
+
 
 };
 
@@ -375,7 +389,7 @@ describe('xpush samples', function() {
       // Channel 명을 null 이나 '' 으로 넘기면, 자동 생성된된다.
       //
       // 사용자 목록에는 userId 가 배열로 들어가며, 반드시 생성한 사용자의 userId 도 포함해야만 한다.
-      Library.createChannel('John', null, ['John', 'Ally', 'Lynn'], function(result){
+      Library.createChannel('John', null, ['John', 'Ally', 'Lynn', 'Daniel'], function(result){
         done();
       });
     });
@@ -491,7 +505,7 @@ describe('xpush samples', function() {
 		//
 		// : Ally/Lynn 에게 JSON 메시지 전송되고,  Daniel 에게 Notification !!
     it('Ally send a JSON message on channel-1 ', function(done) {
-      var message = {title: 'Hello xpush sample', body: 'This is json sample !!! '};
+      var message = {title: 'JSON1 - Hello xpush sample', body: 'This is json sample !!! '};
       Library.sendMessage('Ally', _channelList[1].channel, 'message', message, function(result){
         done();
       });
@@ -501,9 +515,12 @@ describe('xpush samples', function() {
 		//
 		// : John 본인에게 메시지 전송되고,  Ally/Lynn 에게 Notification !!
     it('John send a JSON message on channel-0 ', function(done) {
-      var message = {title: 'Hello xpush sample', body: 'This is json sample !!! '};
-      Library.sendMessage('John', _channelList[0].channel, 'message', message, function(result){
+      var message1 = {title: 'JSON2-1 - Hello xpush sample', body: 'This is json sample !!! '};
+      var message2 = {title: 'JSON2-2 - Hello xpush sample', body: 'This is json sample !!! '};
+      Library.sendMessage('John', _channelList[0].channel, 'message', message1, function(result){
+      Library.sendMessage('John', _channelList[0].channel, 'message', message2, function(result){
         done();
+      });
       });
     });
 		
@@ -536,16 +553,42 @@ describe('xpush samples', function() {
       });
     });
 		
+    it('Lynn is exited from channel-0' , function(done) {
+      Library.exitChannel('Lynn', _channelList[0].channel, function(result){
+        done();
+      });
+    });
+
 		// Ally 는 channel-0 에 JSON 메시지 전송
 		//
 		// 모두 즉시 전송되고 notification 없음!
     it('Ally send a JSON message on channel-1 ', function(done) {
-      var message = {title: 'Hello xpush sample', body: 'This is json sample !!! '};
-      Library.sendMessage('Ally', _channelList[0].channel, 'message', message, function(result){
+      var message1 = {title: '1111 Hello xpush sample', body: 'This is json sample !!! '};
+      var message2 = {title: '2222 Hello xpush sample', body: 'This is json sample !!! '};
+      Library.sendMessage('Ally', _channelList[0].channel, 'message', message1, function(result){
+      Library.sendMessage('Ally', _channelList[0].channel, 'message', message2, function(result){
+        done();
+      });
+      });
+    });
+
+
+    it('wait for 0.5 sec. ', function(done) {
+      setTimeout(done, 500);
+    });
+
+    it('John is exited from channel-0' , function(done) {
+      Library.exitChannel('John', _channelList[0].channel, function(result){
         done();
       });
     });
-		
+
+    it('Ally\'s unread messages .', function(done) {
+      Library.unReadMessage('Ally', function(result){
+        done();
+      });
+    });
+
   });
 
   
