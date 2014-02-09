@@ -12,6 +12,8 @@
       "email": "you@domain.com"
     }
   ],
+  "main": "index.js",
+
   "dependencies": {
     "socket.io": "0.9.x",
     "colors": "~0.6.2",
@@ -26,6 +28,8 @@
     "shortid": "~2.0.0",
     "async": "~0.2.9",
     "socket.io-client": "*",
+    "passport": ">= 0.0.0",
+    "passport-facebook": ">= 0.0.0",
     "supervisor": "~0.5.6",
     "groc": "~0.6.1"
   },
