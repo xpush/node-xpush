@@ -1,5 +1,8 @@
+"apps" : [
+
 {
-  "name": "sample",
+  "id" : "stalk-io",
+  "name": "stalk.io",
 
   "oauth": {
     "facebook": {
@@ -25,3 +28,11 @@
   }
 
 }
+,
+
+{
+  "name": "sample"
+}
+
+
+]
