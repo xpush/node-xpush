@@ -22,7 +22,6 @@ config.port = 8000;
 
 var server = xpush.createSessionServer(config);
 
-
 server.static(/\/public\/?.*/, {
   directory: __dirname+'/public'
 });
