@@ -1,8 +1,0 @@
-{
-  "xpush": {
-    "name":       "xpush",
-    "protocol":   "http",
-    "baseURL":    "localhost:9000",
-    "publicPath": "/"
-  }
-}

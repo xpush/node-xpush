@@ -1,9 +1,0 @@
-{
-  "glob": [
-    "test/usage.js"
-  ],
-  "except": [
-  ],
-  "github": false,
-  "out": "./docs/groc"
-}
