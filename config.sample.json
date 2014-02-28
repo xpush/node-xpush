@@ -3,18 +3,35 @@
   "redis": {},
   "mongodb": {},
 
-  "gcm_api_key" : "Insert Google Server API Key here",
+  "apps" : [
+    {
+      "id" : "stalk-io",
+      "name": "stalk.io",
 
-  "oauth": {
-    "facebook" : {
-      "key": "252922668215115",
-      "secret": "03ce4f5e8d177ad8e4e21cc138bd227d"
+      "oauth": {
+        "facebook": {
+          "key": "252922668215115",
+          "secret": "03ce4f5e8d177ad8e4e21cc138bd227d"
+        },
+        "twitter": {
+          "consumerKey": "",
+          "consumerSecret": ""
+        }
+      },
+      "notification": {
+        "gcm": {
+          "apiKey": "",
+          "senderId":""
+        },
+        "apn": {
+
+        }
+      }
+
     },
-    "twitter" : {
-      "consumerKey": "",
-      "consumerSecret": ""
+    {
+      "name": "sample"
     }
-
-  }
+  ] 
 
 }
