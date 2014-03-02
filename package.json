@@ -12,8 +12,7 @@
       "email": "you@domain.com"
     }
   ],
-  "main": "index.js",
-
+  "main": "./lib/xpush.js",
   "dependencies": {
     "socket.io": "0.9.x",
     "colors": "~0.6.2",
@@ -29,7 +28,8 @@
     "async": "~0.2.9",
     "socket.io-client": "*",
     "passport": ">= 0.0.0",
-    "passport-facebook": ">= 0.0.0"
+    "passport-facebook": ">= 0.0.0",
+    "passport-twitter": "~1.0.2"
   },
   "devDependencies": {
     "Faker": "~0.5.11"
@@ -42,7 +42,6 @@
     "channel"
   ],
   "repository": "git://github.com/xpush/node-xpush",
-  "main": "./lib/xpush.js",
   "bin": {
     "npush": "./bin/xpush"
   },
