@@ -4,6 +4,7 @@
   "mongodb": {},
 
   "apps" : [
+  
     {
       "id" : "stalk-io",
       "name": "stalk.io",
@@ -28,10 +29,8 @@
         }
       }
 
-    },
-    {
-      "name": "sample"
     }
+
   ] 
 
 }
