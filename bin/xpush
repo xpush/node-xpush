@@ -6,6 +6,22 @@ var fs       = require('fs'),
     argv     = require('optimist').argv,
     xpush    = require('../lib/xpush');
 
+var winston = require('winston');
+winston.add(winston.transports.Http, {
+	host : 'www.notdol.com',
+	port : 7070,
+	path : '/log/xpush'
+})
+
+var logger = new (winston.Logger)({
+ transports: [
+   new (winston.transports.Console)()
+ ]
+});
+
+console.log = winston.info;
+console.log = winston.error;
+
 var help = [
     "usage: xpush [options] ",
     "",
