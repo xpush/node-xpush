@@ -1,4 +1,4 @@
-#!/usr/bin/env node 
+#!/usr/bin/env node
 
 var fs       = require('fs'),
     util     = require('util'),
@@ -19,9 +19,9 @@ var logger = new (winston.Logger)({
  ]
 });
 
-console.log = winston.log;
-console.info = winston.info;
-console.error = winston.error;
+//console.log = winston.log;
+//console.info = winston.info;
+//console.error = winston.error;
 
 var help = [
     "usage: xpush [options] ",
@@ -38,7 +38,7 @@ var help = [
 ].join('\n');
 
 
-var welcome = [ 
+var welcome = [
 "                         _     ",
 "                        | |    ",
 "   __  ___ __  _   _ ___| |__  ",
@@ -48,14 +48,14 @@ var welcome = [
 "        | |                    ",
 "        |_|                    ",
 ""
-].join('\n'); 
+].join('\n');
 
 if (argv.h || argv.help || Object.keys(argv).length === 2 || !argv.config) {
   return util.puts(help);
 }
 
 var config = {},
-    port = argv.port || 80, 
+    port = argv.port || 80,
     server;
 
 try {
@@ -76,7 +76,7 @@ if(argv.session){
 
   /*
   if ( typeof config.host  == "undefined" ) {
-  
+
     var errorMessage = [
     '',
     ' --host [Domain or IP Address]'.red + ' is required.',
@@ -98,4 +98,3 @@ server.on('connected', function (url, port){
       ' now listening on port: ' + port);
   }
 });
-
