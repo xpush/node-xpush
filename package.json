@@ -30,7 +30,8 @@
     "passport": ">= 0.0.0",
     "passport-facebook": ">= 0.0.0",
     "passport-twitter": "~1.0.2",
-    "winston": "~0.7.3"
+    "winston": "~0.7.3",
+    "passport-google-plus": "~0.2.0"
   },
   "devDependencies": {
     "Faker": "~0.5.11"
