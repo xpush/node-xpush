@@ -19,8 +19,9 @@ var logger = new (winston.Logger)({
  ]
 });
 
-console.log = winston.info;
-console.log = winston.error;
+console.log = winston.log;
+console.info = winston.info;
+console.error = winston.error;
 
 var help = [
     "usage: xpush [options] ",
