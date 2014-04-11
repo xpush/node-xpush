@@ -1,3 +1,11 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/xpush/node-xpush/master/logo.png"/>
+</p>
+
+xpush
+=======
+
+
 # xpush
 x(extensional)push is the realtime communication channel server and node-module.
 
@@ -26,7 +34,7 @@ Install and start zookeeper. (http://zookeeper.apache.org)
 	$ cp zoo_sample.cfg zoo.cfg
 	$ cd ../bin
 	$ ./zkServer.sh start
-	
+
 Install and start redis. (http://redis.io)
 
 	$ wget http://download.redis.io/redis-stable.tar.gz
@@ -72,5 +80,3 @@ _(Nothing yet)_
 
 ## License
 xpush project may be freely distributed under the MIT license.
-
-
