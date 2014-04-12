@@ -5,8 +5,6 @@
 xpush
 =======
 
-
-# xpush
 x(extensional)push is the realtime communication channel server and node-module.
 
 - **The project is currently under development. Not yet available.**
