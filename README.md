@@ -67,16 +67,19 @@ In order to start XPUSH server, you have to create configuration file with zooke
 
 There are two distinct ways to use XPUSH: through the command line interface, or by requiring the xpush module in your own code.
 
-#### Start XPUSH Server from the command line
+#### -- Start XPUSH Server from the command line
 
-##### 1. Start XPUSH Session server
+##### Start XPUSH Session server
 
 	$ xpush --port 8000 --config ./config.sample.json —session
 
-##### 2. Start XPUSH Channel server
+##### Start XPUSH Channel server
 
 	$ xpush --port 9990 --config ./config.sample.json 
 
+
+#### --  Using XPUSH module from node.js
+_(Coming soon)_
 
 
 ## Documentation
