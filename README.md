@@ -5,11 +5,14 @@
 xpush
 =======
 
-x(extensional)push is the realtime communication channel server and node-module.
+**This project is currently under development.**
 
-- **The project is currently under development. Not yet available.**
+**XPUSH** (eXtensional PUSH) is a real-time communication server and a programmable library that supports websocket, GCM and APN. It is suitable for implementing components such as messengers and push system.
 
-[![Build Status](https://travis-ci.org/xpush/node-xpush.png?branch=master)](https://travis-ci.org/xpush/node-xpush)
+It makes it easy to send and receive real-time messages for web pages, android and iOS.
+
+XPUSH is consists of a channel server and session servers to handle the load of millions of connections. Your applications can send and receive messages(or datas) via the dedicated Channel server. Before connecting with Channel server, Session server assigns Channel server to the clients. Session server is for load balancing and managing many distributed channel servers.
+
 
 ## xpush
 'xpush is an realtime communication channel server for quickly, easily adding scalable functionality to web and mobile apps.
@@ -20,49 +23,69 @@ It makes it easy to send real-time notifications to Android and iOS devices, and
 Session server is for load balancing and managing many distributed channel servers.
 
 
-## Getting Started  ( for developers )
-Currently under development. **This is only for contributors.**
-#### 1. Install zookeeper and redis
+## Installation
 
-Install and start zookeeper. (http://zookeeper.apache.org)
+Currently under development.
 
-	$ wget http://apache.mirror.cdnetworks.com/zookeeper/zookeeper-3.4.5/zookeeper-3.4.5.tar.gz
-	$ tar -xvzf ./zookeeper-3.4.5.tar.gz
-	$ cd zookeeper-3.4.5/conf
-	$ cp zoo_sample.cfg zoo.cfg
-	$ cd ../bin
-	$ ./zkServer.sh start
+XPUSH is installed and managed via npm, the Node.js package manager.
 
-Install and start redis. (http://redis.io)
+#### Preparation to install
 
-	$ wget http://download.redis.io/redis-stable.tar.gz
-	$ tar xvzf redis-stable.tar.gz
-	$ cd redis-stable
-	$ make
-	$ ./src/redis-server
+Before install and run XPUSH servers, you have to install zookeeper, redis and mongoDB.
 
-Install and start mongoDB. (http://www.mongodb.org)
+- Install and start zookeeper. (http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html)
 
-	$ wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-2.4.9.tgz
-	$ tar xvzf mongodb-linux-x86_64-2.4.9.tgz
-	$ cd mongodb-linux-x86_64-2.4.9
-	$ mkdir -p data/db
-	$ bin/mongod --dbpath data/db &
+- Install and start redis. 
+(http://redis.io/download)
 
-#### 2. Clone xpush project
+- Install and start mongoDB. (http://docs.mongodb.org/manual/installation/)
 
-	$ git clone https://github.com/xpush/node-xpush.git
-	$ cd node-xpush
-	$ npm install
+#### Install XPUSH
 
-#### 3. Start xpush Channel Server
+In order to get started, you'll want to install ```node-xpush``` globally. You may need to use sudo (for OSX, *nix, BSD etc) or run your command shell as Administrator (for Windows) to do this.
 
-	$ ./bin/xpush --port 8081 --config ./config.sample.json
+	npm install -g node-xpush
 
-#### 4. Start xpush Session Server
+This will put the ```xpush``` command in your system path, allowing it to be run from any directory.
 
-	$ ./bin/xpush --port 8000 --config ./config.sample.json --session
+	$ xpush
+	usage: xpush [options]
 
+	Starts a xpush server using the specified command-line options
+
+	options:
+	  --port   PORT       (mandatory!) Port that the xpush server should run on
+	  --config OUTFILE    (mandatory!) Location of the configuration file for the xpush server
+	  --silent            Silence the log output from the xpush server
+	  --session           start the session server for load-balancing xpush 	servers
+	  --host              Hostname
+	  -h, --help          You're staring at it
+
+#### Configuration
+
+In order to start XPUSH server, you have to create configuration file with zookeeper, redis, mongoDB addresses. Empty address is localhost and default ports.
+
+	$ vi config.json
+	{
+	  "zookeeper": {},
+	  "redis": {},
+	  "mongodb": {}
+	}
+
+
+## Run XPUSH Servers
+
+There are two distinct ways to use XPUSH: through the command line interface, or by requiring the xpush module in your own code.
+
+#### Start XPUSH Server from the command line
+
+##### 1. Start XPUSH Session server
+
+	$ xpush --port 8000 --config ./config.sample.json —session
+
+##### 2. Start XPUSH Channel server
+
+	$ xpush --port 9990 --config ./config.sample.json 
 
 
 
