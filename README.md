@@ -13,16 +13,6 @@ It makes it easy to send and receive real-time messages for web pages, android a
 
 XPUSH is consists of a channel server and session servers to handle the load of millions of connections. Your applications can send and receive messages(or datas) via the dedicated Channel server. Before connecting with Channel server, Session server assigns Channel server to the clients. Session server is for load balancing and managing many distributed channel servers.
 
-
-## xpush
-'xpush is an realtime communication channel server for quickly, easily adding scalable functionality to web and mobile apps.
-
-It makes it easy to send real-time notifications to Android and iOS devices, and send messages to various messengers (via XMPP) and send real-time datas to Webpages (via websocket, wrapping socket.io).
-
-'xpush' is consists of a channel server and a session server.
-Session server is for load balancing and managing many distributed channel servers.
-
-
 ## Installation
 
 Currently under development.
