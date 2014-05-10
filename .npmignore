@@ -1,1 +1,4 @@
 examples/
+.DS_Store
+.git*
+node_modules/

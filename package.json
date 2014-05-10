@@ -1,7 +1,7 @@
 {
   "name": "xpush",
   "description": "Realtime communication channel server and node module.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "contributors": [
     {
       "name": "John Kim",
