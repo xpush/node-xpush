@@ -45,7 +45,7 @@
   ],
   "repository": "git://github.com/xpush/node-xpush",
   "bin": {
-    "npush": "./bin/xpush"
+    "xpush": "./bin/xpush"
   },
   "scripts": {
     "test": "node test"
