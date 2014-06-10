@@ -1,7 +1,7 @@
 {
   "name": "xpush",
   "description": "Realtime communication channel server and node module.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "contributors": [
     {
       "name": "John Kim",
@@ -14,24 +14,23 @@
   ],
   "main": "./lib/xpush.js",
   "dependencies": {
-    "socket.io": "0.9.x",
-    "colors": "~0.6.2",
-    "pkginfo": "0.2.x",
-    "optimist": "0.3.x",
-    "restify": "2.x.x",
-    "underscore": "1.5.x",
-    "node-zookeeper-client": "0.2.x",
-    "redis": "0.10.x",
-    "mongoose": "~3.8.x",
-    "node-gcm": "0.9.x",
-    "shortid": "~2.0.0",
-    "async": "~0.2.9",
-    "socket.io-client": "*",
-    "passport": ">= 0.0.0",
-    "passport-facebook": ">= 0.0.0",
-    "passport-twitter": "~1.0.2",
-    "winston": "~0.7.3",
-    "passport-google-oauth": "~0.1.5"
+    "async": "^0.9.0",
+    "colors": "^0.6.2",
+    "mongoose": "^3.8.12",
+    "node-gcm": "^0.9.11",
+    "node-zookeeper-client": "^0.2.1",
+    "optimist": "^0.6.1",
+    "passport": "^0.2.0",
+    "passport-facebook": "^1.0.3",
+    "passport-google-oauth": "^0.1.5",
+    "passport-twitter": "^1.0.2",
+    "pkginfo": "^0.3.0",
+    "redis": "^0.10.3",
+    "restify": "^2.8.1",
+    "shortid": "^2.0.0",
+    "socket.io": "^1.0.4",
+    "underscore": "^1.6.0",
+    "winston": "^0.7.3"
   },
   "devDependencies": {
     "Faker": "~0.5.11"

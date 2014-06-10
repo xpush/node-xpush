@@ -28,7 +28,7 @@ Before install and run XPUSH servers, you have to install zookeeper, redis and m
 
 - Install and start zookeeper. (http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html)
 
-- Install and start redis. 
+- Install and start redis.
 (http://redis.io/download)
 
 - Install and start mongoDB. (http://docs.mongodb.org/manual/installation/)
@@ -78,7 +78,7 @@ There are two distinct ways to use XPUSH: through the command line interface, or
 
 ##### Start XPUSH Channel server
 
-	$ xpush --port 9990 --config ./config.sample.json 
+	$ xpush --port 9990 --config ./config.sample.json
 
 
 #### --  Using XPUSH module from node.js

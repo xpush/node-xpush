@@ -50,12 +50,18 @@ var config = {},
     port = argv.port || 80,
     server;
 
+var xpushDataPath = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME']+'/.xpush';
+
+if(!fs.existsSync(xpushDataPath))         fs.mkdirSync(xpushDataPath, 0766);
+if(!fs.existsSync(xpushDataPath+'/log'))  fs.mkdirSync(xpushDataPath+'/log', 0766);
+
 winston.loggers.add('error', {
-  file : { filename: __dirname + '/../log/error_'+port+'.log' }
+  file : { filename: xpushDataPath+'/log/error_'+port+'.log' }
 });
 winston.loggers.add('log', {
-  file : { filename: __dirname + '/../log/log_'+port+'.log' }
+  file : { filename: xpushDataPath+'/log/log_'+port+'.log' }
 });
+
 console.log = winston.loggers.get('log').info;
 console.info = winston.loggers.get('log').info;
 console.error = winston.loggers.get('error').error;
