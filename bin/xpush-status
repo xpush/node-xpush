@@ -37,8 +37,6 @@ try {
   process.exit(1);
 }
 
-config.zookeeper.address
-
 switch (args[0]) {
   case 'session':
     xpushStatus.sessionServer(config.zookeeper.address);
@@ -49,7 +47,6 @@ switch (args[0]) {
     break;
 
   default:
-
     async.waterfall([
       function(callback){
         xpushStatus.sessionServer(config.zookeeper.address, function(){
