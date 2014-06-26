@@ -62,7 +62,7 @@ switch (args[0]) {
         });
       }
     ], function (err, result) {
-       // result now equals 'done'
+       process.stdout.write(' \n');
     });
 
  }
