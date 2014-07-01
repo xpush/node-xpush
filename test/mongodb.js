@@ -44,6 +44,26 @@ describe("MongodbPersistor", function(){
           });
       });
 
+      it("Register User : james ", function(done){
+
+        mongoPersister.registerUser(
+          'stalk.io',                       // _app,
+          'james',                          //_userId,
+          serverUtils.encrypto('password'), //_password,
+          'web',                            //_deviceId,
+          '',                               //_notiId
+          {
+            email: 'james@gmail.com',
+            gender: 'male',
+            features: 'james dean ?',
+            job: 'spiderman'
+          },
+          function (err) {
+            assert.isNull(err, 'there was no error');
+            done();
+          });
+      });
+
       it("Register User : Ally ", function(done){
 
         mongoPersister.registerUser(
@@ -78,6 +98,18 @@ describe("MongodbPersistor", function(){
       });
 
 
+      it("Add device to james ", function(done){
+
+        mongoPersister.addDevice(
+          'stalk.io',                       // _app,
+          'james',
+          '1235-6783-1871234-328271384-1233-4123413251234',                            //_deviceId,
+          'AMSDFuwehfasdf-asdfEWFHSIDhgawe-fawehfxkajecawGawg-aaAA923rhnjkag48',
+          function (err) {
+            assert.isNull(err, 'there was no error');
+            done();
+          });
+      });
 
       it("retrieve yohan's user information #1 ", function(done){
         mongoPersister.retrieveUser(
@@ -174,13 +206,83 @@ describe("MongodbPersistor", function(){
           'ally',
           function (err, users) {
             assert.isNull(err, 'there was no error');
-            console.log(users);
+            //console.log(users);
+            done();
+          });
+      });
+
+    });
+
+
+    describe("#channel()", function(){
+
+      it(" createChannel", function(done){
+        mongoPersister.createChannel(
+          'stalk.io',
+          'CH0000001',
+          ['yohan', 'ally'],
+          function (err, channel) {
+            assert.isNull(err, 'there was no error');
+            //console.log(channel);
+            done();
+          });
+      });
+/*
+      it(" createChannel", function(done){
+        mongoPersister.createChannel(
+          'stalk.io',
+          '',
+          ['yohan', 'ally'],
+          function (err, channel) {
+            assert.isNull(err, 'there was no error');
+            //console.log(channel);
+            done();
+          });
+      });
+*/
+      it(" createChannel", function(done){
+        mongoPersister.createChannel(
+          'stalk.io',
+          'CH01111112',
+          ['yohan', 'ally'],
+          function (err, channel) {
+            assert.isNull(err, 'there was no error');
+            //console.log(channel);
             done();
           });
       });
 
 
 
-    });
 
+
+
+      it(" add a user to channel", function(done){
+        mongoPersister.addChannelUser(
+          'stalk.io',
+          'CH01111112',
+          'james',
+          function (err, user) {
+            assert.isNull(err, 'there was no error');
+            console.log(user);
+            //console.log(channels.length);
+            done();
+          });
+      });
+
+
+      it(" retrieve channel lists", function(done){
+        mongoPersister.listChannel(
+          'stalk.io',
+          'yohan',
+          function (err, channels) {
+            assert.isNull(err, 'there was no error');
+            //console.log(channels);
+            //console.log(channels.length);
+            done();
+          });
+      });
+
+
+    });
 });
