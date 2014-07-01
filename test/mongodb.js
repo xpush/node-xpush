@@ -227,19 +227,8 @@ describe("MongodbPersistor", function(){
             done();
           });
       });
-/*
-      it(" createChannel", function(done){
-        mongoPersister.createChannel(
-          'stalk.io',
-          '',
-          ['yohan', 'ally'],
-          function (err, channel) {
-            assert.isNull(err, 'there was no error');
-            //console.log(channel);
-            done();
-          });
-      });
-*/
+
+
       it(" createChannel", function(done){
         mongoPersister.createChannel(
           'stalk.io',
@@ -261,7 +250,7 @@ describe("MongodbPersistor", function(){
         mongoPersister.addChannelUser(
           'stalk.io',
           'CH01111112',
-          'james',
+          ['james', 'yohan'],
           function (err, user) {
             assert.isNull(err, 'there was no error');
             console.log(user);
