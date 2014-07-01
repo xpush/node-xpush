@@ -35,7 +35,8 @@
     "winston": "^0.7.3"
   },
   "devDependencies": {
-    "Faker": "~0.5.11"
+    "Faker": "~0.5.11",
+    "chai": "^1.9.1"
   },
   "keywords": [
     "push",
