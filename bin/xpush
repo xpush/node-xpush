@@ -6,14 +6,6 @@ var fs       = require('fs'),
     argv     = require('optimist').argv,
     xpush    = require('../lib/xpush');
 
-var winston = require('winston');
-/*
-winston.add(winston.transports.Http, {
-	host : 'www.notdol.com',
-	port : 7070,
-	path : '/log/xpush'
-})
-*/
 
 var help = [
     "usage: xpush [options] ",
@@ -49,22 +41,9 @@ if (argv.h || argv.help || Object.keys(argv).length === 2 || !argv.config) {
 var config = {},
     port = argv.port || 80,
     server;
-
+require('../lib/util/logging')({port: port});
 var xpushDataPath = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME']+'/.xpush';
 
-if(!fs.existsSync(xpushDataPath))         fs.mkdirSync(xpushDataPath, 0766);
-if(!fs.existsSync(xpushDataPath+'/log'))  fs.mkdirSync(xpushDataPath+'/log', 0766);
-
-winston.loggers.add('error', {
-  file : { filename: xpushDataPath+'/log/error_'+port+'.log' }
-});
-winston.loggers.add('log', {
-  file : { filename: xpushDataPath+'/log/log_'+port+'.log' }
-});
-
-console.log = winston.loggers.get('log').info;
-console.info = winston.loggers.get('log').info;
-console.error = winston.loggers.get('error').error;
 
 try {
   var data = fs.readFileSync(argv.config);
