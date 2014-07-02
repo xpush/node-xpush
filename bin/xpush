@@ -62,9 +62,9 @@ winston.loggers.add('log', {
   file : { filename: xpushDataPath+'/log/log_'+port+'.log' }
 });
 
-console.log = winston.loggers.get('log').info;
-console.info = winston.loggers.get('log').info;
-console.error = winston.loggers.get('error').error;
+//console.log = winston.loggers.get('log').info;
+//console.info = winston.loggers.get('log').info;
+//console.error = winston.loggers.get('error').error;
 
 try {
   var data = fs.readFileSync(argv.config);
