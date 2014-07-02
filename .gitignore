@@ -15,5 +15,5 @@ results
 npm-debug.log
 node_modules
 docs/groc
-
+config.sample.json
 config.json
