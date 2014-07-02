@@ -41,9 +41,8 @@ if (argv.h || argv.help || Object.keys(argv).length === 2 || !argv.config) {
 var config = {},
     port = argv.port || 80,
     server;
-require('../lib/util/logging')({port: port});
-var xpushDataPath = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME']+'/.xpush';
 
+require('../lib/util/logging')({port: port});
 
 try {
   var data = fs.readFileSync(argv.config);
