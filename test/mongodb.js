@@ -30,7 +30,7 @@ describe("MongodbPersistor", function() {
       mongoPersister.registerUser({
         app: 'stalk.io',
         userId: 'yohan',
-        password: utils.encrypto('password'),
+        password: serverUtils.encrypto('password'),
         deviceId: 'web',
         notiId: '',
         datas: {
@@ -51,7 +51,7 @@ describe("MongodbPersistor", function() {
       mongoPersister.registerUser({
         app: 'stalk.io',
         userId: 'james',
-        password: utils.encrypto('password'),
+        password: serverUtils.encrypto('password'),
         deviceId: 'web',
         notiId: '',
         datas: {
@@ -72,7 +72,7 @@ describe("MongodbPersistor", function() {
       mongoPersister.registerUser({
         app: 'stalk.io',
         userId: 'ally',
-        password: utils.encrypto('password'),
+        password: serverUtils.encrypto('password'),
         deviceId: 'web',
         notiId: '',
         datas: {
@@ -215,8 +215,11 @@ describe("MongodbPersistor", function() {
   describe("#channel()", function() {
 
     it(" createChannel", function(done) {
-      mongoPersister.createChannel('stalk.io', 'CH0000001', ['yohan', 'ally'],
-
+      mongoPersister.createChannel({
+        app: 'stalk.io',
+        channel: 'CH0000001',
+        userIds: ['yohan', 'ally'],
+      },
       function(err, channel) {
         assert.isNull(err, 'there was no error');
         //console.log(channel);
@@ -226,8 +229,11 @@ describe("MongodbPersistor", function() {
 
 
     it(" createChannel", function(done) {
-      mongoPersister.createChannel('stalk.io', 'CH01111112', ['yohan', 'ally'],
-
+      mongoPersister.createChannel({
+        app: 'stalk.io',
+        channel: 'CH01111112',
+        userIds: ['yohan', 'ally'],
+      },
       function(err, channel) {
         assert.isNull(err, 'there was no error');
         //console.log(channel);
