@@ -2,7 +2,7 @@
   "zookeeper": {},
   "redis": {},
   "mongodb": {
-  	"options" : {"server" : {"poolSize" : 5} , "user": "notdol", "pass":"win1234", "auth":{ "authdb" : "admin"} }
+  	"options" : {"server" : {"poolSize" : 5} }
   },
 
   "oauth": {},
