@@ -169,7 +169,7 @@ describe("MongodbPersistor", function(){
       it("add group 'ally' to yohan", function(done){
         mongoPersister.addGroupId(
           'stalk.io',                       // _app,
-          'yohan',
+          ['yohan','james'],
           'ally',
           function (err) {
             assert.isNull(err, 'there was no error');
