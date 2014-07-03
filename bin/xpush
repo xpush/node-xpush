@@ -72,7 +72,6 @@ if(argv.session){
     ].join('\n');
     return util.puts(errorMessage);
   } */
-
   server = xpush.createChannelServer(config);
 }
 
