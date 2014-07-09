@@ -42,8 +42,6 @@ var config = {},
     port = argv.port || 80,
     server;
 
-require('../lib/util/logging')({port: port});
-
 try {
   var data = fs.readFileSync(argv.config);
   config = JSON.parse(data.toString());
@@ -52,6 +50,12 @@ try {
   process.exit(1);
 }
 
+var homePath = config.home || process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + '/.xpush';
+if (!fs.existsSync(homePath)) fs.mkdirSync(homePath, 0766);
+
+require('../lib/util/logging')({port: port, path: homePath});
+
+config.home = homePath;
 config.silent = typeof argv.silent !== 'undefined' ? argv.silent : config.silent;
 config.port = port || config.port;
 config.host = argv.host || config.host;
