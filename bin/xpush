@@ -52,6 +52,7 @@ try {
 
 var homePath = config.home || process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + '/.xpush';
 if (!fs.existsSync(homePath)) fs.mkdirSync(homePath, 0766);
+if (!fs.existsSync(homePath+'/'+(config.upload || 'upload'))) fs.mkdirSync(homePath+'/'+(config.upload || 'upload'), 0766);
 
 require('../lib/util/logging')({port: port, path: homePath});
 
