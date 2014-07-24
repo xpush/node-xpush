@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "Faker": "^0.7.2",
+    "busboy": "^0.2.8",
     "chai": "^1.9.1"
   },
   "keywords": [
