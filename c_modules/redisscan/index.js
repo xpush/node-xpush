@@ -5,7 +5,6 @@ function genericScan(redis, cmd, key, pattern, each_callback, done_callback) {
     async.doWhilst(
         function (acb) {
             //scan with the current iterator, matching the given pattern
-            console.log(pattern);
 			var args = [iter];
             if (cmd === 'SCAN') {
                 if (pattern) {
