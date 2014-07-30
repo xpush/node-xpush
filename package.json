@@ -38,7 +38,8 @@
     "winston": "^0.7.3"
   },
   "devDependencies": {
-    "Faker": "~0.5.11",
+    "Faker": "^0.7.2",
+    "busboy": "^0.2.8",
     "chai": "^1.9.1"
   },
   "keywords": [
