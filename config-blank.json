@@ -1,0 +1,11 @@
+{
+  "zookeeper": {},
+  "redis": {},
+  "mongodb": {
+  },
+
+  "oauth": {},
+
+  "apps" : []
+
+}
