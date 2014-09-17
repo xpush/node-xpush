@@ -1,15 +1,15 @@
 {
   "name": "xpush",
   "description": "Realtime communication channel server and node module.",
-  "version": "0.0.6",
+  "version": "0.0.9",
   "contributors": [
     {
       "name": "John Kim",
       "email": "yohany@gmail.com"
     },
     {
-      "name": "You",
-      "email": "you@domain.com"
+      "name": "James Jung",
+      "email": "0nlyoung7@gmail.com"
     }
   ],
   "main": "./lib/xpush.js",
@@ -18,7 +18,7 @@
     "colors": "^0.6.2",
     "compression": "^1.0.6",
     "express": "^4.4.2",
-    "imagemagick-native": "^1.2.2",
+    "imagemagick-native": "1.2.2",
     "mongoose": "^3.8.12",
     "node-gcm": "^0.9.11",
     "node-zookeeper-client": "^0.2.1",
@@ -35,7 +35,8 @@
     "socket.io": "^1.0.4",
     "socket.io-stream": "~0.5.3",
     "underscore": "^1.6.0",
-    "winston": "^0.7.3"
+    "winston": "^0.7.3",
+    "busboy": "^0.2.8"
   },
   "devDependencies": {
     "Faker": "^0.7.2",
