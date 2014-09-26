@@ -1,7 +1,14 @@
 {
   "name": "xpush",
   "description": "Realtime communication channel server and node module.",
-  "version": "0.0.11",
+  "version": "0.0.14",
+  "keywords": [
+    "push",
+    "websocket",
+    "gcm",
+    "apn",
+    "channel"
+  ],
   "contributors": [
     {
       "name": "John Kim",
@@ -41,22 +48,21 @@
   "devDependencies": {
     "Faker": "^0.7.2",
     "busboy": "^0.2.8",
-    "chai": "^1.9.1"
+    "chai": "^1.9.1",
+    "xpush-client" : ">=0.0.1"
   },
-  "keywords": [
-    "push",
-    "websocket",
-    "gcm",
-    "apm",
-    "channel"
-  ],
-  "repository": "git://github.com/xpush/node-xpush",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xpush/node-xpush"
+  },
   "bin": {
     "xpush": "./bin/xpush"
   },
+  "license": "MIT",
   "scripts": {
     "test": "node test"
   },
+  "homepage": "http://xpush.github.io/",
   "engines": {
     "node": ">= 0.8.0"
   }
