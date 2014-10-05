@@ -1,7 +1,7 @@
 {
   "name": "xpush",
-  "description": "Realtime communication channel server and node module.",
-  "version": "0.0.14",
+  "description": "Web based Realtime Communication Platform",
+  "version": "0.0.15",
   "keywords": [
     "push",
     "websocket",
@@ -27,7 +27,7 @@
     "compression": "^1.0.6",
     "express": "^4.4.2",
     "imagemagick-native": "1.2.2",
-    "mongoose": "^3.8.12",
+    "mongoose": "3.8",
     "node-gcm": "^0.9.11",
     "node-zookeeper-client": "^0.2.1",
     "optimist": "^0.6.1",
@@ -46,23 +46,23 @@
     "winston": "^0.7.3"
   },
   "devDependencies": {
-    "Faker": "^0.7.2",
     "busboy": "^0.2.8",
     "chai": "^1.9.1",
-    "xpush-client": ">=0.0.1",
+    "xpush-client": ">=0.0.1"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/xpush/node-xpush"
   },
   "bin": {
-    "xpush": "./bin/xpush"
+    "xpush": "./bin/xpush",
+    "xpush-status": "./bin/xpush-status"
   },
   "license": "MIT",
   "scripts": {
     "test": "node test"
   },
-  "homepage": "http://xpush.github.io/",
+  "homepage": "http://xpush.github.io",
   "engines": {
     "node": ">= 0.8.0"
   }
