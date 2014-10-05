@@ -1,8 +1,8 @@
-var xpush    = require('../lib/xpush');
-var assert  = require('assert');
+var xpush  = require('../lib/xpush');
+var assert = require('assert');
 
 var io = require( '../node_modules/socket.io/node_modules/socket.io-client' );
-var http = require( 'http' );
+var util = require( './util' );
 
 describe('XPUSH API', function(){
 
@@ -20,29 +20,48 @@ describe('XPUSH API', function(){
     }
   };
 
+  var userInfo = {
+    'A' : 'app01',
+    'D' : 'device01',
+    'U': 'testuser01',
+    'PW': 'pwuser01',
+    'C' : 'channel01'
+  };
+
+  var userInfo1 = {
+    'A' : 'app01',
+    'D' : 'device02',
+    'U': 'testuser02',
+    'PW': 'pwuser02',
+    'C' : 'channel01'
+  };
+
   before(function(){
 
     config.home = './_xpush';
-    config.host = '127.0.0.1';
+    config.host = host;
 
   });
 
   after(function(){
+    // TODO. zookeeper node and mongodb users, channels for testing
   });
 
+
   describe("#startServer()", function() {
+    
+
     this.timeout(10000);
 
-    it("session server (port:8888)", function(done) {
+    it("session server (port:port)", function(done) {
       config.port= '8888';
       X_SESSION_SERVER      = xpush.createSessionServer(config, done);
     });
-    /**
+
     it("channel server (port:9001)", function(done) {
       config.port= '9001';
       X_CHANNEL_SERVERS.push( xpush.createChannelServer(config, done) );
     });
-    */
 
     /**
     it("channel server (port:9002)", function(done) {
@@ -57,46 +76,222 @@ describe('XPUSH API', function(){
     */
   });
 
+  var token;
+  var serverInfo = {};
 
-  describe("#check", function() {
+  var host = '127.0.0.1';
+  var port = 8888;
 
-    it("API method : /user/register ", function(done) {
-      console.log(' - - - - - - - - - ');
+  describe("#Test User API", function() {
 
-      var dataObject = JSON.stringify({'A':'test', 'U': 'testuser01', 'PW': 'testuser01', 'D': 'test'
+    console.log('\n\n- - - - - - - - -');
+
+    it("API method : /user/register", function(done) {
+      var param = userInfo;
+      param.DT = { 'NM':'testname01' };
+      util.post( host, port, '/user/register', param, function( err, data ){
+        if( data.status == 'ok'){
+          done();
+        }
+      });
+    });
+
+    it("API method : /user/register", function(done) {
+      var param = userInfo1;
+      param.DT = { 'NM':'testname02' };
+      util.post( host, port, '/user/register', param, function( err, data ){
+        if( data.status == 'ok'){
+          done();
+        }
+      });
+    });
+
+    it("API method : /user/update", function(done) {
+      var param = userInfo;
+      param.DT = { 'NM':'testname03' };
+      util.post( host, port, '/user/update', param, function( err, data ){
+        assert.equal( data.status, 'ok' );
+        done();
+      });
+    });
+  });
+
+  describe("#Socket ready", function() {
+
+    it("API method : /auth", function(done) {
+      var param = userInfo;
+      util.post( host, port, '/auth', param, function( err, data ){
+        token = data.result.token;
+        assert.equal( data.status, 'ok' );
+        done();
+      });
+    });
+
+    it("API method : /node", function(done) {
+      util.get( host, port, '/node/' + userInfo.A+'/'+userInfo.C, function( err, data ){
+        serverInfo = data.result.server;
+        assert.equal( data.status, 'ok' );
+        done();
+      });
+    });
+  });
+
+  var sessionSocket;
+
+  describe("#Session socket Test", function() {
+    this.timeout(2000);
+
+    it( "Session socket : connect ", function(done) {
+      var query = 'A='+userInfo.A+'&'+
+          'U='+userInfo.U+'&'+
+          'D='+userInfo.D+'&'+
+          'TK='+token;
+
+      var socketOptions ={
+        transports: ['websocket']
+        ,'force new connection': true
+      };
+
+      sessionSocket = io.connect(serverInfo.url+'/session?'+query, socketOptions);
+      sessionSocket.on( 'connect', function (){
+        assert(true, 'connected'),
+        done();
       });
 
-      var postheaders = {
-        'Content-Type' : 'application/json',
-        'Content-Length' : Buffer.byteLength(dataObject, 'utf8')
-      };
+      sessionSocket.on( 'error', function (){
+        assert(false, 'connect error'),
+        done();
+      });
+    });
 
-      // the post options
-      var optionspost = {
-        host : '127.0.0.1',
-        port : 8888,
-        path : '/user/register',
-        method : 'POST',
-        headers : postheaders
-      };
+    it( "Session socket : user-query ", function(done) {
+      var param = {query : {'DT.NM':'testname02'}, column: { U: 1, DT: 1, _id: 0 } };
 
-      // do the POST call
-      var reqPost = http.request(optionspost, function(res) {
-        console.log("statusCode: ", res.statusCode);
-       
-        res.on('data', function(d) {
-          console.info('POST result:\n');
-          process.stdout.write(d);
-          console.info('\n\nPOST completed');
+      sessionSocket.emit('user-query', param, function(data){
+        assert.equal( 1, data.result.users.length );
+        done();
+      });
+    });
+
+    it( "Session socket : channel-create ", function(done) {
+      var param = {'C':userInfo.C, 'U' : [userInfo.U,userInfo1.U], 'DT' : { 'NM' : 'channelName01' } };
+
+      sessionSocket.emit('channel-create', param, function(data){
+        assert.equal( data.status, 'ok' );
+        done();
+      });   
+    });
+
+    it( "Session socket : channel-list ", function(done) {
+      sessionSocket.emit('channel-list', function(data){
+        assert.equal( 1, data.result.length );
+        done();
+      });    
+    });
+
+    it( "Session socket : channel-get ", function(done) {
+      var param = {'C':userInfo.C};
+      sessionSocket.emit('channel-get', param, function(data){
+        assert.equal( param.C, data.result.C );
+        done();
+      });  
+    });
+
+    it( "Session socket : channel-update ", function(done) {
+      var param = {'C':userInfo.C, 'Q':{ $set:{ 'DT.NM' : 'channelName02' } } };
+      sessionSocket.emit('channel-update', param, function(data){
+        assert.equal( data.result.DT.NM, 'channelName02' );
+        done();
+      });
+    });
+
+    it( "Session socket : channel-exit ", function(done) {
+      var param = {'C':userInfo.C};
+      sessionSocket.emit('channel-exit', param, function(data){
+        assert.equal( 1, data.result.US.length );
+        done();
+      });
+    });
+
+    it( "Session socket : group-add ", function(done) {
+      var param = {'U':userInfo1.U, 'GR':userInfo.U};
+      sessionSocket.emit('group-add', param, function(data){
+        assert.equal( data.status, 'ok' );
+        done();
+      });
+    });
+
+    it( "Session socket : group-list ", function(done) {
+      var param = {'GR':userInfo.U};
+      sessionSocket.emit('group-list', param, function(data){
+        assert.equal( userInfo1.U, data.result[0].U );
+        done();
+      });
+    });
+
+    it( "Session socket : group-remove ", function(done) {
+      var param = {'U':userInfo1.U, 'GR':userInfo.U};
+      sessionSocket.emit('group-remove', param, function(data){
+        sessionSocket.emit('group-list', param, function(data){
+          assert.equal( 0, data.result.length );
           done();
         });
       });
-       
-      // write the json data
-      reqPost.write(dataObject);
-      reqPost.end();
-      reqPost.on('error', function(e) {
-        console.error(e);
+    });
+
+  });
+
+  describe("#Channel socket Test", function() {
+    this.timeout(5000);
+
+    var channelSocket;
+
+    it( "Channel socket : connect ", function(done) {
+      var query = 'A='+userInfo.A+'&'+
+        'C='+userInfo.C+'&'+
+        'U='+userInfo.U+'&'+
+        'D='+userInfo.D+'&'+
+        'S='+serverInfo.name;
+
+      var socketOptions ={
+        transports: ['websocket']
+        ,'force new connection': true
+      };
+
+      channelSocket = io.connect(serverInfo.url+'/channel?'+query, socketOptions);
+      channelSocket.on( 'connect', function (){
+        assert(true, 'connected'),
+        done();
+      });
+
+      channelSocket.on( 'error', function (){
+        assert(false, 'connect error'),
+        done();
+      });
+    });
+
+    it( "Channel socket : send ", function(done) {
+      var param = {'NM':'message', 'DT': { 'MG' : 'Hello world' } };
+      channelSocket.on( 'message', function( data ){
+        assert.equal( data.MG, param.DT.MG );
+        done();
+      });
+
+      channelSocket.emit('send', param, function(data){
+      });
+    });
+
+    it( "Channel socket : message-unread ", function(done) {
+      channelSocket.emit( 'message-unread', function( data ){
+        assert.equal( data.status, 'ok' );
+        done();
+      });
+    });
+
+    it( "Channel socket : message-received ", function(done) {
+      channelSocket.emit( 'message-received', function( data ){
+        assert.equal( data.status, 'ok' );
+        done();
       });
     });
   });
