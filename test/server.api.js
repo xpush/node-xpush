@@ -1,13 +1,21 @@
 var xpush  = require('../lib/xpush');
 var assert = require('assert');
 
+// socket.io-client
 var io = require( '../node_modules/socket.io/node_modules/socket.io-client' );
 var util = require( './util' );
+
+var mongoose = require( '../node_modules/mongoose' );
+
+var NodeConstants  = require('../lib/node-manager/constants');
 
 describe('XPUSH API', function(){
 
   var X_SESSION_SERVER;
   var X_CHANNEL_SERVERS = [];
+  var host = '127.0.0.1';
+  var sessionPort = '8888';
+
   var config =   {
     "zookeeper": {
       "address": "127.0.0.1:2181"
@@ -17,11 +25,12 @@ describe('XPUSH API', function(){
     },
     "mongodb": {
       "address": "127.0.0.1:27017"
-    }
+    },
+    silent : true
   };
 
   var userInfo = {
-    'A' : 'app01',
+    'A' : 'testapp01',
     'D' : 'device01',
     'U': 'testuser01',
     'PW': 'pwuser01',
@@ -29,7 +38,7 @@ describe('XPUSH API', function(){
   };
 
   var userInfo1 = {
-    'A' : 'app01',
+    'A' : 'testapp01',
     'D' : 'device02',
     'U': 'testuser02',
     'PW': 'pwuser02',
@@ -44,7 +53,27 @@ describe('XPUSH API', function(){
   });
 
   after(function(){
-    // TODO. zookeeper node and mongodb users, channels for testing
+
+    // remove session server's node in zookeeper
+    X_SESSION_SERVER.nodeManager.removePath(
+      NodeConstants.META_PATH + NodeConstants.GW_SERVER_PATH + '/' + host + ':' + sessionPort, process.exit);
+
+    // remove channel server's node in zookeeper
+    for( var inx in X_CHANNEL_SERVERS ){
+      X_CHANNEL_SERVERS[inx].nodeManager.removeServerNode(X_CHANNEL_SERVERS[inx].options.host, X_CHANNEL_SERVERS[inx].options.port, process.exit); 
+    }
+
+    var users = mongoose.model('User');
+    var channels = mongoose.model('Channel');
+
+    users.remove( {'A':'testapp01'}, function(err,result){
+      console.log( result );
+    });
+
+    channels.remove( {'A':'testapp01'}, function(err,result){
+      console.log( result );
+    });
+
   });
 
 
@@ -53,13 +82,13 @@ describe('XPUSH API', function(){
 
     this.timeout(10000);
 
-    it("session server (port:port)", function(done) {
-      config.port= '8888';
+    it("session server (port:8888)", function(done) {
+      config.port = sessionPort;
       X_SESSION_SERVER      = xpush.createSessionServer(config, done);
     });
 
     it("channel server (port:9001)", function(done) {
-      config.port= '9001';
+      config.port = '9001';
       X_CHANNEL_SERVERS.push( xpush.createChannelServer(config, done) );
     });
 
@@ -79,9 +108,6 @@ describe('XPUSH API', function(){
   var token;
   var serverInfo = {};
 
-  var host = '127.0.0.1';
-  var port = 8888;
-
   describe("#Test User API", function() {
 
     console.log('\n\n- - - - - - - - -');
@@ -89,7 +115,7 @@ describe('XPUSH API', function(){
     it("API method : /user/register", function(done) {
       var param = userInfo;
       param.DT = { 'NM':'testname01' };
-      util.post( host, port, '/user/register', param, function( err, data ){
+      util.post( host, sessionPort, '/user/register', param, function( err, data ){
         if( data.status == 'ok'){
           done();
         }
@@ -99,7 +125,7 @@ describe('XPUSH API', function(){
     it("API method : /user/register", function(done) {
       var param = userInfo1;
       param.DT = { 'NM':'testname02' };
-      util.post( host, port, '/user/register', param, function( err, data ){
+      util.post( host, sessionPort, '/user/register', param, function( err, data ){
         if( data.status == 'ok'){
           done();
         }
@@ -109,7 +135,7 @@ describe('XPUSH API', function(){
     it("API method : /user/update", function(done) {
       var param = userInfo;
       param.DT = { 'NM':'testname03' };
-      util.post( host, port, '/user/update', param, function( err, data ){
+      util.post( host, sessionPort, '/user/update', param, function( err, data ){
         assert.equal( data.status, 'ok' );
         done();
       });
@@ -120,7 +146,7 @@ describe('XPUSH API', function(){
 
     it("API method : /auth", function(done) {
       var param = userInfo;
-      util.post( host, port, '/auth', param, function( err, data ){
+      util.post( host, sessionPort, '/auth', param, function( err, data ){
         token = data.result.token;
         assert.equal( data.status, 'ok' );
         done();
@@ -128,7 +154,7 @@ describe('XPUSH API', function(){
     });
 
     it("API method : /node", function(done) {
-      util.get( host, port, '/node/' + userInfo.A+'/'+userInfo.C, function( err, data ){
+      util.get( host, sessionPort, '/node/' + userInfo.A+'/'+userInfo.C, function( err, data ){
         serverInfo = data.result.server;
         assert.equal( data.status, 'ok' );
         done();
@@ -148,7 +174,7 @@ describe('XPUSH API', function(){
           'TK='+token;
 
       var socketOptions ={
-        transports: ['websocket']
+        transsessionPorts: ['websocket']
         ,'force new connection': true
       };
 
@@ -254,7 +280,7 @@ describe('XPUSH API', function(){
         'S='+serverInfo.name;
 
       var socketOptions ={
-        transports: ['websocket']
+        transsessionPorts: ['websocket']
         ,'force new connection': true
       };
 
@@ -295,4 +321,5 @@ describe('XPUSH API', function(){
       });
     });
   });
+
 });
