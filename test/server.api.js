@@ -1,5 +1,6 @@
 var xpush  = require('../lib/xpush');
 var assert = require('assert');
+var fs = require( 'fs' );
 
 // socket.io-client
 var io = require( '../node_modules/socket.io/node_modules/socket.io-client' );
@@ -14,7 +15,8 @@ describe('XPUSH API', function(){
   var X_SESSION_SERVER;
   var X_CHANNEL_SERVERS = [];
   var host = '127.0.0.1';
-  var sessionPort = '8888';
+  var sessionPort = '8000';
+  var channelPort = '9000';
 
   var config =   {
     "zookeeper": {
@@ -26,7 +28,8 @@ describe('XPUSH API', function(){
     "mongodb": {
       "address": "127.0.0.1:27017"
     },
-    silent : true
+    silent : true,
+    upload : 'upload'
   };
 
   var userInfo = {
@@ -47,8 +50,16 @@ describe('XPUSH API', function(){
 
   before(function(){
 
-    config.home = './_xpush';
+    config.home = '.';
     config.host = host;
+
+    var homePath = config.home;
+    try {
+      if (!fs.existsSync(homePath)) fs.mkdirSync(homePath, 0766);
+      if (!fs.existsSync(homePath+'/'+(config.upload || 'upload'))) fs.mkdirSync(homePath+'/'+(config.upload || 'upload'), 0766);
+    } catch ( e ){
+      console.log( 'Error creating xpush directory: ' + e );
+    }
 
   });
 
@@ -65,6 +76,7 @@ describe('XPUSH API', function(){
 
     var users = mongoose.model('User');
     var channels = mongoose.model('Channel');
+    var unreadmessages = mongoose.model('UnreadMessage');
 
     users.remove( {'A':'testapp01'}, function(err,result){
       console.log( result );
@@ -74,35 +86,33 @@ describe('XPUSH API', function(){
       console.log( result );
     });
 
-  });
+    unreadmessages.remove( {'A':'testapp01'}, function(err,result){
+      console.log( result );
+    });
 
+    try {
+      util.deleteFolderRecursive( 'upload' );
+    } catch( e ){
+      console.log( e );
+    }
+
+  });
 
   describe("#startServer()", function() {
     
 
     this.timeout(10000);
 
-    it("session server (port:8888)", function(done) {
+    it("session server (port:8000)", function(done) {
       config.port = sessionPort;
       X_SESSION_SERVER      = xpush.createSessionServer(config, done);
     });
 
-    it("channel server (port:9001)", function(done) {
-      config.port = '9001';
+    it("channel server (port:9000)", function(done) {
+      config.port = channelPort;
       X_CHANNEL_SERVERS.push( xpush.createChannelServer(config, done) );
     });
 
-    /**
-    it("channel server (port:9002)", function(done) {
-      config.port= '9002';
-      X_CHANNEL_SERVERS.push( xpush.createChannelServer(config, done) );
-    });
-
-    it("channel server (port:9003)", function(done) {
-      config.port= '9003';
-      X_CHANNEL_SERVERS.push( xpush.createChannelServer(config, done) );
-    });
-    */
   });
 
   var token;
@@ -110,7 +120,7 @@ describe('XPUSH API', function(){
 
   describe("#Test User API", function() {
 
-    console.log('\n\n- - - - - - - - -');
+    this.timeout(5000);
 
     it("API method : /user/register", function(done) {
       var param = userInfo;
@@ -165,7 +175,7 @@ describe('XPUSH API', function(){
   var sessionSocket;
 
   describe("#Session socket Test", function() {
-    this.timeout(2000);
+    this.timeout(5000);
 
     it( "Session socket : connect ", function(done) {
       var query = 'A='+userInfo.A+'&'+
@@ -320,6 +330,19 @@ describe('XPUSH API', function(){
         done();
       });
     });
+  });
+
+  describe("#Upload test", function() {
+
+    it("API method : /upload", function(done) {
+      var param = { 'appId':userInfo1.A, 'userId':userInfo1.U, 'deviceId':userInfo1.D, 'fileUri': 'sample.png', 'channel' :userInfo1.C };
+      util.postFile( host, channelPort, '/upload', param, function( err, data ){
+        if( data.status == 'ok'){
+          done();
+        }
+      });
+    });
+
   });
 
 });

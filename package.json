@@ -48,7 +48,8 @@
   "devDependencies": {
     "busboy": "^0.2.8",
     "chai": "^1.9.1",
-    "xpush-client": ">=0.0.1"
+    "xpush-client": ">=0.0.1",
+    "mime" : "^1.2.11"
   },
   "repository": {
     "type": "git",
