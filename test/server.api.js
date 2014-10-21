@@ -335,7 +335,7 @@ describe('XPUSH API', function(){
   describe("#Upload test", function() {
 
     it("API method : /upload", function(done) {
-      var param = { 'appId':userInfo1.A, 'userId':userInfo1.U, 'deviceId':userInfo1.D, 'fileUri': 'sample.png', 'channel' :userInfo1.C };
+      var param = { 'appId':userInfo1.A, 'userId':userInfo1.U, 'deviceId':userInfo1.D, 'fileUri': 'test/sample.png', 'channel' :userInfo1.C };
       util.postFile( host, channelPort, '/upload', param, function( err, data ){
         if( data.status == 'ok'){
           done();
