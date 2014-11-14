@@ -15,10 +15,11 @@ var help = [
     "options:",
     "  --port   PORT       Port that the xpush server should run on",
     "  --config OUTFILE    (mandatory!) Location of the configuration file for the xpush server",
-    "  --data   Directory  Location of the base folder for the xpush server",
-    "  --silent            Silence the log output from the xpush server",
+    "  --data   DIRECTORY  Location of the base folder for the xpush server",
+    "  --host   DOMAIN     Hostname",
     "  --session           start the session server for loadbalancing xpush servers",
-    "  --host              Hostname ",
+    "  --channel           start the channel server for the sending and receiving messages in real time.",
+    "  --silent            Silence the log output from the xpush server",
     "  -h, --help          You're staring at it"
 ].join('\n');
 
