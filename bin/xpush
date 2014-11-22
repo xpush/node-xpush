@@ -19,6 +19,7 @@ var help = [
     "  --host   DOMAIN     Hostname",
     "  --session           start the session server for loadbalancing xpush servers",
     "  --channel           start the channel server for the sending and receiving messages in real time.",
+    "  --weight            set server weight (only session server)",
     "  --silent            Silence the log output from the xpush server",
     "  -h, --help          You're staring at it"
 ].join('\n');
@@ -83,6 +84,9 @@ if(argv.session){
     ].join('\n');
     return util.puts(errorMessage);
   } */
+
+  if(argv.weight) config.weight = argv.weight;
+
   server = xpush.createChannelServer(config);
 }
 
