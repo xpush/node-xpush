@@ -58,7 +58,8 @@
   },
   "bin": {
     "xpush": "./bin/xpush",
-    "xpush-status": "./bin/xpush-status"
+    "xpush-status": "./bin/xpush-status",
+    "xpushCli": "./bin/xpushCli"
   },
   "license": "MIT",
   "scripts": {
