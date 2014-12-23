@@ -50,7 +50,8 @@
     "busboy": "^0.2.8",
     "chai": "^1.9.1",
     "xpush-client": ">=0.0.1",
-    "mime" : "^1.2.11"
+    "mime" : "^1.2.11",
+    "faker" : "^2.1.1"
   },
   "repository": {
     "type": "git",
