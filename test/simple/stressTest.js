@@ -7,21 +7,20 @@ var io    = require( '../../node_modules/socket.io/node_modules/socket.io-client
   USAGE : node stressTest.js 8000 100
 *************************/
 
-var port    = process.argv[2];
-var count   = process.argv[3] || 1;
+var port        = process.argv[2]; // session 서버 포트번호
+var count       = process.argv[3] || 1; // Client 쓰레드 수 (Optional)
+var maxChannel  = process.argv[4] || 10; // Client 가 연결하는 Channel 수 (Optional)
 
 var run = function(){
 
 
   var app     = "SAMPLE_SERVICE";
-  var channel = "CHANNEL_"+faker.random.number(20);
+  var channel = "CHANNEL_"+faker.random.number(parseInt(maxChannel));
   var userId  = faker.internet.userName();
 
   console.log('CHANNEL : ', '127.0.0.1:'+port+'/node/' + app + '/' + channel);
 
   util.get( '127.0.0.1', port, '/node/' + app + '/' + channel, function( err, data ){
-
-    console.log(data);
 
     var query =
       'A='+app+'&'+
@@ -51,7 +50,7 @@ var run = function(){
 
       setInterval(function() {
         channelSocket.emit('send', {'NM':'message', 'DT': { 'MG' : faker.lorem.sentence() } });
-      }, 500);
+      }, 1000);
 
     });
 
