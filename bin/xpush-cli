@@ -7,7 +7,7 @@ var util      = require('util'),
 
 var help = [
   "",
-  "usage: xpushCli <command> [<args>]",
+  "usage: xpush-cli <command> [<args>]",
   "",
   "The most commonly used 'xpushCli' commands are:",
   "   set      reset global configurations on xpush servers",

@@ -44,7 +44,8 @@
     "socket.io": "^1.0.4",
     "socket.io-stream": "~0.5.3",
     "underscore": "^1.6.0",
-    "winston": "^0.7.3"
+    "winston": "^0.7.3",
+    "influx": "^3.2.0"
   },
   "devDependencies": {
     "busboy": "^0.2.8",
