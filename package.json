@@ -50,19 +50,20 @@
   "devDependencies": {
     "busboy": "^0.2.8",
     "chai": "^1.9.1",
-    "xpush-client": ">=0.0.1",
-    "mime" : "^1.2.11",
-    "faker" : "^2.1.1"
+    "faker": "^2.1.1",
+    "mime": "^1.2.11",
+    "sleep": "^1.2.0",
+    "xpush-client": ">=0.0.1"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/xpush/node-xpush"
   },
   "bin": {
-    "xpush":          "./bin/xpush",
-    "xpush-status":   "./bin/xpush-status",
-    "xpush-cli":      "./bin/xpush-cli",
-    "xpush-harvester":"./bin/xpush-harvester"
+    "xpush": "./bin/xpush",
+    "xpush-status": "./bin/xpush-status",
+    "xpush-cli": "./bin/xpush-cli",
+    "xpush-harvester": "./bin/xpush-harvester"
   },
   "license": "MIT",
   "scripts": {
