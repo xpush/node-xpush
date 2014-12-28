@@ -1,7 +1,7 @@
 {
   "name": "xpush",
   "description": "Web based Realtime Communication Platform",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "keywords": [
     "push",
     "websocket",
@@ -59,9 +59,10 @@
     "url": "https://github.com/xpush/node-xpush"
   },
   "bin": {
-    "xpush": "./bin/xpush",
-    "xpush-status": "./bin/xpush-status",
-    "xpushCli": "./bin/xpushCli"
+    "xpush":          "./bin/xpush",
+    "xpush-status":   "./bin/xpush-status",
+    "xpush-cli":      "./bin/xpush-cli",
+    "xpush-harvester":"./bin/xpush-harvester"
   },
   "license": "MIT",
   "scripts": {
