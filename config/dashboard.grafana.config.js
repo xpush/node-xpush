@@ -6,7 +6,7 @@ define(['settings'], function(Settings) {
     datasources: {
       influxdb: {
         type: 'influxdb',
-        url: "http://localhost:8086/db/xpush_admin",
+        url: "http://localhost:8086/db/xpush",
         username: 'xpush_admin_dbuser',
         password: 'password',
       },
