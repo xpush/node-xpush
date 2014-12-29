@@ -1,5 +1,6 @@
 var io    = require( '../../node_modules/socket.io/node_modules/socket.io-client' ),
     util  = require( '../util' ),
+    sleep = require('sleep'),
     faker = require('faker');
 
 /************************
@@ -7,9 +8,9 @@ var io    = require( '../../node_modules/socket.io/node_modules/socket.io-client
   USAGE : node stressTest.js 8000 100
 *************************/
 
-var port        = process.argv[2]; // session 서버 포트번호
-var count       = process.argv[3] || 1; // Client 쓰레드 수 (Optional)
-var maxChannel  = process.argv[4] || 10; // Client 가 연결하는 Channel 수 (Optional)
+var port        = process.argv[2];        // session 서버 포트번호
+var count       = process.argv[3] || 1;   // Client 쓰레드 수 (Optional)
+var maxChannel  = process.argv[4] || 10;  // Client 가 연결하는 Channel 수 (Optional)
 
 var run = function(){
 
@@ -68,4 +69,5 @@ var run = function(){
 
 for(var a=0; a<count; a++){
   run();
+  sleep.sleep(1);
 }

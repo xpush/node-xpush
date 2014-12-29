@@ -1,7 +1,7 @@
 {
   "name": "xpush",
   "description": "Web based Realtime Communication Platform",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "keywords": [
     "push",
     "websocket",
@@ -31,8 +31,8 @@
     "colors": "^0.6.2",
     "compression": "^1.0.6",
     "express": "^4.4.2",
-    "imagemagick-native": "1.6.0",
-    "mongoose": "3.8",
+    "imagemagick-native": "1.2.2",
+    "mongoose": "^3.8",
     "node-gcm": "^0.9.11",
     "node-zookeeper-client": "^0.2.1",
     "optimist": "^0.6.1",
@@ -41,22 +41,24 @@
     "passport-google-oauth": "^0.1.5",
     "passport-twitter": "^1.0.2",
     "pkginfo": "^0.3.0",
-    "redis": "~0.11.0",
-    "redis-shard": "~0.1.0",
+    "redis": "^0.11.0",
+    "redis-shard": "~0.2.0",
     "restify": "^2.8.1",
     "send": "^0.6.0",
     "shortid": "^2.0.0",
     "socket.io": "^1.0.4",
-    "socket.io-stream": "~0.5.3",
+    "socket.io-stream": "^0.5.3",
     "underscore": "^1.6.0",
-    "winston": "^0.7.3"
+    "winston": "^0.7.3",
+    "influx": "^3.2.0"
   },
   "devDependencies": {
     "busboy": "^0.2.8",
     "chai": "^1.9.1",
-    "xpush-client": ">=0.0.1",
-    "mime" : "^1.2.11",
-    "faker" : "^2.1.1"
+    "faker": "^2.1.1",
+    "mime": "^1.2.11",
+    "sleep": "^1.2.0",
+    "xpush-client": ">=0.0.1"
   },
   "repository": {
     "type": "git",
@@ -65,7 +67,8 @@
   "bin": {
     "xpush": "./bin/xpush",
     "xpush-status": "./bin/xpush-status",
-    "xpushCli": "./bin/xpushCli"
+    "xpush-cli": "./bin/xpush-cli",
+    "xpush-harvester": "./bin/xpush-harvester"
   },
   "license": "MIT",
   "scripts": {
