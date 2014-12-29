@@ -17,7 +17,12 @@
     {
       "name": "James Jung",
       "email": "0nlyoung7@gmail.com"
+    },
+    {
+      "name": "John Ko",
+      "email": "eunsan.ko@gmail.com"
     }
+
   ],
   "main": "./lib/xpush.js",
   "dependencies": {
@@ -26,7 +31,7 @@
     "colors": "^0.6.2",
     "compression": "^1.0.6",
     "express": "^4.4.2",
-    "imagemagick-native": "1.2.2",
+    "imagemagick-native": "1.6.0",
     "mongoose": "3.8",
     "node-gcm": "^0.9.11",
     "node-zookeeper-client": "^0.2.1",
