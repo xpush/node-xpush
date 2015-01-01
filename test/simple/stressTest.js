@@ -15,6 +15,10 @@ var maxChannel  = process.argv[4] || 10;  // Client 가 연결하는 Channel 수
 var _host = address.substr(0, address.indexOf(':'));
 var _port = Number(address.substr(address.indexOf(':') + 1));
 
+var count_connected = 1;
+var count_error = 1;
+var count_disconnected = 1;
+
 var run = function(){
 
 
@@ -46,7 +50,8 @@ var run = function(){
     var channelSocket = io.connect(data.result.server.url+'/channel?'+query, socketOptions);
 
     channelSocket.on( 'connect', function (){
-      console.log('connected');
+      console.log(count_connected + '. connected');
+      count_connected = count_connected + 1;
 
       setInterval(function() {
         channelSocket.emit('send', {'NM':'message', 'DT': { 'MG' : faker.lorem.sentence() } });
@@ -59,7 +64,13 @@ var run = function(){
     });
 
     channelSocket.on( 'error', function ( data ){
-      console.error(data);
+      console.error(count_error+" "+data);
+      count_error = count_error + 1;
+    });
+
+    channelSocket.on('disconnect', function() {
+      console.log(count_disconnected + '. disconnected');
+      count_disconnected = count_disconnected + 1;
     });
 
   });
