@@ -1,0 +1,52 @@
+#!/usr/bin/env node
+
+var fs          = require('fs'),
+    util        = require('util'),
+    colors      = require('colors'),
+    argv        = require('optimist').argv,
+    zookeeper   = require('node-zookeeper-client'),
+    serverConf  = require('../lib/util/global-config.js');
+
+var help = [
+    "",
+    "usage: xpush-config <args> [key] [value]",
+    "",
+    "The most commonly used 'xpush-config' args are:",
+    "  --config FILE_PATH  (mandatory!) Location of the configuration file for the xpush server",
+    "  -h, --help          You're staring at it",
+    ""
+    ].join('\n');
+
+if (argv.h || argv.help || Object.keys(argv).length === 2 || !argv.config) {
+  return util.puts(help);
+}
+
+var config = {};
+
+try {
+  var data = fs.readFileSync(argv.config);
+  config = JSON.parse(data.toString());
+} catch (ex) {
+  util.puts('Error : ' + ex);
+  process.exit(1);
+}
+
+var address = config.zookeeper && config.zookeeper.address ? config.zookeeper.address : 'localhost:2181';
+var zkClient = zookeeper.createClient(address);
+
+zkClient.once('connected', function () {
+
+  serverConf.setZKClientOnce( zkClient , 'xpush' );
+
+  serverConf.setConfigOnce(process.argv[4], process.argv[5], function(data){
+
+    console.log(" "+"The setting is applied.".underline.bold);
+    console.log(" "+process.argv[4]+" = "+process.argv[5]);
+
+    zkClient.close();
+
+  });
+
+});
+
+zkClient.connect();

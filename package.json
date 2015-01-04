@@ -67,7 +67,7 @@
   "bin": {
     "xpush": "./bin/xpush",
     "xpush-status": "./bin/xpush-status",
-    "xpush-cli": "./bin/xpush-cli",
+    "xpush-config": "./bin/xpush-config",
     "xpush-harvester": "./bin/xpush-harvester"
   },
   "license": "MIT",
