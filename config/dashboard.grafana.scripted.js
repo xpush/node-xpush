@@ -14,7 +14,7 @@
 
 
 // accessable variables in this scope
-var window, document, ARGS, $, jQuery, moment, kbn;
+var window, document, ARGS, $, jQuery, moment, kbn, services, _;
 
 // Setup some variables
 var dashboard;
@@ -23,6 +23,79 @@ var dashboard;
 var ARGS;
 
 // Intialize a skeleton with nothing but a rows array and service object
+
+// default datasource
+var datasource = services.datasourceSrv.default;
+// get datasource used for saving dashboards
+var dashboardDB = services.datasourceSrv.getGrafanaDB();
+
+var targets = [];
+
+var series = [];
+
+
+function getSeries(){
+  return datasource.metricFindQuery('list series').then(function(result) {
+    if (!result) {
+      return null;
+    }
+    
+    var promises = _.map(result, function(metric) {
+      if(metric.text.indexOf('summary')==-1){
+        series.push(metric.text);  
+      }
+      
+    });
+    
+    return services.$q.all(promises);
+  });
+}
+
+function getTargets(path) {
+  return datasource.metricFindQuery(path + '.*').then(function(result) {
+    if (!result) {
+      return null;
+    }
+
+    if (targets.length === 10) {
+      return null;
+    }
+
+    var promises = _.map(result, function(metric) {
+      if (metric.expandable) {
+        return getTargets(path + "." + metric.text);
+      }
+      else {
+        targets.push(path + '.' + metric.text);
+      }
+      return null;
+    });
+
+    return services.$q.all(promises);
+  });
+}
+
+function saveDashboard(dashboard) {
+  var model = services.dashboardSrv.create(dashboard);
+  dashboardDB.saveDashboard(model);
+}
+
+function dynamicSeriesDashboard(callback){
+  getSeries().then(function(){
+    console.log(series);
+    _.each(series, function(s, index) {
+
+
+      callback(new CREATE_SERIES_ROWS(s));
+
+      
+      
+    });
+  });
+}
+
+
+
 
 //DASH Board 기본설정
 dashboard = {"id": null,
@@ -439,16 +512,191 @@ var TOTAL_SOCKET = {
                         "links": []
                       }
                     ]
-                  } 
+                  };
 
+
+var CREATE_SERIES_ROWS = function(server){
+  var obj = {
+                    "title": "New row",
+                    "height": "100px",
+                    "editable": true,
+                    "collapse": false,
+                    "panels": [{"title": "Server",
+                                "error": false,
+                                "span": 3,
+                                "editable": true,
+                                "type": "text",
+                                "id": 6,
+                                "mode": "html",
+                                "content": "<div style=\"height: 60px;line-height: 60px;text-align: center;\"><span style=\"vertical-align: middle;font-weight: 600;font-size: large;\">"+server+"</span></div>",
+                                "style": {
+                                  "font-size": "60pt"
+                                },
+                                "links": []
+                              },{
+                                "title": "Sockets",
+                                "error": false,
+                                "span": 3,
+                                "editable": true,
+                                "type": "singlestat",
+                                "id": 7,
+                                "links": [],
+                                "maxDataPoints": 100,
+                                "interval": null,
+                                "targets": [
+                                  {
+                                    "function": "first",
+                                    "column": "client_socket",
+                                    "series": server,
+                                    "query": "select first(client_socket) from "+server+" where $timeFilter group by time($interval) order asc"
+                                  }
+                                ],
+                                "cacheTimeout": null,
+                                "format": "none",
+                                "prefix": "",
+                                "postfix": " ea",
+                                "nullText": null,
+                                "valueMaps": [
+                                  {
+                                    "value": "null",
+                                    "op": "=",
+                                    "text": "N/A"
+                                  }
+                                ],
+                                "nullPointMode": "connected",
+                                "valueName": "current",
+                                "prefixFontSize": "50%",
+                                "valueFontSize": "80%",
+                                "postfixFontSize": "50%",
+                                "thresholds": "",
+                                "colorBackground": false,
+                                "colorValue": false,
+                                "colors": [
+                                  "rgba(65, 121, 214, 0.4)",
+                                  "rgba(245, 150, 40, 0.73)",
+                                  "rgba(225, 40, 40, 0.59)"
+                                ],
+                                "sparkline": {
+                                  "show": false,
+                                  "full": false,
+                                  "lineColor": "rgb(31, 120, 193)",
+                                  "fillColor": "rgba(31, 118, 189, 0.18)"
+                                }
+                              },{
+                                "title": "Uptime",
+                                "error": false,
+                                "span": 4,
+                                "editable": true,
+                                "type": "singlestat",
+                                "id": 8,
+                                "links": [],
+                                "maxDataPoints": 100,
+                                "interval": null,
+                                "targets": [
+                                  {
+                                    "function": "last",
+                                    "column": "uptime",
+                                    "series": server,
+                                    "query": "select first(uptime) from "+server+" where $timeFilter group by time($interval) order asc"
+                                  }
+                                ],
+                                "cacheTimeout": null,
+                                "format": "none",
+                                "prefix": "",
+                                "postfix": " sec ",
+                                "nullText": null,
+                                "valueMaps": [
+                                  {
+                                    "value": "null",
+                                    "op": "=",
+                                    "text": "N/A"
+                                  }
+                                ],
+                                "nullPointMode": "connected",
+                                "valueName": "current",
+                                "prefixFontSize": "50%",
+                                "valueFontSize": "80%",
+                                "postfixFontSize": "50%",
+                                "thresholds": "",
+                                "colorBackground": false,
+                                "colorValue": false,
+                                "colors": [
+                                  "rgba(245, 54, 54, 0.9)",
+                                  "rgba(237, 129, 40, 0.89)",
+                                  "rgba(50, 172, 45, 0.97)"
+                                ],
+                                "sparkline": {
+                                  "show": false,
+                                  "full": false,
+                                  "lineColor": "rgb(31, 120, 193)",
+                                  "fillColor": "rgba(31, 118, 189, 0.18)"
+                                }
+                              },{
+                                "title": "Memory Usage",
+                                "error": false,
+                                "span": 2,
+                                "editable": true,
+                                "type": "singlestat",
+                                "id": 9,
+                                "links": [],
+                                "maxDataPoints": 100,
+                                "interval": null,
+                                "targets": [
+                                  {
+                                    "function": "mean",
+                                    "column": "memory_rss",
+                                    "series": server,
+                                    "query": "select first(memory_usage) from "+server+" where $timeFilter group by time($interval) order asc",
+                                    "rawQuery": true
+                                  }
+                                ],
+                                "cacheTimeout": null,
+                                "format": "none",
+                                "prefix": "",
+                                "postfix": " %",
+                                "nullText": null,
+                                "valueMaps": [
+                                  {
+                                    "value": "null",
+                                    "op": "=",
+                                    "text": "N/A"
+                                  }
+                                ],
+                                "nullPointMode": "connected",
+                                "valueName": "current",
+                                "prefixFontSize": "50%",
+                                "valueFontSize": "80%",
+                                "postfixFontSize": "50%",
+                                "thresholds": "",
+                                "colorBackground": false,
+                                "colorValue": false,
+                                "colors": [
+                                  "rgba(245, 54, 54, 0.9)",
+                                  "rgba(237, 129, 40, 0.89)",
+                                  "rgba(50, 172, 45, 0.97)"
+                                ],
+                                "sparkline": {
+                                  "show": false,
+                                  "full": false,
+                                  "lineColor": "rgb(31, 120, 193)",
+                                  "fillColor": "rgba(31, 118, 189, 0.18)"
+                                }
+                              }]
+                  };
+  return obj;
+}
 
 var XPUSH_DASHBOARD_LIST = [HEAP_MEMORY,TOTAL_CHANNEL,TOTAL_SOCKET];
 
 
 for (var i = 0; i < XPUSH_DASHBOARD_LIST.length; i++) {
-
+  
   dashboard.rows.push(XPUSH_DASHBOARD_LIST[i]);
 }
 
+dynamicSeriesDashboard(function(dash){
+  dashboard.rows.push(dash);
+});
 
 return dashboard;
+
