@@ -310,10 +310,11 @@ var TOTAL_CHANNEL = {
                           "thresholds": "",
                           "colorBackground": true,
                           "colorValue": false,
+
                           "colors": [
-                            "rgba(71, 212, 59, 0.4)",
+                            "rgba(255, 185, 68, 0.91)",
                             "rgba(245, 150, 40, 0.73)",
-                            "rgba(225, 40, 40, 0.59)"
+                            "rgba(232, 60, 14, 0.4)"
                           ],
                           "sparkline": {
                             "show": false,
@@ -439,7 +440,7 @@ var TOTAL_SOCKET = {
                         "colorBackground": true,
                         "colorValue": false,
                         "colors": [
-                          "rgba(79, 133, 74, 0.4)",
+                          "rgba(38, 220, 22, 0.79)",
                           "rgba(161, 143, 122, 0.73)",
                           "rgba(243, 230, 230, 0.59)"
                         ],
@@ -568,20 +569,21 @@ var CREATE_SERIES_ROWS = function(server){
                                 "prefixFontSize": "50%",
                                 "valueFontSize": "80%",
                                 "postfixFontSize": "50%",
-                                "thresholds": "",
+                                "thresholds": "30,50,100",
                                 "colorBackground": false,
-                                "colorValue": false,
+                                "colorValue": true,
                                 "colors": [
-                                  "rgba(65, 121, 214, 0.4)",
-                                  "rgba(245, 150, 40, 0.73)",
-                                  "rgba(225, 40, 40, 0.59)"
+                                  "rgba(50, 172, 45, 0.97)",
+                                  "rgba(237, 129, 40, 0.89)",
+                                  "rgba(245, 54, 54, 0.9)"
                                 ],
                                 "sparkline": {
-                                  "show": false,
-                                  "full": false,
+                                  "show": true,
+                                  "full": true,
                                   "lineColor": "rgb(31, 120, 193)",
                                   "fillColor": "rgba(31, 118, 189, 0.18)"
                                 }
+                                
                               },{
                                 "title": "Uptime",
                                 "error": false,
@@ -617,9 +619,9 @@ var CREATE_SERIES_ROWS = function(server){
                                 "prefixFontSize": "50%",
                                 "valueFontSize": "80%",
                                 "postfixFontSize": "50%",
-                                "thresholds": "",
+                                "thresholds": "6000,60000,600000",
                                 "colorBackground": false,
-                                "colorValue": false,
+                                "colorValue": true,
                                 "colors": [
                                   "rgba(245, 54, 54, 0.9)",
                                   "rgba(237, 129, 40, 0.89)",
@@ -667,20 +669,21 @@ var CREATE_SERIES_ROWS = function(server){
                                 "prefixFontSize": "50%",
                                 "valueFontSize": "80%",
                                 "postfixFontSize": "50%",
-                                "thresholds": "",
-                                "colorBackground": false,
+                                "thresholds": "0,50,80",
+                                "colorBackground": true,
                                 "colorValue": false,
                                 "colors": [
-                                  "rgba(245, 54, 54, 0.9)",
+                                  "rgba(50, 172, 45, 0.97)",
                                   "rgba(237, 129, 40, 0.89)",
-                                  "rgba(50, 172, 45, 0.97)"
+                                  "rgba(245, 54, 54, 0.9)"
                                 ],
                                 "sparkline": {
-                                  "show": false,
-                                  "full": false,
+                                  "show": true,
+                                  "full": true,
                                   "lineColor": "rgb(31, 120, 193)",
                                   "fillColor": "rgba(31, 118, 189, 0.18)"
                                 }
+                                
                               }]
                   };
   return obj;
