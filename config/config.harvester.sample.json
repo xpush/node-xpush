@@ -7,7 +7,8 @@
     "port" : 8086,
     "username" : "xpush_admin_dbuser",
     "password" : "password",
-    "database" : "xpush"
+    "database" : "xpush",
+    "dropandrun" : true
   }
 
 }
