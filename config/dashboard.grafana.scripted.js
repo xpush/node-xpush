@@ -51,27 +51,22 @@ function getSeries(){
   });
 }
 
-function getTargets(path) {
-  return datasource.metricFindQuery(path + '.*').then(function(result) {
+var hosts = {};
+function getHost(series) {
+  return datasource.metricFindQuery('select first(host) from '+series).then(function(result) {
     if (!result) {
       return null;
     }
 
-    if (targets.length === 10) {
-      return null;
-    }
-
     var promises = _.map(result, function(metric) {
-      if (metric.expandable) {
-        return getTargets(path + "." + metric.text);
-      }
-      else {
-        targets.push(path + '.' + metric.text);
-      }
-      return null;
+      hosts[series]=metric.text;
+      
     });
 
     return services.$q.all(promises);
+    
+    
+    
   });
 }
 
@@ -82,11 +77,16 @@ function saveDashboard(dashboard) {
 
 function dynamicSeriesDashboard(callback){
   getSeries().then(function(){
-    console.log(series);
+    
     _.each(series, function(s, index) {
+      
 
-
-      callback(new CREATE_SERIES_ROWS(s));
+      getHost(s).then(function(){
+          
+          callback(new CREATE_SERIES_ROWS(s,hosts[s]));
+      })
+      
+      
 
       
       
@@ -516,7 +516,7 @@ var TOTAL_SOCKET = {
                   };
 
 
-var CREATE_SERIES_ROWS = function(server){
+var CREATE_SERIES_ROWS = function(server,host){
   var obj = {
                     "title": "New row",
                     "height": "100px",
@@ -529,7 +529,7 @@ var CREATE_SERIES_ROWS = function(server){
                                 "type": "text",
                                 "id": 6,
                                 "mode": "html",
-                                "content": "<div style=\"height: 60px;line-height: 60px;text-align: center;\"><span style=\"vertical-align: middle;font-weight: 600;font-size: large;\">"+server+"</span></div>",
+                                "content": "<div style=\"height: 60px;line-height: 60px;text-align: center;\" onclick=\"javascipt:window.open('http://114.31.50.125:8888') \"><span style=\"vertical-align: middle;font-weight: 600;font-size: large;\">"+server+"</span>&nbsp;&nbsp;<span style=\"vertical-align: middle;font-weight: 200;font-size: small;\">("+host+")</span></div>",
                                 "style": {
                                   "font-size": "60pt"
                                 },
@@ -569,7 +569,7 @@ var CREATE_SERIES_ROWS = function(server){
                                 "prefixFontSize": "50%",
                                 "valueFontSize": "80%",
                                 "postfixFontSize": "50%",
-                                "thresholds": "30,50,100",
+                                "thresholds": "0,50,100",
                                 "colorBackground": false,
                                 "colorValue": true,
                                 "colors": [
@@ -619,7 +619,7 @@ var CREATE_SERIES_ROWS = function(server){
                                 "prefixFontSize": "50%",
                                 "valueFontSize": "80%",
                                 "postfixFontSize": "50%",
-                                "thresholds": "6000,60000,600000",
+                                "thresholds": "0,6000,60000",
                                 "colorBackground": false,
                                 "colorValue": true,
                                 "colors": [
