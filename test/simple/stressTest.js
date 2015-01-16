@@ -36,7 +36,7 @@ var run = function(){
       'U='+userId.replace(/\./g, '')+'&'+
       'D=DEVAPP&'+
       'S='+data.result.server.name+'&'+
-      'DT={user:"'+userId+'"}&'+
+      'DT={"user":"'+userId+'"}&'+
       'MD=CHANNEL_ONLY';
       ;
 
