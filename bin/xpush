@@ -53,17 +53,7 @@ try {
   process.exit(1);
 }
 
-var homePath = argv.data || config.home || process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + '/.xpush';
-try {
-  if (!fs.existsSync(homePath)) fs.mkdirSync(homePath, 0766);
-  if (!fs.existsSync(homePath+'/'+(config.upload || 'upload'))) fs.mkdirSync(homePath+'/'+(config.upload || 'upload'), 0766);
-} catch ( e ){
-  console.log( 'Error creating xpush directory: ' + e );
-}
-
-require('../lib/util/logging')({port: port, path: homePath});
-
-config.home = homePath;
+config.data = argv.data;
 config.silent = typeof argv.silent !== 'undefined' ? argv.silent : config.silent;
 config.port = port || config.port;
 config.host = argv.host || config.host;
