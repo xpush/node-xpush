@@ -57,6 +57,8 @@ var run = function(){
         channelSocket.emit('send', {'NM':'message', 'DT': { 'MG' : faker.lorem.sentence() } });
       }, 1000);
 
+      //channelSocket.emit('send2', {'NM':'message', 'DT': { 'MG' : faker.lorem.sentence() } });
+
     });
 
     channelSocket.on( 'message', function( data ){
