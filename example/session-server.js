@@ -10,7 +10,7 @@ config.port = 8888;
 
 var server = xpush.createSessionServer(config);
 
-server.on('connected', function (url, port){
+server.on('started', function (url, port){
 
   console.log(' >>>>>> SESSION SERVER is started '+url+':'+port);
 

@@ -12,8 +12,9 @@ config.port = 9000;
 
 var server = xpush.createChannelServer(config);
 
-server.on('connected', function (url, port){
+server.on('started', function (url, port){
 
   console.log(' >>>>>> CHANNEL SERVER is started '+url+':'+port);
+  console.log(server.ping());
 
 });

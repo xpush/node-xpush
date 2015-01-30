@@ -81,7 +81,7 @@ if(argv.session){
   server = xpush.createChannelServer(config);
 }
 
-server.on('connected', function (url, port){
+server.on('started', function (url, port){
   if (!config.silent) {
     util.puts(welcome.rainbow.bold);
     util.puts(' ' +
