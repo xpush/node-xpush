@@ -16,6 +16,13 @@ server.on('started', function (url, port){
 
   console.log(' >>>>>> CHANNEL SERVER is started '+url+':'+port);
   console.log(server.ping());
+
+  console.log(server.event);
+});
+
+server.channel_on('send', function(params, callback){
+  console.log('>>>>>>>> THIS IS CUSTOMIZED EVENT !!!!--- ');
+
 });
 
 server.channel_on('send2', function(params, callback){
