@@ -27,31 +27,19 @@ server = xpush.createChannelServer(config);
 server.on('started', function (url, port){
 
   console.log(' >>>>>> CHANNEL SERVER is started '+url+':'+port);
-  console.log(server.ping());
-  console.log(server.event);
+
 });
 
 server.channel_on('send', function(params, callback){
 
-  console.log('>>>>>>>> THIS IS CUSTOMIZED EVENT !!!!--- ');
-  var query = this.handshake.query;
-
-  var DT = query.DT;
-  if( DT && typeof DT == 'string' ){
-    DT = JSON.parse( DT );
-  }
-
-  if( DT.roomLevel == '9'|| DT.roomLevel == 9 ){
-    if (callback) callback({ status: 'ERR-AUTH', message: 'Please authorize the user first' });
-    return;
-  }
+  // add your customized pre-processes..
 
   server.send( this,  params, callback );
 });
 
 server.channel_on('send2', function(params, callback){
 
-  console.log('>>>>>>>> THIS IS CUSTOMIZED EVENT !!!! ');
+  server.send( this,  params, callback );
 
 });
 
