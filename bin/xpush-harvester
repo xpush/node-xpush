@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-var harvester = require('../lib/xpush-harvester'),
+var xpush     = require('../lib/xpush'),
+    colors    = require('colors'),
     influx    = require('influx'),
     argv      = require('optimist').argv,
     fs        = require('fs'),
@@ -30,45 +31,9 @@ try {
   process.exit(1);
 }
 
-var serverInflux = influx({
-  host : config.influxdb.host,
-  port : config.influxdb.port});
-
-function startApp() {
-
-  harvester.start(config);
-
-}
-
-if(config.influxdb.dropandrun){
-  console.log("Drop Database");
-  serverInflux.deleteDatabase(config.influxdb.database, function(err,result){
-    createDatabaseAndUser();
-  });
-}else{
-  createDatabaseAndUser();
-}
-
-function createDatabaseAndUser(){
-  serverInflux.getDatabaseNames(function(err, dbs) {
-  if(err) throw err;
-  if(dbs.indexOf(config.influxdb.database) === -1) {
-    console.log('Creating Database');
-    serverInflux.createDatabase(config.influxdb.database, function(err) {
-      if(err) throw err;
-      console.log('Creating User');
-      serverInflux.createUser(config.influxdb.database, config.influxdb.username, config.influxdb.password, function(err) {
-        if(err) throw err;
-        startApp();
-      });
-    });
-  } else {
-    startApp();
-  }
-});  
-}
-
-
-
-
-
+xpush.createHarvester(config, function(err, result) {
+  util.puts('');
+  util.puts(' XPUSH Harvester daemon is started'.underline.bold.green);
+  util.puts(' influxDB - '+result.host+':' + result.port);
+  util.puts('');
+});
