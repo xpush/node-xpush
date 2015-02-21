@@ -1,7 +1,7 @@
 {
   "name": "xpush",
   "description": "Web based Realtime Communication Platform",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "keywords": [
     "push",
     "websocket",
