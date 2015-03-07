@@ -18,7 +18,7 @@ var help = [
     ].join('\n');
 
 if (argv.h || argv.help || Object.keys(argv).length === 2 || !argv.config) {
-  return util.puts(help);
+  return console.log(help);
 }
 
 var config = {};
@@ -27,7 +27,7 @@ try {
   var data = fs.readFileSync(argv.config);
   config = JSON.parse(data.toString());
 } catch (ex) {
-  util.puts('Error : ' + ex);
+  console.error('Error : ' + ex);
   process.exit(1);
 }
 

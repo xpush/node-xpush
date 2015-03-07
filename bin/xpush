@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var fs       = require('fs'),
-    util     = require('util'),
     colors   = require('colors'),
     argv     = require('optimist').argv,
     xpush    = require('../lib/xpush');
@@ -28,7 +27,7 @@ var help = [
 var welcome = xpush.welcome();
 
 if (argv.h || argv.help || Object.keys(argv).length === 2 || !argv.config) {
-  return util.puts(help);
+  return console.log(help);
 }
 
 var config = {},
@@ -39,7 +38,7 @@ try {
   var data = fs.readFileSync(argv.config);
   config = JSON.parse(data.toString());
 } catch (ex) {
-  util.puts('Error starting xpush server: ' + ex);
+  console.error('Error starting xpush server: ' + ex);
   process.exit(1);
 }
 
@@ -62,7 +61,7 @@ if(argv.session){
     ' Check host value in your config file'.red +' (loaded by --config)',
     ''
     ].join('\n');
-    return util.puts(errorMessage);
+    return console.error(errorMessage);
   } */
 
   if(argv.weight) config.weight = argv.weight;
@@ -73,8 +72,8 @@ if(argv.session){
 
 server.on('started', function (url, port){
   if (!config.silent) {
-    util.puts(welcome.rainbow.bold);
-    util.puts(' ' +
+    console.error(welcome.rainbow.bold);
+    console.error(' ' +
       (argv.session?'Session Server'.underline.bold.green:'Channel Server'.underline.bold.green) +
       ' now listening on port: ' + port);
   }

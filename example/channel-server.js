@@ -10,7 +10,7 @@ try {
   var data = fs.readFileSync(argv.config);
   config = JSON.parse(data.toString());
 } catch (ex) {
-  util.puts('Error starting xpush server: ' + ex);
+  console.error('Error starting xpush server: ' + ex);
   process.exit(1);
 }
 

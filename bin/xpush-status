@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var fs           = require('fs'),
-    util         = require('util'),
     colors       = require('colors'),
     async        = require('async'),
     xpushStatus  = require('../lib/xpush-status'),
@@ -25,7 +24,7 @@ var help = [
 var args = process.argv.slice(2);
 
 if (argv.h || argv.help || /*args.length === 1 ||*/ !argv.config) {
-  return util.puts(help);
+  return console.log(help);
 }
 
 var config = {};
@@ -33,7 +32,7 @@ try {
   var data = fs.readFileSync(argv.config);
   config = JSON.parse(data.toString());
 } catch (ex) {
-  util.puts('Error starting xpush server: ' + ex);
+  console.error('Error starting xpush server: ' + ex);
   process.exit(1);
 }
 

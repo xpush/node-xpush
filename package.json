@@ -1,7 +1,7 @@
 {
   "name": "xpush",
   "description": "Web based Realtime Communication Platform",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "keywords": [
     "push",
     "websocket",
@@ -53,7 +53,6 @@
     "influx": "^3.2.0"
   },
   "devDependencies": {
-    "busboy": "^0.2.8",
     "chai": "^1.9.1",
     "faker": "^2.1.1",
     "mime": "^1.2.11",

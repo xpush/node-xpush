@@ -4,8 +4,7 @@ var xpush     = require('../lib/xpush'),
     colors    = require('colors'),
     influx    = require('influx'),
     argv      = require('optimist').argv,
-    fs        = require('fs'),
-    util      = require('util');
+    fs        = require('fs');
 
 var help = [
   "",
@@ -18,7 +17,7 @@ var help = [
 ].join('\n');
 
 if (argv.h || argv.help || Object.keys(argv).length === 2 || !argv.config) {
-  return util.puts(help);
+  return console.log(help);
 }
 
 var config = {};
@@ -32,8 +31,8 @@ try {
 }
 
 xpush.createHarvester(config, function(err, result) {
-  util.puts('');
-  util.puts(' XPUSH Harvester daemon is started'.underline.bold.green);
-  util.puts(' influxDB - '+result.host+':' + result.port);
-  util.puts('');
+  console.log('');
+  console.log(' XPUSH Harvester daemon is started'.underline.bold.green);
+  console.log(' influxDB - '+result.host+':' + result.port);
+  console.log('');
 });
