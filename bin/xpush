@@ -72,8 +72,8 @@ if(argv.session){
 
 server.on('started', function (url, port){
   if (!config.silent) {
-    console.error(welcome.rainbow.bold);
-    console.error(' ' +
+    console.info(welcome.rainbow.bold);
+    console.info(' ' +
       (argv.session?'Session Server'.underline.bold.green:'Channel Server'.underline.bold.green) +
       ' now listening on port: ' + port);
   }

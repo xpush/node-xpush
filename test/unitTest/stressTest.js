@@ -1,6 +1,5 @@
 var io    = require( '../../node_modules/socket.io/node_modules/socket.io-client' ),
     util  = require( '../util' ),
-    sleep = require('sleep'),
     faker = require('faker');
 
 /************************
@@ -81,5 +80,4 @@ var run = function(){
 
 for(var a=0; a<count; a++){
   run();
-  //sleep.sleep(1);
 }

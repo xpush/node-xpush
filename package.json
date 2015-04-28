@@ -31,7 +31,6 @@
     "colors": "^0.6.2",
     "compression": "^1.0.6",
     "express": "^4.4.2",
-    "imagemagick-native": "1.2.2",
     "mongoose": "^3.8",
     "node-gcm": "^0.9.11",
     "node-zookeeper-client": "^0.2.1",
@@ -56,7 +55,6 @@
     "chai": "^1.9.1",
     "faker": "^2.1.1",
     "mime": "^1.2.11",
-    "sleep": "^1.2.0",
     "xpush-client": ">=0.0.1"
   },
   "repository": {
@@ -75,6 +73,6 @@
   },
   "homepage": "http://xpush.github.io",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.12.0"
   }
 }
