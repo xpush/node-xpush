@@ -1,7 +1,7 @@
 {
   "name": "xpush",
   "description": "Web based Realtime Communication Platform",
-  "version": "0.0.23",
+  "version": "0.1.0",
   "keywords": [
     "push",
     "websocket",
@@ -22,50 +22,25 @@
       "name": "John Ko",
       "email": "eunsan.ko@gmail.com"
     }
-
   ],
   "main": "./lib/xpush.js",
   "dependencies": {
-    "async": "^0.9.0",
-    "busboy": "^0.2.8",
-    "colors": "^0.6.2",
-    "compression": "^1.0.6",
-    "express": "^4.4.2",
-    "mongoose": "^3.8",
-    "node-gcm": "^0.9.11",
-    "node-zookeeper-client": "^0.2.1",
-    "optimist": "^0.6.1",
-    "passport": "^0.2.0",
-    "passport-facebook": "^1.0.3",
-    "passport-google-oauth": "^0.1.5",
-    "passport-twitter": "^1.0.2",
-    "pkginfo": "^0.3.0",
-    "redis": "^0.11.0",
-    "redis-shard": "~0.2.0",
-    "restify": "^2.8.1",
-    "send": "^0.6.0",
-    "shortid": "^2.0.0",
-    "socket.io": "^1.0.4",
-    "socket.io-stream": "^0.5.3",
-    "underscore": "^1.6.0",
-    "winston": "^0.7.3",
-    "influx": "^3.2.0"
+    "async": "^1.2.1",
+    "node-zookeeper-client": "^0.2.2",
+    "redis": "^0.12.1",
+    "redis-shard": "^0.2.0",
+    "restify": "^3.0.3",
+    "shortid": "^2.2.2",
+    "socket.io": "^1.3.5",
+    "winston": "^1.0.0"
   },
-  "devDependencies": {
-    "chai": "^1.9.1",
-    "faker": "^2.1.1",
-    "mime": "^1.2.11",
-    "xpush-client": ">=0.0.1"
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/xpush/node-xpush"
   },
   "bin": {
-    "xpush": "./bin/xpush",
-    "xpush-status": "./bin/xpush-status",
-    "xpush-config": "./bin/xpush-config",
-    "xpush-harvester": "./bin/xpush-harvester"
+    "xpush": "./bin/xpush"
   },
   "license": "MIT",
   "scripts": {
