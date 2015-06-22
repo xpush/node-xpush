@@ -6,13 +6,14 @@ lib-cov
 *.out
 *.pid
 *.gz
+*.iml
 .DS_Store
-
 pids
 logs
 results
+.idea
 
 npm-debug.log
 node_modules
 docs/groc
-config.json
+
