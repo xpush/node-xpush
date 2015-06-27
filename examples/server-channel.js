@@ -6,7 +6,9 @@ var config = {
   "mongodb": {}
 };
 
-config.port = 9001;
+var port = process.argv[2]
+
+config.port = port || 9001;
 
 var server = xpush.createChannelServer(config);
 
