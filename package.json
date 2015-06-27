@@ -34,7 +34,11 @@
     "socket.io": "^1.3.5",
     "winston": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "faker": "^2.1.5",
+    "mime": "^1.3.4",
+    "socket.io-client": "^1.3.5"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/xpush/node-xpush"
