@@ -22,6 +22,8 @@ var run = function () {
 
   util.get(_host, _port, '/node/' + app + '/' + channel, function (err, data) {
 
+    console.log(data);
+
     var uid = userId.replace(/\./g, '');
     uid = "zztv01";
     var DT = {"U": uid, "roomLevel": "0"};
