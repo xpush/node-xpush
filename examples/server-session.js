@@ -17,13 +17,9 @@ function foo(req, res, next) {
   next();
 }
 
-server.put('/foo', foo);
-server.get('/foo', foo);
-server.del('/foo', foo);
-server.post('/foo', foo);
-
-
 server.on('started', function (url, port) {
+
+	server.session_get('/foo', foo);
 
   console.log(' >>>>>> SESSION SERVER is started ' + url + ':' + port);
 

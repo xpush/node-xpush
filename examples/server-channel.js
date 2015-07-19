@@ -19,12 +19,6 @@ function foo(req, res, next) {
   next();
 }
 
-server.put('/foo', foo);
-server.get('/foo', foo);
-server.del('/foo', foo);
-server.post('/foo', foo);
-
-
 server.on('started', function (url, port) {
 
   console.log(' >>>>>> Channel SERVER is started ' + url + ':' + port);
