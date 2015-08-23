@@ -21,7 +21,7 @@ function foo(req, res, next) {
 server.on('started', function (url, port) {
 
   //You can add request events to xpush session server.
-  server.session_get('/foo', foo);
+  server.onGetRequest('/foo', foo);
 
   console.log(' >>>>>> SESSION SERVER is started ' + url + ':' + port);
 
