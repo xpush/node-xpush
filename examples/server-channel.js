@@ -3,18 +3,16 @@ var xpush = require('../lib/xpush');
 var config = {
   "zookeeper": {},
   "redis": {},
-  "mongodb": {}
+  "port": 9001
 };
 
 var port = process.argv[2]
-
-config.port = port || 9001;
+if (port) config.port = port;
 
 var server = xpush.createChannelServer(config);
 
 
 function foo(req, res, next) {
-  //res.send(204);
   res.send({hello: 'XPUSH WORLD !!! ' + config.port});
   next();
 }

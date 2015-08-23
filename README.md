@@ -2,13 +2,12 @@
   <img src="https://raw.githubusercontent.com/xpush/node-xpush/master/logo.png" width="200px"/>
 </p>
 
+**Current release version is 0.0.23, You can download xpush module via NPM or this [link](https://github.com/xpush/node-xpush/releases). This master branch is currently under development, version 0.1.0.**
+
+visit [XPUSH](http://xpush.github.io) (for current version 0.0.23)
 
 xpush
 =======
-
-** Current release version is 0.0.23, You can download xpush module via NPM or this [link](https://github.com/xpush/node-xpush/releases). This master branch is currently under development, version 0.1.0.  **
-
-visit [XPUSH](http://xpush.github.io) (for current version 0.0.23)
 
 **XPUSH** (eXtensional PUSH) is a real-time communication server and a programmable library that supports websocket, GCM and APN. It is suitable for implementing components such as messengers and push system.
 
