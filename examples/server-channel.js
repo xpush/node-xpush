@@ -11,14 +11,27 @@ if (port) config.port = port;
 
 var server = xpush.createChannelServer(config);
 
+// Customizing connection events
+server.onConnection(function (socket) {
+  var query = socket.handshake.query;
 
-function foo(req, res, next) {
-  res.send({hello: 'XPUSH WORLD !!! ' + config.port});
-  next();
-}
+  console.log('CONNECTION - ' + query.A + " : " + query.C + " : " + query.U);
+
+  // add customized socket events
+  socket.on('sessionCount', function (callback) {
+    server.getSessionCount(socket, function (err, data) {
+
+      callback({
+        status: 'ok',
+        result: data
+      });
+
+    });
+  });
+
+});
+
 
 server.on('started', function (url, port) {
-
   console.log(' >>>>>> Channel SERVER is started ' + url + ':' + port);
-
 });
