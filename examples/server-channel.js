@@ -6,7 +6,7 @@ var config = {
   "port": 9001
 };
 
-var port = process.argv[2]
+var port = process.argv[2];
 if (port) config.port = port;
 
 var server = xpush.createChannelServer(config);
@@ -30,7 +30,6 @@ server.onConnection(function (socket) {
   });
 
 });
-
 
 server.on('started', function (url, port) {
   console.log(' >>>>>> Channel SERVER is started ' + url + ':' + port);
