@@ -47,9 +47,6 @@
     "type": "git",
     "url": "https://github.com/xpush/node-xpush"
   },
-  "bin": {
-    "xpush": "./bin/xpush"
-  },
   "license": "MIT",
   "scripts": {
     "test": "node test"
