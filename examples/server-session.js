@@ -17,7 +17,6 @@ function foo(req, res, next) {
   next();
 }
 
-
 server.on('started', function (url, port) {
 
   //You can add request events to xpush session server.
