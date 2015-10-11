@@ -53,6 +53,6 @@
   },
   "homepage": "http://xpush.github.io",
   "engines": {
-    "node": ">= 0.12.0"
+    "node": ">= 4.0.0"
   }
 }
