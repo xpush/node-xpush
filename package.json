@@ -1,7 +1,7 @@
 {
   "name": "xpush",
   "description": "Web based Realtime Communication Platform",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [
     "push",
     "websocket",
@@ -29,19 +29,19 @@
   ],
   "main": "./lib/xpush.js",
   "dependencies": {
-    "async": "^1.2.1",
+    "async": "^1.5.0",
     "node-zookeeper-client": "^0.2.2",
-    "redis": "^0.12.1",
+    "redis": "^2.3.0",
     "redis-shard": "https://github.com/JohnKim/node-redis-shard.git",
-    "restify": "^3.0.3",
-    "shortid": "^2.2.2",
-    "socket.io": "^1.3.5",
-    "winston": "^1.0.0"
+    "restify": "^4.0.3",
+    "shortid": "^2.2.4",
+    "socket.io": "^1.3.7",
+    "winston": "^2.0.0"
   },
   "devDependencies": {
-    "faker": "^2.1.5",
+    "faker": "^3.0.1",
     "mime": "^1.3.4",
-    "socket.io-client": "^1.3.5"
+    "socket.io-client": "^1.3.7"
   },
   "repository": {
     "type": "git",
