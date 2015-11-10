@@ -12,11 +12,6 @@ xpush
 **XPUSH** (eXtensional PUSH) is a real-time communication server and a programmable library that supports websocket, GCM and APN. It is suitable for implementing components such as messengers and push system.
 
 
-<div  align="center">
-    <iframe class="embed-responsive-item" src="//www.youtube.com/embed/9r-4ZvWvRTg?rel=0" allowfullscreen></iframe>
-</div>
-
-
 Features
 =======
 
@@ -66,19 +61,17 @@ To use the XPUSH is, [nodejs](http://nodejs.org/), [zookeeper](http://zookeeper.
 The following is how to install 64bit linux. Please install to suit your environment.
 If you have already been installed, please skip these preparation steps.
 
-### nodejs
+### Install nodejs
 [nodejs installation](http://nodejs.org/download/) by referring to Download and unzip the nodejs.
 
-	mkdir -p $HOME/xpush
-	cd $HOME/xpush
-	wget http://nodejs.org/dist/v0.12.7/node-v0.12.7-linux-x64.tar.gz
-	tar zvf node-v0.12.7-linux-x64.tar.gz
+    wget http://nodejs.org/dist/v5.0.0/node-v5.0.0-linux-x64.tar.gz
+	tar zvf node-v5.0.0-linux-x64.tar.gz
+	cd node-v5.0.0-linux-x64
+	./configure
+	make
+	sudo make install
 
-Set the PATH environment variable so that you can use the node and npm to global.
-
-	PATH=$HOME/xpush/node-v0.12.7-linux-x64/bin:$PATH
-
-### zookeeper
+### Install zookeeper
 Install and run zookeeper with reference [Zookeeper installation](http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html).
 
 The following is the code to install and run the zookeeper3.4.6.
@@ -86,13 +79,12 @@ The following is the code to install and run the zookeeper3.4.6.
 	cd $HOME/xpush
 	wget http://apache.mirror.cdnetworks.com/zookeeper/stable/zookeeper-3.4.6.tar.gz
 	tar xvf zookeeper-3.4.6.tar.gz
-<p/>
 	cp zookeeper-3.4.6/conf/zoo_sample.cfg zookeeper-3.4.6/conf/zoo.cfg
 	cd zookeeper-3.4.6/bin
 	./zkServer.sh start
 
 
-### redis
+### Install redis
 Install and run redis with reference [Redis installation](http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html).
 
 The follow is the code to install and run redis 3.0.3.
@@ -102,7 +94,6 @@ The follow is the code to install and run redis 3.0.3.
 	tar xzf redis-3.0.3.tar.gz
 	cd redis-3.0.3
 	make
-<p/>
 	src/redis-server
 	(daemon : $ nohup src/redis-server & )
 
@@ -114,11 +105,16 @@ The follow is the code to install and run redis 3.0.3.
 
 	git clone https://github.com/xpush/node-xpush.git
 
+### clone xpush repository
+
+	vi ./node-xpush/config.json
+	
+
 ### run session server
 
-	(작성 중. . . . .)
+	./bin/node-xpush/bin/session-server --port 8000
 
 
 ### run channel server
 
-	(작성 중. . . . .)
+	./bin/node-xpush/bin/channel-server --port 8000
