@@ -2,9 +2,11 @@
   <img src="https://raw.githubusercontent.com/xpush/node-xpush/master/logo.png" width="200px"/>
 </p>
 
-**Current release version is 0.0.23, You can download xpush module via NPM or this [link](https://github.com/xpush/node-xpush/releases). This master branch is currently under development, version 0.1.0.**
+visit [XPUSH](http://xpush.github.io) (for version 0.0.23)
 
-visit [XPUSH](http://xpush.github.io) (for current version 0.0.23)
+
+**We are preparing the documents for version 0.1.x**
+
 
 xpush
 =======
@@ -48,7 +50,7 @@ Socket.IO enables real-time bidirectional event-based communication. It works on
 
 Real time server platform has to be designed to be able to handle a large amount of network traffic to a sharply rising splice. It has to run a large number of servers for load balancing, needs to designed to be non-disruptive expansion. **XPUSH** developers designed the **Scalable Web Architecture** for a long time, and continue to optimize the architecture design.
 
-**XPUSH** manages the real-time status of the distributed servers through a **zookeeper** and use **Redis** to store connection information of the visitors and meta datas in the memory. And XPUSH stores various types of unstructured messages sent or received in **MongoDB**. 
+**XPUSH** manages the real-time status of the distributed servers through a **zookeeper** and use **Redis** to store connection information of the visitors and meta datas in the memory. And XPUSH stores various types of unstructured messages sent or received in **MongoDB**.
 
 **XPUSH** server platform run each in the Session server and Channel server.
 Channel server is responsible to authenticate users, managing user and device information, and assigning distribution server for load balancing. Since relatively Channel servers are easy to increase the load on the network traffic, so that it can be added separately as an expansion only Channel server
@@ -108,7 +110,7 @@ The follow is the code to install and run redis 3.0.3.
 ### clone xpush repository
 
 	vi ./node-xpush/config.json
-	
+
 
 ### run session server
 
