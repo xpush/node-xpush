@@ -3,3 +3,4 @@ examples/
 .git*
 node_modules/
 test/
+logo.png
