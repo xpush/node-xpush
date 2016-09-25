@@ -66,6 +66,7 @@ If you have already been installed, please skip these preparation steps.
 ### Install nodejs
 [nodejs installation](http://nodejs.org/download/) by referring to Download and unzip the nodejs.
 
+	cd $HOME/xpush
     wget http://nodejs.org/dist/v5.0.0/node-v5.0.0-linux-x64.tar.gz
 	tar zvf node-v5.0.0-linux-x64.tar.gz
 	cd node-v5.0.0-linux-x64
@@ -92,9 +93,9 @@ Install and run redis with reference [Redis installation](http://zookeeper.apach
 The follow is the code to install and run redis 3.0.3.
 
 	cd $HOME/xpush
-	wget http://download.redis.io/releases/redis-3.0.3.tar.gz
-	tar xzf redis-3.0.3.tar.gz
-	cd redis-3.0.3
+	wget http://download.redis.io/releases/redis-3.2.3.tar.gz
+	tar xzf redis-3.2.3.tar.gz
+	cd redis-3.2.3
 	make
 	src/redis-server
 	(daemon : $ nohup src/redis-server & )
@@ -106,17 +107,14 @@ The follow is the code to install and run redis 3.0.3.
 ### clone xpush repository
 
 	git clone https://github.com/xpush/node-xpush.git
-
-### clone xpush repository
-
-	vi ./node-xpush/config.json
+	cd xpush
 
 
 ### run session server
-
-	./bin/node-xpush/bin/session-server --port 8000
+	
+	node examples/server-session.js 8000
 
 
 ### run channel server
 
-	./bin/node-xpush/bin/channel-server --port 8000
+	node examples/server-channel.js 9000

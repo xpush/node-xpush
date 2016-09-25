@@ -3,7 +3,7 @@ var xpush = require('../lib/xpush');
 var config = {
   "zookeeper": {},
   "redis": {},
-  "port": 9001
+  "port": 9000
 };
 
 var port = process.argv[2];
