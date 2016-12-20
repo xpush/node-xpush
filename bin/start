@@ -79,8 +79,8 @@ if(argv.channel) options['type'] = 'channel';
 // start server
 console.log('\n    ##### Options #####\n',options,'\n\n');
 
-var checkPort = function (callback) {
-  var port = options['port'];
+var checkPort = function (callback, port) {
+  var port = port || options['port'];
 
   var tester = net.createServer()
     .once('error', function (err) {

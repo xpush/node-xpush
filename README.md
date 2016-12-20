@@ -77,25 +77,25 @@ If you have already been installed, please skip these preparation steps.
 ### Install zookeeper
 Install and run zookeeper with reference [Zookeeper installation](http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html).
 
-The following is the code to install and run the zookeeper3.4.6.
+The following is the code to install and run the zookeeper3.4.9.
 
 	cd $HOME/xpush
-	wget http://apache.mirror.cdnetworks.com/zookeeper/stable/zookeeper-3.4.6.tar.gz
-	tar xvf zookeeper-3.4.6.tar.gz
-	cp zookeeper-3.4.6/conf/zoo_sample.cfg zookeeper-3.4.6/conf/zoo.cfg
-	cd zookeeper-3.4.6/bin
+	wget http://apache.mirror.cdnetworks.com/zookeeper/stable/zookeeper-3.4.9.tar.gz
+	tar xvf zookeeper-3.4.9.tar.gz
+	cp zookeeper-3.4.9/conf/zoo_sample.cfg zookeeper-3.4.9/conf/zoo.cfg
+	cd zookeeper-3.4.9/bin
 	./zkServer.sh start
 
 
 ### Install redis
 Install and run redis with reference [Redis installation](http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html).
 
-The follow is the code to install and run redis 3.0.3.
+The follow is the code to install and run redis 3.2.6.
 
 	cd $HOME/xpush
-	wget http://download.redis.io/releases/redis-3.2.3.tar.gz
-	tar xzf redis-3.2.3.tar.gz
-	cd redis-3.2.3
+	wget http://download.redis.io/releases/redis-3.2.6.tar.gz
+	tar xzf redis-3.2.6.tar.gz
+	cd redis-3.2.6
 	make
 	src/redis-server
 	(daemon : $ nohup src/redis-server & )
