@@ -108,13 +108,24 @@ The follow is the code to install and run redis 3.2.6.
 
 	git clone https://github.com/xpush/node-xpush.git
 	cd xpush
+	npm install
 
 
 ### run session server
 	
-	node examples/server-session.js 8000
-
+	bin/start --session
 
 ### run channel server
 
-	node examples/server-channel.js 9000
+	bin/start --channel
+
+### with config.json
+
+	bin/start ---config config.json
+
+### Config Options
+
+```
+- host : bind ip
+- port : bind port
+```
